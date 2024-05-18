@@ -26,6 +26,12 @@ urlpatterns = [
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
 
+    path('auth/', include('djoser.urls')),
+
+    path('auth/', include('djoser.urls.authtoken')),
+
+    path('auth/', include('djoser.urls.jwt')),
+
     path('api/v1/', include('books.urls')),
 ]
 
