@@ -1,7 +1,7 @@
 from django.urls import path
 
 from books.views import BookListView, BookDetailView, ReviewCreateView
-
+""""""
 
 urlpatterns = [
     path("/<int:pk>/", BookDetailView.as_view()),
