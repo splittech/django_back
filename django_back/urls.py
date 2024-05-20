@@ -32,7 +32,9 @@ urlpatterns = [
 
     path('auth/', include('djoser.urls.jwt')),
 
-    path('api/v1/', include('books.urls')),
+    path('api/v1/books', include('books.urls')),
+
+    path('api/v1/news', include('news.urls')),
 ]
 
 if settings.DEBUG:

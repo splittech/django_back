@@ -20,11 +20,11 @@ class BookListView(generics.ListAPIView):
         books = Book.objects.all()
         return books
 
+
 class BookDetailView(generics.RetrieveAPIView):
     """Вывод конкретной книги"""
+    queryset = Book.objects.filter(draft=False)
     serializer_class = BookDetailSerializer
-
-    queryset = Book.objects.filter()
 
 
 class ReviewCreateView(generics.CreateAPIView):
