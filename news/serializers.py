@@ -5,7 +5,7 @@ from .models import News
 class NewsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = News
-        fields = ('newsTitle', 'newsImage')
+        fields = "__all__"
 
 
 class NewsDetailSerializer(serializers.ModelSerializer):

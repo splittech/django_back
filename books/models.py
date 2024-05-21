@@ -54,7 +54,7 @@ class Book(models.Model):
     """Книги"""
     title = models.CharField("Название", max_length=100)
     description = models.TextField("Описание")
-    #year = models.PositiveSmallIntegerField("Дата выхода", default=2019)
+    image = models.ImageField(upload_to ='uploads/')
     genres = models.ManyToManyField(Genre, verbose_name="Жанры")
     tags = models.ManyToManyField(Tag, verbose_name="Теги")
     author = models.ForeignKey(

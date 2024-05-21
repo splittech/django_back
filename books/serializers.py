@@ -4,10 +4,10 @@ from .models import Book, Review
 
 class BookListSerializer(serializers.ModelSerializer):
     """Список книг"""
-
+    authors = serializers.StringRelatedField()
     class Meta:
         model = Book
-        fields = ("title", "author")
+        fields = "__all__"
 
 
 class ReviewCreateSerializer(serializers.ModelSerializer):
@@ -23,7 +23,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Review
-        fields = ("rating", "name", "text")
+        fields = "__all__"
 
 
 class BookDetailSerializer(serializers.ModelSerializer):

@@ -14,7 +14,7 @@ class BookListView(generics.ListAPIView):
     serializer_class = BookListSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = BookFilter
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         books = Book.objects.all()
