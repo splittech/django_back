@@ -11,10 +11,10 @@ export default class BookItem extends Component {
                             <span className='book-item-status book-item-status-green'>До {(new Date(this.props.bookItem.status).toLocaleDateString('ru-RU'))}</span>}
                     </>
                 }
-                <img src='' width={180} height={270} className='book-item-image'></img>
+                <img src={this.props.bookItem.image} width={180} height={270} className='book-item-image'></img>
                 <div className='book-item-text'>
                     <span className='book-item-title'>{this.props.bookItem.title}</span>
-                    <span className='book-item-author'>Автор</span>
+                    <span className='book-item-author'>{this.props.bookItem.author}</span>
                     <div className='book-item-numbers'>
                         <span className='book-item-rating'>Оценка</span>
                         <span className='book-item-comment'>Отзывы</span>

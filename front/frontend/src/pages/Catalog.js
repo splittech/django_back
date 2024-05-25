@@ -9,11 +9,11 @@ import axios from 'axios'
 import { API_URL } from '../http'
 
 export default function Catalog() {
-    let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
+    let [url, setUrl] = useState('http://127.0.0.1:8000/api/v1/books/')
     const memoizedUrl = useMemo(() => url, [url])
     // console.log(memoizedUrl)
     // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
-    const [books] = useDinamicPagination(memoizedUrl, 15)
+    const [books] = useDinamicPagination(memoizedUrl, 5)
     const [authors, setAuthors] = useState([])
     let [selectedAuthors, setSelectedAuthors] = useState([])
     const [jenres, setJenres] = useState(['Жанр1', 'Жанр2', 'Жанр3', 'Жанр4', 'Жанр5', 'Жанр6'])
@@ -66,8 +66,8 @@ export default function Catalog() {
                     arr.push(el)
                 })
                 arr.map(el => {
-                    if (!authors.includes(el.title)) {
-                        authors.push(el.title)
+                    if (!authors.includes(el.author)) {
+                        authors.push(el.author)
                     }
                 })
             }).finally(() => setFetching(false))
