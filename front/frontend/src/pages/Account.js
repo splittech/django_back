@@ -10,7 +10,7 @@ export default observer(function Account() {
 
     useEffect(() => {
         if (localStorage.getItem('auth_token')) {
-            store.checkAuth(store.user.email, store.user.password)
+            store.checkAuth(store.user.username, store.user.password)
         }
     }, [])
 
