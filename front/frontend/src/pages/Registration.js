@@ -8,6 +8,7 @@ import { observer } from 'mobx-react-lite'
 export default observer(function Registration() {
     const [lastname, setLastname] = useState('')
     const [firstname, setFirstname] = useState('')
+    const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [password2, setPassword2] = useState('')
@@ -59,6 +60,14 @@ export default observer(function Registration() {
                     required />
             </div>
             <div className='account-login-item'>
+                <span className='account-login-item-title'>Имя пользователя:</span>
+                <Input
+                    onChange={e => setUsername(e.target.value)}
+                    value={username}
+                    type='text'
+                    placeholder={'Имя пользователя'} />
+            </div>
+            <div className='account-login-item'>
                 <span className='account-login-item-title'>Адрес электронной почты:</span>
                 <Input
                     onChange={e => setEmail(e.target.value)}
@@ -91,11 +100,12 @@ export default observer(function Registration() {
                 onClick={() => {
                     if (lastname != '' &&
                         firstname != '' &&
+                        username != '' &&
                         email != '' &&
                         password != '' &&
                         password2 != '' &&
                         checkPassword()) {
-                        store.registration(email, firstname, lastname, password)
+                        store.registration(username, email, firstname, lastname, password)
                     }
                 }} />
         </div>
