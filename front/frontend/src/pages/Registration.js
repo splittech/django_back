@@ -89,11 +89,11 @@ export default observer(function Registration() {
                 title={'Зарегистрироваться'}
                 className='button-enter'
                 onClick={() => {
-                    if (lastname !== '' &&
-                        firstname !== '' &&
-                        email !== '' &&
-                        password !== '' &&
-                        password2 !== '' &&
+                    if (lastname != '' &&
+                        firstname != '' &&
+                        email != '' &&
+                        password != '' &&
+                        password2 != '' &&
                         checkPassword()) {
                         store.registration(email, firstname, lastname, password)
                     }

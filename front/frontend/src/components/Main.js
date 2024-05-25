@@ -7,15 +7,16 @@ import Favorites from '../pages/Favorites';
 import Account from '../pages/Account';
 import News from '../pages/News';
 import Book from '../pages/Book';
-import Tops from '../pages/Tops';
-import Collections from '../pages/Collections';
-import Collection from '../pages/Collection';
+import TopsPage from '../pages/TopsPage';
+import CollectionsPage from '../pages/CollectionsPage';
+import CollectionPage from '../pages/CollectionPage';
 import Authorisation from '../pages/Authorisation';
 import ForgetPassword from '../pages/ForgetPassword';
 import Registration from '../pages/Registration';
 import Reader from '../pages/Reader';
 import Librarian from '../pages/Librarian';
 import BookHistory from '../pages/BookHistory';
+import Reviews from '../pages/Reviews';
 
 export default class Main extends Component {
     render() {
@@ -30,19 +31,21 @@ export default class Main extends Component {
                     <Routes>
                         <Route path='/' element={<Home />} />
                         <Route path='/home' element={<Home />} />
-                        <Route path='/home/:title' element={<News />} />
+                        <Route path='/home/:id' element={<News />} />
                         <Route path='/recommendations' element={<Recommendations />} />
-                        <Route path='/recommendations/tops/:title' element={<Book />} />
-                        <Route path='/recommendations/tops' element={<Tops />} />
-                        <Route path='/recommendations/collections' element={<Collections />} />
-                        <Route path='/recommendations/collections/:title' element={<Collection />} />
+                        <Route path='/recommendations/tops/:id' element={<Book />} />
+                        <Route path='/recommendations/tops/:id/reviews' element={<Reviews />} />
+                        <Route path='/recommendations/tops' element={<TopsPage />} />
+                        <Route path='/recommendations/collections' element={<CollectionsPage />} />
+                        <Route path='/recommendations/collections/:id' element={<CollectionPage />} />
                         <Route path='/catalog' element={<Catalog />} />
-                        <Route path='/catalog/:title' element={<Book />} />
+                        <Route path='/catalog/:id' element={<Book />} />
+                        <Route path='/catalog/:id/reviews' element={<Reviews />} />
                         <Route path='/favorites' element={<Favorites />} />
                         <Route path='/account' element={<Account />} />
                         <Route path='/account/reader' element={<Reader />} />
                         <Route path='/account/reader/bookhistory' element={<BookHistory />} />
-                        <Route path='/account/reader/bookhistory:title' element={<BookHistory />} />
+                        <Route path='/account/reader/bookhistory:id' element={<BookHistory />} />
                         <Route path='/account/librarian' element={<Librarian />} />
                         <Route path='/authorisation' element={<Authorisation />} />
                         <Route path='/authorisation/forget_password' element={<ForgetPassword />} />

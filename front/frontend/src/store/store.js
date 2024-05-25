@@ -29,8 +29,9 @@ export default class Store {
         try {
             const response = await AuthService.login(email, password)
             console.log(response)
-            localStorage.setItem('token', response.data.accessToken)
-            localStorage.setItem('userRole', response.data.userRole)
+            localStorage.setItem('auth_token', response.data.auth_token)
+            // localStorage.setItem('token', response.data.accessToken)
+            // localStorage.setItem('userRole', response.data.userRole)
             this.setAuth(true)
             this.setUser(response.data.user)
         } catch (e) {
@@ -42,8 +43,9 @@ export default class Store {
         try {
             const response = await AuthService.registration(email, firstname, lastname, password)
             console.log(response)
-            localStorage.setItem('token', response.data.accessToken)
-            localStorage.setItem('userRole', response.data.userRole)
+            localStorage.setItem('auth_token', response.data.auth_token)
+            // localStorage.setItem('token', response.data.accessToken)
+            // localStorage.setItem('userRole', response.data.userRole)
             this.setAuth(true)
             this.setUser(response.data.user)
         } catch (e) {
@@ -55,7 +57,7 @@ export default class Store {
         try {
             const response = await AuthService.logout()
             console.log(response)
-            localStorage.removeItem('token')
+            localStorage.removeItem('auth_token')
             this.setAuth(false)
             this.setUser({})
         } catch (e) {
@@ -63,13 +65,15 @@ export default class Store {
         }
     }
 
-    async checkAuth() {
+    async checkAuth(email, password) {
         this.setLoading(true)
         try {
-            const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true })
-            localStorage.setItem('token', response.data.accessToken)
+            const response = await axios.post(`${API_URL}/auth/token/login/`, { withCredentials: true, email, password })
+            // const response = await axios.post(`${API_URL}/auth/jwt/refresh`, { withCredentials: true })
+            localStorage.setItem('auth_token', response.data.auth_token)
+            // localStorage.setItem('token', response.data.accessToken)
             this.setAuth(true)
-            this.setUser(response.data.user)
+            // this.setUser(response.data.user)
         } catch (e) {
             console.log(e.response?.data?.message)
         } finally {

@@ -9,8 +9,8 @@ export default observer(function Account() {
     const isReader = store.isReader()
 
     useEffect(() => {
-        if (localStorage.getItem('token')) {
-            store.checkAuth()
+        if (localStorage.getItem('auth_token')) {
+            store.checkAuth(store.user.email, store.user.password)
         }
     }, [])
 
