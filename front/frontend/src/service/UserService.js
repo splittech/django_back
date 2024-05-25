@@ -13,8 +13,12 @@ export default class UserService {
         return $api.get('')
     }
     
-    static async getJenres() {
-        return $api.get('')
+    static async getGenres() {
+        return $api.get('/api/v1/book/genres')
+    }
+    
+    static async getTags() {
+        return $api.get('/api/v1/book/tags')
     }
     
     static async getTops() {

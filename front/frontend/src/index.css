@@ -287,7 +287,7 @@ body {
 
 .book-list {
     display: grid;
-    gap: 50px;
+    gap: 48px;
     grid-template-columns: repeat(5, 1fr);
 }
 
@@ -427,13 +427,13 @@ body {
 
 /* COLLECTION */
 
-.collection-name{
+.collection-name {
     font-size: 20px;
     font-weight: 700;
     margin: 0 0 20px 30px;
 }
 
-.collection-description{
+.collection-description {
     margin: 0 0 30px 30px;
     font-size: 16px;
     line-height: 24px;
@@ -518,7 +518,7 @@ body {
     margin-bottom: 35px;
     padding: 20px;
     gap: 20px;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     transform: translateY(-30px);
     /* transition: all ease 0.5s; */
     transition-property: transform, opacity, position;
@@ -562,9 +562,9 @@ body {
     outline: 1.2px solid #42515a;
 }
 
-/* .input:invalid {
+.input-invalid {
     outline: 1.2px solid #c60021;
-} */
+}
 
 .catalog-filters-item-checkbox-item {
     display: flex;
@@ -637,11 +637,10 @@ body {
     border: 1px solid #42515a;
     border-radius: 10px;
     display: grid;
-    width: fit-content;
+    width: 230px;
     margin-bottom: 35px;
     padding: 20px;
     gap: 20px;
-    grid-template-columns: 1fr;
     transform: translateY(-30px);
     transition-property: transform, opacity, position;
     transition-duration: 0.5s, 0s, 0.5s;
@@ -669,6 +668,16 @@ body {
     border: none;
     background-color: white;
     color: #42515a;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.catalog-sort-button:hover {
+    scale: 1.3;
+}
+
+.catalog-sort-button-active {
+    scale: 1.3;
 }
 
 /* BOOK */
@@ -751,7 +760,7 @@ body {
     gap: 50px;
 }
 
-.book-reviews{
+.book-reviews {
     display: flex;
     flex-direction: column;
     gap: 50px;

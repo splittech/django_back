@@ -24,11 +24,10 @@ export default function Filter(props) {
     }
 
     async function handleCheckboxChange(el) {
-        const isChecked =  selectedItems.includes(el)
+        const isChecked = selectedItems.includes(el)
         const promise = new Promise((resolve) => {
             if (isChecked) {
                 selectedItems = selectedItems.filter(item => item !== el)
-
                 const interval = setInterval(() => {
                     if (!selectedItems.includes(el)) {
                         clearInterval(interval)
@@ -44,7 +43,6 @@ export default function Filter(props) {
                     }
                 }, 100)
             }
-
         })
         await promise
         props.updateSelectedItems(selectedItems)

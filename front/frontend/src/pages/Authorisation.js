@@ -10,6 +10,9 @@ export default observer(function Authorisation() {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [usernameMessage, setUsernameMessage] = useState('')
+    const [emailMessage, setEmailMessage] = useState('')
+    const [passwordMessage, setPasswordMessage] = useState('')
 
     const { store } = useContext(Context)
 
@@ -19,6 +22,32 @@ export default observer(function Authorisation() {
 
     if (store.isLoading) {
         return <div>Загрузка...</div>
+    }
+
+    function checker() {
+        let flag = true
+        if (username === '') {
+            setUsernameMessage('Заполните это поле!')
+            flag = false
+        } else {
+            setUsernameMessage('')
+        }
+        if (email === '') {
+            setEmailMessage('Заполните это поле!')
+            flag = false
+        } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+            setEmailMessage('Email введен не корректно!')
+            flag = false
+        } else {
+            setEmailMessage('')
+        }
+        if (password === '') {
+            setPasswordMessage('Заполните это поле!')
+            flag = false
+        } else {
+            setPasswordMessage('')
+        }
+        return flag
     }
 
     return (
@@ -32,32 +61,38 @@ export default observer(function Authorisation() {
             <div className='account-login-item'>
                 <span className='account-login-item-title'>Имя пользователя:</span>
                 <Input
+                    className={usernameMessage !== '' && 'input-invalid'}
                     onChange={e => setUsername(e.target.value)}
                     value={username}
                     type='text'
                     placeholder={'Имя пользователя'} />
+                <label style={usernameMessage === '' ? { display: 'none' } : { color: '#c60021' }}>{usernameMessage}</label>
             </div>
             <div className='account-login-item'>
                 <span className='account-login-item-title'>Электронная почта:</span>
                 <Input
+                    className={emailMessage !== '' && 'input-invalid'}
                     onChange={e => setEmail(e.target.value)}
                     value={email}
                     type='email'
                     placeholder={'Электронная почта'} />
+                <label style={emailMessage === '' ? { display: 'none' } : { color: '#c60021' }}>{emailMessage}</label>
             </div>
             <div className='account-login-item'>
                 <span className='account-login-item-title'>Пароль:</span>
                 <Input
+                    className={passwordMessage !== '' && 'input-invalid'}
                     onChange={e => setPassword(e.target.value)}
                     value={password}
                     type='password'
                     placeholder={'Введите пароль'} />
+                <label style={passwordMessage === '' ? { display: 'none' } : { color: '#c60021' }}>{passwordMessage}</label>
             </div>
             <Button
                 title={'Войти'}
                 className='button-enter'
                 onClick={() => {
-                    if (username != '' && email != ''&& password != '') {
+                    if (checker()) {
                         store.login(username, email, password)
                     }
                 }} />
