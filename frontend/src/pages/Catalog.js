@@ -7,6 +7,7 @@ import Filter from '../components/Filter'
 import useDinamicPagination from '../hooks/use-dinamicPagination'
 import axios from 'axios'
 import { API_URL } from '../http'
+import UserService from '../service/UserService'
 
 export default function Catalog() {
     let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
@@ -14,9 +15,15 @@ export default function Catalog() {
     // console.log(memoizedUrl)
     // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
     const [books] = useDinamicPagination(memoizedUrl, 15)
-    const [authors, setAuthors] = useState([])
+    const [authors, setAuthors] = useState(
+        // getAuthors()
+    []
+    )
     let [selectedAuthors, setSelectedAuthors] = useState([])
-    const [jenres, setJenres] = useState(['Жанр1', 'Жанр2', 'Жанр3', 'Жанр4', 'Жанр5', 'Жанр6'])
+    const [jenres, setJenres] = useState(
+        // getJenres()
+        ['Жанр1', 'Жанр2', 'Жанр3', 'Жанр4', 'Жанр5', 'Жанр6']
+    )
     let [selectedJenres, setSelectedJenres] = useState([])
     const [status, setStatus] = useState(['Свободно', 'На руках', 'Забронировано'])
     let [selectedStatus, setSelectedStatus] = useState([])
@@ -27,6 +34,24 @@ export default function Catalog() {
     const [openSort, setOpenSort] = useState(false)
     // const [value, setValue] = useState('')
 
+    async function getAuthors() {
+        try {
+            const response = await UserService.getAuthors()
+            setAuthors(response.data)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    
+    async function getJenres() {
+        try {
+            const response = await UserService.getJenres()
+            setJenres(response.data)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+    
     function updateSelectedAutors(array) {
         selectedAuthors = array
         searchBook()
@@ -48,9 +73,15 @@ export default function Catalog() {
     }
 
     function searchBook() {
-        const authorsQuery = selectedAuthors.length > 0 ? `author=${selectedAuthors.map(el => el.replace(/\s/g, '_')).join(',')}` : ''
-        const jenresQuery = selectedJenres.length > 0 ? `jenres=${selectedJenres.map(el => el.replace(/\s/g, '_')).join(',')}` : ''
-        const statusesQuery = selectedStatus.length > 0 ? `status=${selectedStatus.map(el => el.replace(/\s/g, '_')).join(',')}` : ''
+        const authorsQuery = selectedAuthors.length > 0 ? `author=${selectedAuthors.map(el => el
+            // .replace(/\s/g, '_')
+        ).join(',')}` : ''
+        const jenresQuery = selectedJenres.length > 0 ? `jenres=${selectedJenres.map(el => el
+            // .replace(/\s/g, '_')
+        ).join(',')}` : ''
+        const statusesQuery = selectedStatus.length > 0 ? `status=${selectedStatus.map(el => el
+            // .replace(/\s/g, '_')
+        ).join(',')}` : ''
 
         const queryParams = [authorsQuery, jenresQuery, statusesQuery].filter(Boolean).join('&')
 
@@ -166,7 +197,7 @@ export default function Catalog() {
             </div>
             <div className='book-list'>
                 {books.map(el => (
-                    <Link to={`/catalog/${el.title}`} className='book-link-another-page' key={el.id}>
+                    <Link to={`/catalog/${el.id}`} className='book-link-another-page' key={el.id}>
                         <BookItem key={el.id} bookItem={el} />
                     </Link>
                 ))}

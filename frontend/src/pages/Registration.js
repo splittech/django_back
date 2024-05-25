@@ -43,7 +43,7 @@ export default observer(function Registration() {
             <div className='account-login-item'>
                 <span className='account-login-item-title'>Фамилия:</span>
                 <Input
-                    onChange={e => setFirstname(e.target.value)}
+                    onChange={e => setLastname(e.target.value)}
                     value={lastname}
                     type='text'
                     placeholder={'Введите фамилию'}
@@ -52,7 +52,7 @@ export default observer(function Registration() {
             <div className='account-login-item'>
                 <span className='account-login-item-title'>Имя:</span>
                 <Input
-                    onChange={e => setLastname(e.target.value)}
+                    onChange={e => setFirstname(e.target.value)}
                     value={firstname}
                     type='text'
                     placeholder={'Введите имя'}
@@ -89,11 +89,11 @@ export default observer(function Registration() {
                 title={'Зарегистрироваться'}
                 className='button-enter'
                 onClick={() => {
-                    if (lastname !== '' &&
-                        firstname !== '' &&
-                        email !== '' &&
-                        password !== '' &&
-                        password2 !== '' &&
+                    if (lastname != '' &&
+                        firstname != '' &&
+                        email != '' &&
+                        password != '' &&
+                        password2 != '' &&
                         checkPassword()) {
                         store.registration(email, firstname, lastname, password)
                     }

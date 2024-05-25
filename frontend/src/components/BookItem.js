@@ -14,10 +14,16 @@ export default class BookItem extends Component {
                 <img src='' width={180} height={270} className='book-item-image'></img>
                 <div className='book-item-text'>
                     <span className='book-item-title'>{this.props.bookItem.title}</span>
-                    <span className='book-item-author'>Автор</span>
+                    <span className='book-item-author'>
+                        {/* {this.props.bookItem.author} */}
+                        Автор</span>
                     <div className='book-item-numbers'>
-                        <span className='book-item-rating'>Оценка</span>
-                        <span className='book-item-comment'>Отзывы</span>
+                        <span className='book-item-rating'>
+                            {/* {this.props.bookItem.rating} */}
+                            Оценка</span>
+                        <span className='book-item-comment'>
+                            {/* {this.props.bookItem.comment} */}
+                            Отзывы</span>
                     </div>
                 </div>
             </div>
