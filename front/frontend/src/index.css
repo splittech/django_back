@@ -525,7 +525,7 @@ body {
     outline: 1.2px solid #42515a;
 }
 
-.input:invalid{
+.input:invalid {
     outline: 1.2px solid #c60021;
 }
 
@@ -680,6 +680,15 @@ body {
 .button-enter {
     margin-left: auto;
     margin-right: auto;
+}
+
+.account-login-button {
+    min-width: 150px;
+}
+
+.personal-account-logout {
+    width: 250px;
+    margin-top: 20px;
 }
 
 .account-login-forget-password {
@@ -839,7 +848,7 @@ body {
     max-height: 194px;
 }
 
-.review-item-text-container-not-hide{
+.review-item-text-container-not-hide {
     max-height: fit-content;
 }
 
@@ -863,7 +872,7 @@ body {
     height: fit-content;
 }
 
-.review-read-completely:hover{
+.review-read-completely:hover {
     color: #42515a;
     font-size: 16px;
     border: none;

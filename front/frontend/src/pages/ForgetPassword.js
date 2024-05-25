@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import Button from '../components/Button'
 import Input from '../components/Input'
-import { Link } from 'react-router-dom'
 
 export default class ForgetPassword extends Component {
     render() {

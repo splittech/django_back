@@ -1,9 +1,13 @@
-import React, { createRef, useEffect, useState } from 'react'
+import React, { createRef, useEffect, useState, useContext } from 'react'
 import PageNavigation from '../components/PageNavigation'
 import Button from '../components/Button'
 import Input from '../components/Input'
+import { observer } from 'mobx-react-lite'
+import { Context } from '..'
 
-export default function Librarian() {
+export default observer(function Librarian() {
+    const { store } = useContext(Context)
+
     const items = [
         {
             id: 1,
@@ -22,17 +26,16 @@ export default function Librarian() {
         }
     ]
 
-    const [user, setUser] = useState({
-        eTicket: 123456,
-        photo: '',
-        lastName: 'Фамилия',
-        firstName: 'Имя',
-        patronymic: 'Отчество',
-        dateOfBirth: '01.01.1990',
-        email: 'email@email.com',
-        phone: '',
-        position: 'Старший библиотекарь',
-    })
+    const [user, setUser] = useState(store.user
+        //     {
+        //     eTicket: 123456,
+        //     photo: '',
+        //     lastName: 'Фамилия',
+        //     firstName: 'Имя',
+        //     email: 'email@email.com',
+        //     position: 'Старший библиотекарь',
+        // }
+    )
 
     const refComponent = createRef()
     const [height, setHeight] = useState('')
@@ -58,7 +61,7 @@ export default function Librarian() {
                             className='personal-account-image'></img>
                         <div className='personal-account-information-div' ref={refComponent}>
                             <div className='personal-account-information-div-title'>
-                                <span className='personal-account-information-div-name'>{user.lastName} {user.firstName} {user.patronymic}</span>
+                                <span className='personal-account-information-div-name'>{user.lastName} {user.firstName}</span>
                                 <li className='personal-account-information-div-e-ticket'>
                                     <span className='personal-account-information-item-name'>ID библиотекаря:</span>
                                     <span className='personal-account-information-item-property'>№{user.eTicket}</span>
@@ -66,22 +69,18 @@ export default function Librarian() {
                             </div>
                             <ul className='personal-account-information-div-list'>
                                 <li>
-                                    <span className='personal-account-information-item-name'>Дата рождения:</span>
-                                    <span className='personal-account-information-item-property'>{user.dateOfBirth}</span>
-                                </li>
-                                <li>
                                     <span className='personal-account-information-item-name'>Электронная почта:</span>
                                     <span className='personal-account-information-item-property'>{user.email}</span>
-                                </li>
-                                <li>
-                                    <span className='personal-account-information-item-name'>Номер телефона:</span>
-                                    <span className='personal-account-information-item-property'>{user.phone}</span>
                                 </li>
                                 <li>
                                     <span className='personal-account-information-item-name'>Должность:</span>
                                     <span className='personal-account-information-item-property'>{user.position}</span>
                                 </li>
                             </ul>
+                            <Button
+                                className='personal-account-logout'
+                                title={'Выйти из аккаунта'}
+                                onClick={() => { store.logout() }} />
                             <button className='personal-account-information-edit'
                                 onClick={() => { setIsEdit(true) }}>Редактировать</button>
                         </div>
@@ -124,34 +123,6 @@ export default function Librarian() {
                                         />
                                     </li>
                                     <li className='personal-account-information-item-edit'>
-                                        <span className='account-login-item-title'>Отчество:</span>
-                                        <Input
-                                            type={'text'}
-                                            value={user.patronymic}
-                                            placeholder={'Введите отчество'}
-                                            pattern={"[А-Яа-яЁё\\s\\-]+"}
-                                            onChange={(e) => {
-                                                setUser(prevState => ({
-                                                    ...prevState, patronymic: e.target.value
-                                                }))
-                                            }}
-                                        />
-                                    </li>
-                                    <li className='personal-account-information-item-edit'>
-                                        <span className='account-login-item-title'>Дата рождения:</span>
-                                        <Input
-                                            type={'date'}
-                                            value={user.dateOfBirth}
-                                            pattern={'\\d{2}\\.\\d{2}\\.\\d{4}'}
-                                            placeholder={'дд.мм.гггг'}
-                                            onChange={(e) => {
-                                                setUser(prevState => ({
-                                                    ...prevState, dateOfBirth: e.target.value
-                                                }))
-                                            }}
-                                        />
-                                    </li>
-                                    <li className='personal-account-information-item-edit'>
                                         <span className='account-login-item-title'>Адрес электронной почты:</span>
                                         <Input
                                             type={'email'}
@@ -161,20 +132,6 @@ export default function Librarian() {
                                             onChange={(e) => {
                                                 setUser(prevState => ({
                                                     ...prevState, email: e.target.value
-                                                }))
-                                            }}
-                                        />
-                                    </li>
-                                    <li className='personal-account-information-item-edit'>
-                                        <span className='account-login-item-title'>Номер телефона:</span>
-                                        <Input
-                                            type={'tel'}
-                                            value={`${user.phone}`}
-                                            placeholder={'+7 (___) ___-__-__'}
-                                            // pattern={'\\+7 \\([0-9]{3}\\) [0-9]{3}-[0-9]{2}-[0-9]{2}'}
-                                            onChange={(e) => {
-                                                setUser(prevState => ({
-                                                    ...prevState, phone: e.target.value
                                                 }))
                                             }}
                                         />
@@ -192,4 +149,4 @@ export default function Librarian() {
             <PageNavigation onShowItem={items} style={{ marginTop: '60px' }} />
         </div>
     )
-}
+})

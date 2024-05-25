@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from datetime import date
 
@@ -81,6 +82,9 @@ class BookCopy(models.Model):
     """Книги"""
     book = models.ForeignKey(
         Book, verbose_name="Книга", on_delete=models.SET_NULL, null=True
+    )
+    reader = models.ForeignKey(
+        User, verbose_name="Читатель", on_delete=models.SET_NULL, null=True
     )
     takenTime = models.DateTimeField(null=True, editable=False)
     returnTime = models.DateTimeField(null=True, editable=False)

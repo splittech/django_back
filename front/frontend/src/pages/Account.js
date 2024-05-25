@@ -1,19 +1,32 @@
-import React, { Component } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
+import { Context } from '..'
 import { Navigate } from 'react-router-dom'
+import { observer } from 'mobx-react-lite'
 
-let isAuthorized = true
-let isReader = true
+export default observer(function Account() {
+    const { store } = useContext(Context)
 
-export default class Account extends Component {
-    render() {
-        return (
-            <div>
-                {!isAuthorized ?
-                    <Navigate to={'/authorization'} />
-                    : (isReader ? <Navigate to={'/account/reader'} />
-                        : <Navigate to={'/account/librarian'} />)
-                }
-            </div>
-        )
+    const isReader = store.isReader()
+
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            store.checkAuth()
+        }
+    }, [])
+
+    if (store.isLoading) {
+        return <div>Загрузка...</div>
     }
-}
+
+    if (!store.isLoading && !store.isAuth) {
+        return <Navigate to='/authorisation' />
+    }
+
+    return (
+        <div>
+            {isReader ? <Navigate to={'/account/reader'} />
+                : <Navigate to={'/account/librarian'} />
+            }
+        </div>
+    )
+})

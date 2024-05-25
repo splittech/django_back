@@ -4,6 +4,7 @@ import Input from './Input'
 
 export default function Filter(props) {
     const [value, setValue] = useState('')
+    let selectedItems = []
 
     const hasScroll = props.items.length > 5
     const filters = useRef(null)
@@ -22,6 +23,33 @@ export default function Filter(props) {
         }
     }
 
+    async function handleCheckboxChange(el) {
+        const isChecked =  selectedItems.includes(el)
+        const promise = new Promise((resolve) => {
+            if (isChecked) {
+                selectedItems = selectedItems.filter(item => item !== el)
+
+                const interval = setInterval(() => {
+                    if (!selectedItems.includes(el)) {
+                        clearInterval(interval)
+                        resolve()
+                    }
+                }, 100)
+            } else {
+                selectedItems.push(el)
+                const interval = setInterval(() => {
+                    if (selectedItems.includes(el)) {
+                        clearInterval(interval)
+                        resolve()
+                    }
+                }, 100)
+            }
+
+        })
+        await promise
+        props.updateSelectedItems(selectedItems)
+    }
+
     return (
         <div className='catalog-filters-item' style={{ gridRow: qwerty() }} >
             {props.title != null && <span className='catalog-filters-item-title'>{props.title}</span>}
@@ -36,7 +64,12 @@ export default function Filter(props) {
                 ref={filters} >
                 <div className='catalog-filters-item-checkbox-item'>
                     {filter.map(el => (
-                        <label key={el} className='catalog-filters-item-checkbox-label'><input type='checkbox' className='catalog-filters-item-checkbox' />
+                        <label key={el} className='catalog-filters-item-checkbox-label'>
+                            <input
+                                type='checkbox'
+                                className='catalog-filters-item-checkbox'
+                                onChange={() => handleCheckboxChange(el)}
+                            />
                             <span className='catalog-filters-item-checkbox-custom'></span>
                             {el}
                         </label>
