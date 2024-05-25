@@ -1,4 +1,4 @@
-from rest_framework import generics
+from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -14,16 +14,17 @@ class BookListView(generics.ListAPIView):
     serializer_class = BookListSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = BookFilter
+    #permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         books = Book.objects.all()
         return books
 
+
 class BookDetailView(generics.RetrieveAPIView):
     """Вывод конкретной книги"""
+    queryset = Book.objects.filter(draft=False)
     serializer_class = BookDetailSerializer
-
-    queryset = Book.objects.filter()
 
 
 class ReviewCreateView(generics.CreateAPIView):

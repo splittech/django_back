@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from datetime import date
 
@@ -54,7 +55,7 @@ class Book(models.Model):
     """Книги"""
     title = models.CharField("Название", max_length=100)
     description = models.TextField("Описание")
-    #year = models.PositiveSmallIntegerField("Дата выхода", default=2019)
+    image = models.ImageField(upload_to ='uploads/')
     genres = models.ManyToManyField(Genre, verbose_name="Жанры")
     tags = models.ManyToManyField(Tag, verbose_name="Теги")
     author = models.ForeignKey(
@@ -81,6 +82,9 @@ class BookCopy(models.Model):
     """Книги"""
     book = models.ForeignKey(
         Book, verbose_name="Книга", on_delete=models.SET_NULL, null=True
+    )
+    reader = models.ForeignKey(
+        User, verbose_name="Читатель", on_delete=models.SET_NULL, null=True
     )
     takenTime = models.DateTimeField(null=True, editable=False)
     returnTime = models.DateTimeField(null=True, editable=False)
