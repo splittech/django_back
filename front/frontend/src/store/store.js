@@ -25,9 +25,9 @@ export default class Store {
         this.isLoading = bool
     }
 
-    async login(email, password) {
+    async login(username, email, password) {
         try {
-            const response = await AuthService.login(email, password)
+            const response = await AuthService.login(username, email, password)
             console.log(response)
             localStorage.setItem('auth_token', response.data.auth_token)
             // localStorage.setItem('token', response.data.accessToken)
@@ -39,9 +39,9 @@ export default class Store {
         }
     }
 
-    async registration(email, firstname, lastname, password) {
+    async registration(username, email, firstname, lastname, password) {
         try {
-            const response = await AuthService.registration(email, firstname, lastname, password)
+            const response = await AuthService.registration(username, email, firstname, lastname, password)
             console.log(response)
             localStorage.setItem('auth_token', response.data.auth_token)
             // localStorage.setItem('token', response.data.accessToken)
@@ -65,10 +65,10 @@ export default class Store {
         }
     }
 
-    async checkAuth(email, password) {
+    async checkAuth(username, password) {
         this.setLoading(true)
         try {
-            const response = await axios.post(`${API_URL}/auth/token/login/`, { withCredentials: true, email, password })
+            const response = await axios.post(`${API_URL}/auth/token/login/`, { withCredentials: true, username, password })
             // const response = await axios.post(`${API_URL}/auth/jwt/refresh`, { withCredentials: true })
             localStorage.setItem('auth_token', response.data.auth_token)
             // localStorage.setItem('token', response.data.accessToken)
