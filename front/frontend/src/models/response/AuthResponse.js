@@ -1,9 +1,8 @@
 const User = require('../User')
 
 class AuthResponse {
-    constructor(accessToken, refreshToken, user) {
-        this.accessToken = accessToken
-        this.refreshToken = refreshToken
+    constructor(auth_token, user) {
+        this.auth_token = auth_token
         this.user = user
     }
 }
