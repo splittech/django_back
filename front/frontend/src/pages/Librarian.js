@@ -4,6 +4,7 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import { observer } from 'mobx-react-lite'
 import { Context } from '..'
+import { Navigate } from 'react-router-dom'
 
 export default observer(function Librarian() {
     const { store } = useContext(Context)
@@ -48,6 +49,10 @@ export default observer(function Librarian() {
             setWidht(height * 3 / 4)
         }
     }, [refComponent])
+
+    if (!store.isLoading && !store.isAuth) {
+        return <Navigate to='/authorisation' />
+    }
 
     return (
         <div>

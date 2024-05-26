@@ -9,10 +9,11 @@ import PersonalRecommendations from '../components/PersonalRecommendations'
 import Favorites from '../components/Favorites'
 import { observer } from 'mobx-react-lite'
 import { Context } from '..'
+import { Navigate } from 'react-router-dom'
 
 export default observer(function Reader() {
     const { store } = useContext(Context)
-    
+
     const items = [
         {
             id: 1,
@@ -211,6 +212,10 @@ export default observer(function Reader() {
         }
     }, [refComponent])
 
+    if (!store.isLoading && !store.isAuth) {
+        return <Navigate to='/authorisation' />
+    }
+
     return (
         <div>
             <h1 className='page-title'>Личный кабинет читателя</h1>
@@ -238,7 +243,7 @@ export default observer(function Reader() {
                                 </li>
                                 <li>
                                     <span className='personal-account-information-item-name'>Рейтинг читателя:</span>
-                                    <span className='personal-account-information-item-property'>{user.rating.toFixed(1)}</span>
+                                    <span className='personal-account-information-item-property'>{user.rating?.toFixed(1)}</span>
                                 </li>
                             </ul>
                             <Button
