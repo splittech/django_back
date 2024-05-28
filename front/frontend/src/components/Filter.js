@@ -11,7 +11,7 @@ export default function Filter(props) {
 
     useScrollBar(filters, hasScroll)
 
-    const filter = props.items.filter(el => {
+    const filter1 = props.items.filter(el => {
         return el.name.toLowerCase().includes(value.toLowerCase())
     })
 
@@ -61,7 +61,7 @@ export default function Filter(props) {
             }}
                 ref={filters} >
                 <div className='catalog-filters-item-checkbox-item'>
-                    {filter.map(el => (
+                    {filter1.map(el => (
                         <label key={el} className='catalog-filters-item-checkbox-label'>
                             <input
                                 type='checkbox'
