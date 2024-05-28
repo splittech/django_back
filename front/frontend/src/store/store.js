@@ -26,19 +26,20 @@ export default class Store {
         this.isLoading = bool
     }
 
-    setCSRF(csrf) {
-        this.isCSRF = csrf
-    }
+    // setCSRF(csrf) {
+    //     this.isCSRF = csrf
+    // }
 
     async login(username, email, password) {
         try {
-            this.getCSRF()
-            const response = await AuthService.login(username, email, password, this.isCSRF)
+            // this.getCSRF()
+            // const response = await AuthService.login(username, email, password, this.isCSRF)
+            const response = await AuthService.login(username, email, password)
             console.log(response)
             localStorage.setItem('auth_token', response.data.auth_token)
             // localStorage.setItem('token', response.data.accessToken)
             // localStorage.setItem('userRole', response.data.userRole)
-            this.setAuth(true)
+            // this.setAuth(true)
             this.getUser(localStorage.getItem('auth_token'))
             // this.setUser(response.data.user)
         } catch (e) {
@@ -48,13 +49,14 @@ export default class Store {
 
     async registration(username, email, firstname, lastname, password) {
         try {
-            this.getCSRF()
-            const response = await AuthService.registration(username, email, firstname, lastname, password, this.isCSRF)
+            // this.getCSRF()
+            // const response = await AuthService.registration(username, email, firstname, lastname, password, this.isCSRF)
+            const response = await AuthService.registration(username, email, firstname, lastname, password,)
             console.log(response)
             localStorage.setItem('auth_token', response.data.auth_token)
             // localStorage.setItem('token', response.data.accessToken)
             // localStorage.setItem('userRole', response.data.userRole)
-            this.setAuth(true)
+            // this.setAuth(true)
             this.getUser(localStorage.getItem('auth_token'))
             // this.setUser(response.data.user)
         } catch (e) {
@@ -64,7 +66,8 @@ export default class Store {
 
     async logout() {
         try {
-            const response = await AuthService.logout(this.isCSRF)
+            // const response = await AuthService.logout(this.isCSRF)
+            const response = await AuthService.logout()
             console.log(response)
             localStorage.removeItem('auth_token')
             this.setAuth(false)
@@ -100,20 +103,25 @@ export default class Store {
         }
     }
 
-    async getCSRF() {
-        try {
-            const response = await axios.get(`${API_URL}auth/token/csrf/`, { withCredentials: true })
-            console.log(response)
-            const csrfToken = response.headers.get('X-CSRFToken')
-            this.setCSRF(csrfToken)
-        } catch (e) {
-            console.log(e?.message)
-        }
-    }
+    // async getCSRF() {
+    //     try {
+    //         const response = await axios.get(`${API_URL}auth/token/csrf/`, { withCredentials: true })
+    //         console.log(response)
+    //         const csrfToken = response.headers.get('X-CSRFToken')
+    //         this.setCSRF(csrfToken)
+    //     } catch (e) {
+    //         console.log(e?.message)
+    //     }
+    // }
 
     async getUser(auth_token) {
-        const response = await AuthService.getUser(auth_token)
-        console.log(response)
-        this.setUser(response.data.user)
+        try {
+            const response = await AuthService.getUser(auth_token)
+            console.log(response)
+            this.setUser(response.data.user)
+            this.setAuth(true)
+        } catch (e) {
+            console.log(e.response?.data?.message)
+        }
     }
 }
