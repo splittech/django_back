@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
 from datetime import date
+from django.conf import settings
 
 from django.urls import reverse
 
@@ -84,7 +85,7 @@ class BookCopy(models.Model):
         Book, verbose_name="Книга", on_delete=models.SET_NULL, null=True
     )
     reader = models.ForeignKey(
-        User, verbose_name="Читатель", on_delete=models.SET_NULL, null=True
+        settings.AUTH_USER_MODEL, verbose_name="Читатель", on_delete=models.SET_NULL, null=True
     )
     takenTime = models.DateTimeField(null=True, editable=False)
     returnTime = models.DateTimeField(null=True, editable=False)
