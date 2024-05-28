@@ -6,7 +6,7 @@ export default class BookHistory extends Component {
     render() {
         return (
             <div className='book-list'>{this.props.bookItems.map(el => (
-                <Link to={`bookhistory/${el.title}`} className='book-link-another-page' key={el.id}>
+                <Link to={`bookhistory/${el.id}`} className='book-link-another-page' key={el.id}>
                     <BookItem key={el.id} bookItem={el} />
                 </Link>
             ))}

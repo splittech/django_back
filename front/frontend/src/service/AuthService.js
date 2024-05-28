@@ -18,4 +18,10 @@ export default class AuthService {
         return $api.post('/auth/token/logout/',
             { headers: { "X-CSRFToken": isCSRF } })
     }
+
+    static async getUser(auth_token) {
+        return $api.get(`auth/users/me/`,
+            { headers: { "Authorization": `Token ${auth_token}` } }
+        )
+    }
 }

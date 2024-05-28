@@ -221,7 +221,7 @@ body {
 
 .news-img-detail {
     border-radius: 10px;
-    margin: 0 30px 30px 30px;
+    margin: 0 30px 30px 0;
     float: left;
 }
 
@@ -258,6 +258,19 @@ body {
     font-size: 16px;
     line-height: 24px;
     text-align: justify;
+}
+
+.news-description-text p {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: justify;
+}
+
+.news-description-text a {
+    color: #42515a;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .news-description-read-completely {

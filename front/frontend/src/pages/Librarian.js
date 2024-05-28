@@ -60,16 +60,16 @@ export default observer(function Librarian() {
             <div>
                 {!isEdit ?
                     <div className='personal-account-information'>
-                        <img src={user.photo}
+                        <img src={user.avatar}
                             width={width}
                             height={height}
                             className='personal-account-image'></img>
                         <div className='personal-account-information-div' ref={refComponent}>
                             <div className='personal-account-information-div-title'>
-                                <span className='personal-account-information-div-name'>{user.lastName} {user.firstName}</span>
+                                <span className='personal-account-information-div-name'>{user.last_name} {user.first_name}</span>
                                 <li className='personal-account-information-div-e-ticket'>
                                     <span className='personal-account-information-item-name'>ID библиотекаря:</span>
-                                    <span className='personal-account-information-item-property'>№{user.eTicket}</span>
+                                    <span className='personal-account-information-item-property'>№{user.id}</span>
                                 </li>
                             </div>
                             <ul className='personal-account-information-div-list'>
@@ -102,13 +102,13 @@ export default observer(function Librarian() {
                                     <li className='personal-account-information-item-edit'>
                                         <span className='account-login-item-title'>Фамилия:</span>
                                         <Input
-                                            value={user.lastName}
+                                            value={user.last_name}
                                             placeholder={'Введите фамилию'}
                                             pattern={"[А-Яа-яЁё\\s\\-]+"}
                                             type={'text'}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, lastName: e.target.value
+                                                    ...prevState, last_name: e.target.value
                                                 }))
                                             }}
                                         />
@@ -117,12 +117,12 @@ export default observer(function Librarian() {
                                         <span className='account-login-item-title'>Имя:</span>
                                         <Input
                                             type={'text'}
-                                            value={user.firstName}
+                                            value={user.first_name}
                                             placeholder={'Введите имя'}
                                             pattern={"[А-Яа-яЁё\\s\\-]+"}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, firstName: e.target.value
+                                                    ...prevState, first_name: e.target.value
                                                 }))
                                             }}
                                         />

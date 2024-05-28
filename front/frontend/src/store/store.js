@@ -36,9 +36,11 @@ export default class Store {
             const response = await AuthService.login(username, email, password, this.isCSRF)
             console.log(response)
             localStorage.setItem('auth_token', response.data.auth_token)
+            // localStorage.setItem('token', response.data.accessToken)
             // localStorage.setItem('userRole', response.data.userRole)
             this.setAuth(true)
-            this.setUser(response.data.user)
+            this.getUser(localStorage.getItem('auth_token'))
+            // this.setUser(response.data.user)
         } catch (e) {
             console.log(e.response?.data?.message)
         }
@@ -50,9 +52,11 @@ export default class Store {
             const response = await AuthService.registration(username, email, firstname, lastname, password, this.isCSRF)
             console.log(response)
             localStorage.setItem('auth_token', response.data.auth_token)
+            // localStorage.setItem('token', response.data.accessToken)
             // localStorage.setItem('userRole', response.data.userRole)
             this.setAuth(true)
-            this.setUser(response.data.user)
+            this.getUser(localStorage.getItem('auth_token'))
+            // this.setUser(response.data.user)
         } catch (e) {
             console.log(e.response?.data?.message)
         }
@@ -95,7 +99,7 @@ export default class Store {
             return false
         }
     }
-    
+
     async getCSRF() {
         try {
             const response = await axios.get(`${API_URL}auth/token/csrf/`, { withCredentials: true })
@@ -105,5 +109,11 @@ export default class Store {
         } catch (e) {
             console.log(e?.message)
         }
+    }
+
+    async getUser(auth_token) {
+        const response = await AuthService.getUser(auth_token)
+        console.log(response)
+        this.setUser(response.data.user)
     }
 }
