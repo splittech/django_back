@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Book, Review, Genre
+from .models import Book, Review, Genre, Author
 
 
 class BookListSerializer(serializers.ModelSerializer):
@@ -50,4 +50,10 @@ class GenresSerializer(serializers.ModelSerializer):
 class TagsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Genre
+        fields = "__all__"
+
+
+class AuthorsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Author
         fields = "__all__"

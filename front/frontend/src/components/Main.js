@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Recommendations from '../pages/Recommendations';
 import Catalog from '../pages/Catalog';
-import Favorites from '../pages/Favorites';
+import Favorites from '../pages/FavoritesPage';
 import Account from '../pages/Account';
 import News from '../pages/News';
 import Book from '../pages/Book';

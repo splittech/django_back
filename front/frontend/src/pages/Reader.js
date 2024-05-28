@@ -224,13 +224,13 @@ export default observer(function Reader() {
                 <h1 className='section-name'><a name='personalInformation'>Личная информация</a></h1>
                 {!isEdit ?
                     <div className='personal-account-information'>
-                        <img src={user.photo}
+                        <img src=''
                             width={width}
                             height={height}
                             className='personal-account-image'></img>
                         <div className='personal-account-information-div' ref={refComponent}>
                             <div className='personal-account-information-div-title'>
-                                <span className='personal-account-information-div-name'>{user.lastName} {user.firstName}</span>
+                                <span className='personal-account-information-div-name'>{user.last_name} {user.first_name}</span>
                                 <li className='personal-account-information-div-e-ticket'>
                                     <span className='personal-account-information-item-name'>Электронный билет:</span>
                                     <span className='personal-account-information-item-property'>№{user.eTicket}</span>

@@ -19,6 +19,8 @@ class BookAdminForm(forms.ModelForm):
 class TagAdmin(admin.ModelAdmin):
     """Тег"""
     list_display = ("name",)
+    #readonly_fields = ('url',)
+    prepopulated_fields = {'url': ('name',)}
 
 
 class ReviewInline(admin.TabularInline):
@@ -38,10 +40,9 @@ class BookAdmin(admin.ModelAdmin):
     list_editable = ("draft",)
     actions = ["publish", "unpublish"]
     form = BookAdminForm
-    readonly_fields = ("get_image",)
+    #readonly_fields = ("get_image",)
+    prepopulated_fields = {"url": ("title",)}
 
-    def get_image(self, obj):
-        return mark_safe(f'<img src={obj.poster.url} width="100" height="110"')
 
     def unpublish(self, request, queryset):
         """Снять с публикации"""
@@ -67,7 +68,6 @@ class BookAdmin(admin.ModelAdmin):
     unpublish.short_description = "Снять с публикации"
     unpublish.allowed_permissions = ('change',)
 
-    get_image.short_description = "Постер"
 
 
 @admin.register(Review)
@@ -81,6 +81,9 @@ class ReviewAdmin(admin.ModelAdmin):
 class GenreAdmin(admin.ModelAdmin):
     """Жанры"""
     list_display = ("name",)
+    prepopulated_fields = {'url': ('name',)}
+    #readonly_fields = ("url",)
+
 
 
 @admin.register(Author)

@@ -2,11 +2,11 @@ import $api from "../http";
 
 export default class UserService {
     static async getNews(id) {
-        return $api.get('/api/v1/news', { id })
+        return $api.get(`/api/v1/news/${id}`)
     }
 
     static async getBook(id) {
-        return $api.get('/api/v1/book', { id })
+        return $api.get('/api/v1/books/', { id })
     }
     
     static async getAuthors() {

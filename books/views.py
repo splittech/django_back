@@ -2,9 +2,9 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Book, Genre, Tag
+from .models import Book, Genre, Tag, Author
 from .serializers import BookListSerializer, BookDetailSerializer, ReviewCreateSerializer, GenresSerializer, \
-    TagsSerializer
+    TagsSerializer, AuthorsSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
 from service.service import BookFilter
@@ -50,3 +50,11 @@ class GenresListView(generics.ListAPIView):
         books = Genre.objects.all()
         return books
 
+
+class AuthorsListView(generics.ListAPIView):
+    """Вывод списка авторов"""
+    serializer_class = AuthorsSerializer
+
+    def get_queryset(self):
+        authors = Author.objects.all()
+        return authors
