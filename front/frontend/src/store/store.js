@@ -39,7 +39,7 @@ export default class Store {
             localStorage.setItem('auth_token', response.data.auth_token)
             // localStorage.setItem('token', response.data.accessToken)
             // localStorage.setItem('userRole', response.data.userRole)
-            this.setAuth(true)
+            // this.setAuth(true)
             this.getUser(localStorage.getItem('auth_token'))
             // this.setUser(response.data.user)
         } catch (e) {
@@ -51,12 +51,12 @@ export default class Store {
         try {
             // this.getCSRF()
             // const response = await AuthService.registration(username, email, firstname, lastname, password, this.isCSRF)
-            const response = await AuthService.registration(username, email, firstname, lastname, password, )
+            const response = await AuthService.registration(username, email, firstname, lastname, password,)
             console.log(response)
             localStorage.setItem('auth_token', response.data.auth_token)
             // localStorage.setItem('token', response.data.accessToken)
             // localStorage.setItem('userRole', response.data.userRole)
-            this.setAuth(true)
+            // this.setAuth(true)
             this.getUser(localStorage.getItem('auth_token'))
             // this.setUser(response.data.user)
         } catch (e) {
@@ -115,8 +115,13 @@ export default class Store {
     // }
 
     async getUser(auth_token) {
-        const response = await AuthService.getUser(auth_token)
-        console.log(response)
-        this.setUser(response.data.user)
+        try {
+            const response = await AuthService.getUser(auth_token)
+            console.log(response)
+            this.setUser(response.data.user)
+            this.setAuth(true)
+        } catch (e) {
+            console.log(e.response?.data?.message)
+        }
     }
 }
