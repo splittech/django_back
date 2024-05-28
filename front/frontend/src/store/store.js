@@ -7,6 +7,7 @@ export default class Store {
     user = {}
     isAuth = false
     isLoading = false
+    isCSRF = null
 
     constructor() {
         makeAutoObservable(this)
@@ -25,27 +26,39 @@ export default class Store {
         this.isLoading = bool
     }
 
-    async login(email, password) {
+    // setCSRF(csrf) {
+    //     this.isCSRF = csrf
+    // }
+
+    async login(username, email, password) {
         try {
-            const response = await AuthService.login(email, password)
+            // this.getCSRF()
+            // const response = await AuthService.login(username, email, password, this.isCSRF)
+            const response = await AuthService.login(username, email, password)
             console.log(response)
-            localStorage.setItem('token', response.data.accessToken)
-            localStorage.setItem('userRole', response.data.userRole)
-            this.setAuth(true)
-            this.setUser(response.data.user)
+            localStorage.setItem('auth_token', response.data.auth_token)
+            // localStorage.setItem('token', response.data.accessToken)
+            // localStorage.setItem('userRole', response.data.userRole)
+            // this.setAuth(true)
+            this.getUser(localStorage.getItem('auth_token'))
+            // this.setUser(response.data.user)
         } catch (e) {
             console.log(e.response?.data?.message)
         }
     }
 
-    async registration(email, firstname, lastname, password) {
+    async registration(username, email, firstname, lastname, password) {
         try {
-            const response = await AuthService.registration(email, firstname, lastname, password)
+            // this.getCSRF()
+            // const response = await AuthService.registration(username, email, firstname, lastname, password, this.isCSRF)
+            const response = await AuthService.registration(username, email, firstname, lastname, password,)
             console.log(response)
-            localStorage.setItem('token', response.data.accessToken)
-            localStorage.setItem('userRole', response.data.userRole)
-            this.setAuth(true)
-            this.setUser(response.data.user)
+            localStorage.setItem('auth_token', response.data.auth_token)
+            // localStorage.setItem('token', response.data.accessToken)
+            // localStorage.setItem('userRole', response.data.userRole)
+            // this.setAuth(true)
+            this.getUser(localStorage.getItem('auth_token'))
+            // this.setUser(response.data.user)
         } catch (e) {
             console.log(e.response?.data?.message)
         }
@@ -53,9 +66,10 @@ export default class Store {
 
     async logout() {
         try {
+            // const response = await AuthService.logout(this.isCSRF)
             const response = await AuthService.logout()
             console.log(response)
-            localStorage.removeItem('token')
+            localStorage.removeItem('auth_token')
             this.setAuth(false)
             this.setUser({})
         } catch (e) {
@@ -63,19 +77,22 @@ export default class Store {
         }
     }
 
-    async checkAuth() {
-        this.setLoading(true)
-        try {
-            const response = await axios.get(`${API_URL}/refresh`, { withCredentials: true })
-            localStorage.setItem('token', response.data.accessToken)
-            this.setAuth(true)
-            this.setUser(response.data.user)
-        } catch (e) {
-            console.log(e.response?.data?.message)
-        } finally {
-            this.setLoading(false)
-        }
-    }
+    // async checkAuth(username, password) {
+    //     this.setLoading(true)
+    //     try {
+    //         const response = await axios.post(`${API_URL}api/login/`, { withCredentials: true, username, password })
+    //         // const response = await axios.post(`${API_URL}/auth/token/login/`, { withCredentials: true, username, password })
+    //         // const response = await axios.post(`${API_URL}/auth/jwt/refresh`, { withCredentials: true })
+    //         localStorage.setItem('auth_token', response.data.auth_token)
+    //         // localStorage.setItem('token', response.data.accessToken)
+    //         this.setAuth(true)
+    //         // this.setUser(response.data.user)
+    //     } catch (e) {
+    //         console.log(e.response?.data?.message)
+    //     } finally {
+    //         this.setLoading(false)
+    //     }
+    // }
 
     async isReader() {
         const role = localStorage.getItem('userRole')
@@ -83,6 +100,28 @@ export default class Store {
             return true
         } else {
             return false
+        }
+    }
+
+    // async getCSRF() {
+    //     try {
+    //         const response = await axios.get(`${API_URL}auth/token/csrf/`, { withCredentials: true })
+    //         console.log(response)
+    //         const csrfToken = response.headers.get('X-CSRFToken')
+    //         this.setCSRF(csrfToken)
+    //     } catch (e) {
+    //         console.log(e?.message)
+    //     }
+    // }
+
+    async getUser(auth_token) {
+        try {
+            const response = await AuthService.getUser(auth_token)
+            console.log(response)
+            this.setUser(response.data.user)
+            this.setAuth(true)
+        } catch (e) {
+            console.log(e.response?.data?.message)
         }
     }
 }

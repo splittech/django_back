@@ -2,13 +2,7 @@ from rest_framework import viewsets
 from django.contrib.auth.models import User
 from .serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated
-from .permissions import IsLibrarian, IsReader
-
-
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+from .permissions import IsLibrarian
 
 
 class LibrarianViewSet(viewsets.ModelViewSet):
@@ -20,4 +14,4 @@ class LibrarianViewSet(viewsets.ModelViewSet):
 class ReaderViewSet(viewsets.ModelViewSet):
     queryset = User.objects.filter(groups__name='Readers')
     serializer_class = UserSerializer
-    permission_classes = [IsReader]
+    permission_classes = [IsAuthenticated]

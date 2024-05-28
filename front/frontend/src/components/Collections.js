@@ -7,7 +7,7 @@ export default class Collections extends Component {
         return (
             <div className='collection-list'>
                 {this.props.collection.map(el => (
-                    <Link to={`/recommendations/collections/${el.title}`} className='collection-link-another-page' key={el.id}>
+                    <Link to={`/recommendations/collections/${el.id}`} className='collection-link-another-page' key={el.id}>
                         <Collection key={el.id} collection={el} />
                     </Link>
                 ))}

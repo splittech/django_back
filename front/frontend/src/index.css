@@ -219,6 +219,12 @@ body {
     margin-right: 10px;
 }
 
+.news-img-detail {
+    border-radius: 10px;
+    margin: 0 30px 30px 0;
+    float: left;
+}
+
 .news-text-part {
     width: 100%;
     display: flex;
@@ -251,6 +257,20 @@ body {
 .news-description-text {
     font-size: 16px;
     line-height: 24px;
+    text-align: justify;
+}
+
+.news-description-text p {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: justify;
+}
+
+.news-description-text a {
+    color: #42515a;
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .news-description-read-completely {
@@ -260,13 +280,28 @@ body {
     margin-bottom: 10px;
 }
 
+.path {
+    color: #999999;
+    margin-bottom: 35px;
+    margin-left: 30px;
+}
+
+.path-link {
+    cursor: pointer;
+}
+
+.news-create-date {
+    color: #999999;
+    display: block;
+    margin: 10px 0 15px 30px;
+}
+
 /* TOPS */
 
 .book-list {
-    display: flex;
-    flex-wrap: wrap;
-    row-gap: 50px;
-    justify-content: space-between;
+    display: grid;
+    gap: 48px;
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .book-item {
@@ -352,10 +387,9 @@ body {
 /* COLLECTIONS */
 
 .collection-list {
-    display: flex;
-    flex-wrap: wrap;
-    row-gap: 50px;
-    justify-content: space-between;
+    display: grid;
+    gap: 50px;
+    grid-template-columns: repeat(5, 1fr);
 }
 
 .collection-item {
@@ -402,6 +436,21 @@ body {
 
 .collection-link-another-page {
     text-decoration: none;
+}
+
+/* COLLECTION */
+
+.collection-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 20px 30px;
+}
+
+.collection-description {
+    margin: 0 0 30px 30px;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: justify;
 }
 
 /* CATALOG */
@@ -482,8 +531,9 @@ body {
     margin-bottom: 35px;
     padding: 20px;
     gap: 20px;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     transform: translateY(-30px);
+    /* transition: all ease 0.5s; */
     transition-property: transform, opacity, position;
     transition-duration: 0.5s, 0s, 0.5s;
     transition-timing-function: ease, ease, ease;
@@ -525,7 +575,7 @@ body {
     outline: 1.2px solid #42515a;
 }
 
-.input:invalid {
+.input-invalid {
     outline: 1.2px solid #c60021;
 }
 
@@ -600,11 +650,10 @@ body {
     border: 1px solid #42515a;
     border-radius: 10px;
     display: grid;
-    width: fit-content;
+    width: 230px;
     margin-bottom: 35px;
     padding: 20px;
     gap: 20px;
-    grid-template-columns: 1fr;
     transform: translateY(-30px);
     transition-property: transform, opacity, position;
     transition-duration: 0.5s, 0s, 0.5s;
@@ -632,6 +681,102 @@ body {
     border: none;
     background-color: white;
     color: #42515a;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.catalog-sort-button:hover {
+    scale: 1.3;
+}
+
+.catalog-sort-button-active {
+    scale: 1.3;
+}
+
+/* BOOK */
+
+.book-description {
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 35px;
+    border-bottom: #e4f2f1 1px solid;
+    color: black;
+    text-decoration: none;
+}
+
+.book-description-img {
+    border-radius: 10px;
+    margin-right: 50px;
+    margin-bottom: 50px;
+}
+
+.book-description-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.book-description-params {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.book-title {
+    font-size: 24px;
+    margin: 0;
+}
+
+.book-description-author {
+    font-size: 20px;
+}
+
+.book-description-numbers-div {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}
+
+.book-description-numbers {
+    color: #42515a;
+}
+
+.book-description-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+}
+
+.book-description-status {
+    color: #42515a;
+}
+
+.book-description-desc-text {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: justify;
+    margin: 0;
+}
+
+.book-section-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin-top: 35px;
+    margin-bottom: 15px;
+}
+
+.book-description-genres-tegs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 50px;
+}
+
+.book-reviews {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
 }
 
 /* ACCOUNT */
@@ -889,6 +1034,59 @@ body {
     bottom: 30px;
     left: 30px;
     display: contents;
+    color: #42515a;
+}
+
+.review-item-head {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+}
+
+.review-item-head-text {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.review-item-img {
+    border-radius: 50px;
+}
+
+.review-item-name {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.review-item-bottom {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.review-item-likes {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.review-item-answer {
+    color: #42515a;
+    margin-right: 20px;
+}
+
+.review-item-likes-red {
+    color: #c60021;
+}
+
+.review-item-likes-green {
+    color: #7dc271;
+}
+
+.review-item-likes-blue {
+    color: #42515a;
 }
 
 /* FOOTER */

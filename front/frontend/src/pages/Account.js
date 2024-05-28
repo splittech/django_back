@@ -8,11 +8,11 @@ export default observer(function Account() {
 
     const isReader = store.isReader()
 
-    useEffect(() => {
-        if (localStorage.getItem('token')) {
-            store.checkAuth()
-        }
-    }, [])
+    // useEffect(() => {
+    //     if (localStorage.getItem('auth_token')) {
+    //         store.checkAuth(store.user.username, store.user.password)
+    //     }
+    // }, [])
 
     if (store.isLoading) {
         return <div>Загрузка...</div>

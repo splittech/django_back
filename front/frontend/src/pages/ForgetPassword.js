@@ -13,7 +13,7 @@ export default class ForgetPassword extends Component {
                     <span className='account-login-item-title'>Введите адрес электронной почты:</span>
                     <Input placeholder={'Адрес электронной почты'} required={true} />
                     <span className='account-login-item-message'>На указанный адрес будет отправлена <br></br>
-                    информация о восстановлении пароля.</span>
+                        информация о восстановлении пароля.</span>
                 </div>
                 <Button title={'Отправить'} className='button-enter' />
             </div>

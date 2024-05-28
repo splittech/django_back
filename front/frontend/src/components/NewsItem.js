@@ -12,7 +12,7 @@ export default class NewsItem extends Component {
                         <p className='news-description-text' dangerouslySetInnerHTML={{ __html: this.props.news.text }}></p>
                         <div className='news-description-bottom'></div>
                     </div>
-                    <Link to={`/home/${this.props.news.title}`} className='news-description-read-completely'>Читать полностью</Link>
+                    <Link to={`/home/${this.props.news.id}`} className='news-description-read-completely'>Читать полностью</Link>
                 </div>
             </div>
         )

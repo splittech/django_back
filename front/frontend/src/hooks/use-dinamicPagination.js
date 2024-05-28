@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import axios from 'axios'
 
 export default function UseDinamicPagination(url, limit, page = 1) {
@@ -6,6 +6,16 @@ export default function UseDinamicPagination(url, limit, page = 1) {
     const [currentPage, setCurrentPage] = useState(page)
     const [fetching, setFetching] = useState(true)
     const [totalCount, setTotalCount] = useState(0)
+    const arrayRef = useRef(array);
+    const totalCountRef = useRef(totalCount);
+
+    useEffect(() => {
+        arrayRef.current = array
+    }, [array])
+
+    useEffect(() => {
+        totalCountRef.current = totalCount
+    }, [totalCount])
 
     useEffect(() => {
         if (fetching) {
@@ -26,7 +36,8 @@ export default function UseDinamicPagination(url, limit, page = 1) {
 
     const scrollHandler = (e) => {
         if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 1000
-            && array.length < totalCount) {
+            && arrayRef.current.length < totalCountRef.current
+        ) {
             setFetching(true)
         }
     }

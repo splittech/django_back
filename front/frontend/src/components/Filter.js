@@ -11,8 +11,8 @@ export default function Filter(props) {
 
     useScrollBar(filters, hasScroll)
 
-    const filter = props.items.filter(el => {
-        return el.toLowerCase().includes(value.toLowerCase())
+    const filter1 = props.items.filter(el => {
+        return el.name.toLowerCase().includes(value.toLowerCase())
     })
 
     function qwerty() {
@@ -24,11 +24,10 @@ export default function Filter(props) {
     }
 
     async function handleCheckboxChange(el) {
-        const isChecked =  selectedItems.includes(el)
+        const isChecked = selectedItems.includes(el)
         const promise = new Promise((resolve) => {
             if (isChecked) {
                 selectedItems = selectedItems.filter(item => item !== el)
-
                 const interval = setInterval(() => {
                     if (!selectedItems.includes(el)) {
                         clearInterval(interval)
@@ -44,7 +43,6 @@ export default function Filter(props) {
                     }
                 }, 100)
             }
-
         })
         await promise
         props.updateSelectedItems(selectedItems)
@@ -63,15 +61,15 @@ export default function Filter(props) {
             }}
                 ref={filters} >
                 <div className='catalog-filters-item-checkbox-item'>
-                    {filter.map(el => (
+                    {filter1.map(el => (
                         <label key={el} className='catalog-filters-item-checkbox-label'>
                             <input
                                 type='checkbox'
                                 className='catalog-filters-item-checkbox'
-                                onChange={() => handleCheckboxChange(el)}
+                                onChange={() => handleCheckboxChange(el.name)}
                             />
                             <span className='catalog-filters-item-checkbox-custom'></span>
-                            {el}
+                            {el.name}
                         </label>
                     ))}
                 </div>

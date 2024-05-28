@@ -2,8 +2,9 @@ from rest_framework import generics, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Book
-from .serializers import BookListSerializer, BookDetailSerializer, ReviewCreateSerializer
+from .models import Book, Genre, Tag, Author
+from .serializers import BookListSerializer, BookDetailSerializer, ReviewCreateSerializer, GenresSerializer, \
+    TagsSerializer, AuthorsSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
 from service.service import BookFilter
@@ -31,3 +32,29 @@ class ReviewCreateView(generics.CreateAPIView):
     """Добавление отзыва"""
     serializer_class = ReviewCreateSerializer
 
+
+class TagsListView(generics.ListAPIView):
+    """Вывод списка тегов"""
+    serializer_class = TagsSerializer
+
+    def get_queryset(self):
+        books = Tag.objects.all()
+        return books
+
+
+class GenresListView(generics.ListAPIView):
+    """Вывод списка жанров"""
+    serializer_class = GenresSerializer
+
+    def get_queryset(self):
+        books = Genre.objects.all()
+        return books
+
+
+class AuthorsListView(generics.ListAPIView):
+    """Вывод списка авторов"""
+    serializer_class = AuthorsSerializer
+
+    def get_queryset(self):
+        authors = Author.objects.all()
+        return authors
