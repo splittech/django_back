@@ -1,9 +1,10 @@
 class User {
-    constructor(username, lastname, firstname, email, id) {
+    constructor(username, lastname, firstname, email, avatar, id) {
         this.username = username
-        this.lastname = lastname
-        this.firstname = firstname
+        this.last_name = lastname
+        this.first_name = firstname
         this.email = email
+        this.avatar = avatar
         this.id = id
     }
 }

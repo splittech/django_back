@@ -3,14 +3,12 @@ import { OverlayScrollbars } from 'overlayscrollbars'
 import 'overlayscrollbars/overlayscrollbars.css'
 
 const config = {
-    scrollbars: {
-        
-    }
+    scrollbars: {}
 }
 
 export default function useScrollBar(root, hasScroll) {
     let scrollBar;
-    
+
     useEffect(() => {
         if (root.current, hasScroll) {
             scrollBar = OverlayScrollbars(root.current, config)

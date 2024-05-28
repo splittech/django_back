@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
 import Recommendations from '../pages/Recommendations';
 import Catalog from '../pages/Catalog';
-import Favorites from '../pages/FavoritesPage';
+import FavoritesPage from '../pages/FavoritesPage';
 import Account from '../pages/Account';
 import News from '../pages/News';
 import Book from '../pages/Book';
@@ -41,7 +41,7 @@ export default class Main extends Component {
                         <Route path='/catalog' element={<Catalog />} />
                         <Route path='/catalog/:id' element={<Book />} />
                         <Route path='/catalog/:id/reviews' element={<Reviews />} />
-                        <Route path='/favorites' element={<Favorites />} />
+                        <Route path='/favorites' element={<FavoritesPage />} />
                         <Route path='/account' element={<Account />} />
                         <Route path='/account/reader' element={<Reader />} />
                         <Route path='/account/reader/bookhistory' element={<BookHistory />} />

@@ -7,7 +7,7 @@ export default class PersonalRecommendations extends Component {
         return (
             <div className='book-list'>
                 {this.props.bookItems.map(el => (
-                    <Link to={`personalrecommendations/${el.title}`} className='book-link-another-page' key={el.id}>
+                    <Link to={`personalrecommendations/${el.id}`} className='book-link-another-page' key={el.id}>
                         <BookItem key={el.id} bookItem={el} />
                     </Link>
                 ))}

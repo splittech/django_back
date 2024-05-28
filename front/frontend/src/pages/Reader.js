@@ -191,10 +191,10 @@ export default observer(function Reader() {
 
     const [user, setUser] = useState(store.user
         //     {
-        //     eTicket: 123456,
-        //     photo: '',
-        //     lastName: 'Фамилия',
-        //     firstName: 'Имя',
+        //     id: 123456,
+        //     avatar: '',
+        //     last_name: 'Фамилия',
+        //     first_name: 'Имя',
         //     email: 'email@email.com',
         //     rating: 5.0,
         // }
@@ -224,7 +224,7 @@ export default observer(function Reader() {
                 <h1 className='section-name'><a name='personalInformation'>Личная информация</a></h1>
                 {!isEdit ?
                     <div className='personal-account-information'>
-                        <img src=''
+                        <img src={user.avatar}
                             width={width}
                             height={height}
                             className='personal-account-image'></img>
@@ -233,7 +233,7 @@ export default observer(function Reader() {
                                 <span className='personal-account-information-div-name'>{user.last_name} {user.first_name}</span>
                                 <li className='personal-account-information-div-e-ticket'>
                                     <span className='personal-account-information-item-name'>Электронный билет:</span>
-                                    <span className='personal-account-information-item-property'>№{user.eTicket}</span>
+                                    <span className='personal-account-information-item-property'>№{user.id}</span>
                                 </li>
                             </div>
                             <ul className='personal-account-information-div-list'>
@@ -243,7 +243,10 @@ export default observer(function Reader() {
                                 </li>
                                 <li>
                                     <span className='personal-account-information-item-name'>Рейтинг читателя:</span>
-                                    <span className='personal-account-information-item-property'>{user.rating?.toFixed(1)}</span>
+                                    <span className='personal-account-information-item-property'>
+                                        {/* {user.rating?.toFixed(1)} */}
+                                        5.0
+                                    </span>
                                 </li>
                             </ul>
                             <Button
@@ -266,13 +269,13 @@ export default observer(function Reader() {
                                     <li className='personal-account-information-item-edit'>
                                         <span className='account-login-item-title'>Фамилия:</span>
                                         <Input
-                                            value={user.lastName}
+                                            value={user.last_name}
                                             placeholder={'Введите фамилию'}
                                             pattern={"[А-Яа-яЁё\\s\\-]+"}
                                             type={'text'}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, lastName: e.target.value
+                                                    ...prevState, last_name: e.target.value
                                                 }))
                                             }}
                                         />
@@ -281,12 +284,12 @@ export default observer(function Reader() {
                                         <span className='account-login-item-title'>Имя:</span>
                                         <Input
                                             type={'text'}
-                                            value={user.firstName}
+                                            value={user.first_name}
                                             placeholder={'Введите имя'}
                                             pattern={"[А-Яа-яЁё\\s\\-]+"}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, firstName: e.target.value
+                                                    ...prevState, first_name: e.target.value
                                                 }))
                                             }}
                                         />

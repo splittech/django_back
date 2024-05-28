@@ -12,7 +12,7 @@ export default function Filter(props) {
     useScrollBar(filters, hasScroll)
 
     const filter = props.items.filter(el => {
-        return el.toLowerCase().includes(value.toLowerCase())
+        return el.name.toLowerCase().includes(value.toLowerCase())
     })
 
     function qwerty() {
@@ -66,10 +66,10 @@ export default function Filter(props) {
                             <input
                                 type='checkbox'
                                 className='catalog-filters-item-checkbox'
-                                onChange={() => handleCheckboxChange(el)}
+                                onChange={() => handleCheckboxChange(el.name)}
                             />
                             <span className='catalog-filters-item-checkbox-custom'></span>
-                            {el}
+                            {el.name}
                         </label>
                     ))}
                 </div>

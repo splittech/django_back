@@ -10,25 +10,25 @@ import { API_URL } from '../http'
 import UserService from '../service/UserService'
 
 export default function Catalog() {
-    // let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
-    let [url, setUrl] = useState('http://localhost:8000/api/v1/books/')
+    let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
+    // let [url, setUrl] = useState('https://localhost:8000/api/v1/books/')
     const memoizedUrl = useMemo(() => url, [url])
     // console.log(memoizedUrl)
     // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
     const [books] = useDinamicPagination(memoizedUrl, 15)
     const [authors, setAuthors] = useState(
-        // getAuthors()
-        []
+        getAuthors()
+        // []
     )
     let [selectedAuthors, setSelectedAuthors] = useState([])
     const [genres, setGenres] = useState(
-        // getGenres()
-        ['Жанр1', 'Жанр2', 'Жанр3', 'Жанр4', 'Жанр5', 'Жанр6']
+        getGenres()
+        // ['Жанр1', 'Жанр2', 'Жанр3', 'Жанр4', 'Жанр5', 'Жанр6']
     )
     let [selectedGenres, setSelectedGenres] = useState([])
     const [tags, setTags] = useState(
-        // getTags()
-        ['Тег1', 'Тег2', 'Тег3', 'Тег4', 'Тег5', 'Тег6']
+        getTags()
+        // ['Тег1', 'Тег2', 'Тег3', 'Тег4', 'Тег5', 'Тег6']
     )
     let [selectedTags, setSelectedTags] = useState([])
     const [status, setStatus] = useState(['Свободно', 'На руках', 'Забронировано'])
@@ -130,21 +130,21 @@ export default function Catalog() {
         console.log(url)
     }
 
-    useEffect(() => {
-        let arr = []
-        if (fetching) {
-            axios.get(url).then(res => {
-                res.data.map(el => {
-                    arr.push(el)
-                })
-                arr.map(el => {
-                    if (!authors.includes(el.title)) {
-                        authors.push(el.title)
-                    }
-                })
-            }).finally(() => setFetching(false))
-        }
-    }, [])
+    // useEffect(() => {
+    //     let arr = []
+    //     if (fetching) {
+    //         axios.get(url).then(res => {
+    //             res.data.map(el => {
+    //                 arr.push(el)
+    //             })
+    //             arr.map(el => {
+    //                 if (!authors.includes(el.title)) {
+    //                     authors.push(el.title)
+    //                 }
+    //             })
+    //         }).finally(() => setFetching(false))
+    //     }
+    // }, [])
 
     // const searchBooks = books.filter(book => {
     //     return (book.title.toLowerCase().includes(value.toLowerCase())
