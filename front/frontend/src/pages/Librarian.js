@@ -4,7 +4,6 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import { observer } from 'mobx-react-lite'
 import { Context } from '..'
-import { Navigate } from 'react-router-dom'
 
 export default observer(function Librarian() {
     const { store } = useContext(Context)
@@ -50,26 +49,22 @@ export default observer(function Librarian() {
         }
     }, [refComponent])
 
-    if (!store.isLoading && !store.isAuth) {
-        return <Navigate to='/authorisation' />
-    }
-
     return (
         <div>
             <h1 className='page-title'>Личный кабинет библиотекаря</h1>
             <div>
                 {!isEdit ?
                     <div className='personal-account-information'>
-                        <img src={user.avatar}
+                        <img src={user.photo}
                             width={width}
                             height={height}
                             className='personal-account-image'></img>
                         <div className='personal-account-information-div' ref={refComponent}>
                             <div className='personal-account-information-div-title'>
-                                <span className='personal-account-information-div-name'>{user.last_name} {user.first_name}</span>
+                                <span className='personal-account-information-div-name'>{user.lastName} {user.firstName}</span>
                                 <li className='personal-account-information-div-e-ticket'>
                                     <span className='personal-account-information-item-name'>ID библиотекаря:</span>
-                                    <span className='personal-account-information-item-property'>№{user.id}</span>
+                                    <span className='personal-account-information-item-property'>№{user.eTicket}</span>
                                 </li>
                             </div>
                             <ul className='personal-account-information-div-list'>
@@ -102,13 +97,13 @@ export default observer(function Librarian() {
                                     <li className='personal-account-information-item-edit'>
                                         <span className='account-login-item-title'>Фамилия:</span>
                                         <Input
-                                            value={user.last_name}
+                                            value={user.lastName}
                                             placeholder={'Введите фамилию'}
                                             pattern={"[А-Яа-яЁё\\s\\-]+"}
                                             type={'text'}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, last_name: e.target.value
+                                                    ...prevState, lastName: e.target.value
                                                 }))
                                             }}
                                         />
@@ -117,12 +112,12 @@ export default observer(function Librarian() {
                                         <span className='account-login-item-title'>Имя:</span>
                                         <Input
                                             type={'text'}
-                                            value={user.first_name}
+                                            value={user.firstName}
                                             placeholder={'Введите имя'}
                                             pattern={"[А-Яа-яЁё\\s\\-]+"}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, first_name: e.target.value
+                                                    ...prevState, firstName: e.target.value
                                                 }))
                                             }}
                                         />

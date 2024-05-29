@@ -12,7 +12,7 @@ export default function Filter(props) {
     useScrollBar(filters, hasScroll)
 
     const filter = props.items.filter(el => {
-        return el.name.toLowerCase().includes(value.toLowerCase())
+        return el.name?.toLowerCase()?.includes(value.toLowerCase())
     })
 
     function qwerty() {
@@ -62,7 +62,7 @@ export default function Filter(props) {
                 ref={filters} >
                 <div className='catalog-filters-item-checkbox-item'>
                     {filter.map(el => (
-                        <label key={el} className='catalog-filters-item-checkbox-label'>
+                        <label key={el.id} className='catalog-filters-item-checkbox-label'>
                             <input
                                 type='checkbox'
                                 className='catalog-filters-item-checkbox'

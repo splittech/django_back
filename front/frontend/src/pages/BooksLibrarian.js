@@ -1,109 +1,110 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import BookItem from '../components/BookItem'
+import Path from '../components/Path'
 import { Link } from 'react-router-dom'
 import { FaSearch, FaArrowUp, FaArrowDown } from "react-icons/fa"
 import Button from '../components/Button'
 import Filter from '../components/Filter'
 import useDinamicPagination from '../hooks/use-dinamicPagination'
-import axios from 'axios'
 import { API_URL } from '../http'
 import UserService from '../service/UserService'
 
-export default function Catalog() {
-    // let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
-    let [url, setUrl] = useState('https://localhost:8000/api/v1/books/')
+
+
+export default function BooksLibrarian() {
+    let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
+    // let [url, setUrl] = useState('https://localhost:8000/api/v1/books/')
     const memoizedUrl = useMemo(() => url, [url])
     // console.log(memoizedUrl)
     // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
     const [books] = useDinamicPagination(memoizedUrl, 15)
     const [authors, setAuthors] = useState(
-        getAuthors()
-        // [
-        //     {
-        //         id: 1,
-        //         name: 'Автор 1'
-        //     },
-        //     {
-        //         id: 2,
-        //         name: 'Автор 2'
-        //     },
-        //     {
-        //         id: 3,
-        //         name: 'Автор 3'
-        //     },
-        //     {
-        //         id: 4,
-        //         name: 'Автор 4'
-        //     },
-        //     {
-        //         id: 5,
-        //         name: 'Автор 5'
-        //     },
-        //     {
-        //         id: 6,
-        //         name: 'Автор 6'
-        //     },
-        // ]
+        // getAuthors()
+        [
+            {
+                id: 1,
+                name: 'Автор 1'
+            },
+            {
+                id: 2,
+                name: 'Автор 2'
+            },
+            {
+                id: 3,
+                name: 'Автор 3'
+            },
+            {
+                id: 4,
+                name: 'Автор 4'
+            },
+            {
+                id: 5,
+                name: 'Автор 5'
+            },
+            {
+                id: 6,
+                name: 'Автор 6'
+            },
+        ]
     )
     let [selectedAuthors, setSelectedAuthors] = useState([])
     const [genres, setGenres] = useState(
-        getGenres()
-        // [
-        //     {
-        //         id: 1,
-        //         name: 'Жанр 1'
-        //     },
-        //     {
-        //         id: 2,
-        //         name: 'Жанр 2'
-        //     },
-        //     {
-        //         id: 3,
-        //         name: 'Жанр 3'
-        //     },
-        //     {
-        //         id: 4,
-        //         name: 'Жанр 4'
-        //     },
-        //     {
-        //         id: 5,
-        //         name: 'Жанр 5'
-        //     },
-        //     {
-        //         id: 6,
-        //         name: 'Жанр 6'
-        //     },
-        // ]
+        // getGenres()
+        [
+            {
+                id: 1,
+                name: 'Жанр 1'
+            },
+            {
+                id: 2,
+                name: 'Жанр 2'
+            },
+            {
+                id: 3,
+                name: 'Жанр 3'
+            },
+            {
+                id: 4,
+                name: 'Жанр 4'
+            },
+            {
+                id: 5,
+                name: 'Жанр 5'
+            },
+            {
+                id: 6,
+                name: 'Жанр 6'
+            },
+        ]
     )
     let [selectedGenres, setSelectedGenres] = useState([])
     const [tags, setTags] = useState(
-        getTags()
-        // [
-        //     {
-        //         id: 1,
-        //         name: 'Тег 1'
-        //     },
-        //     {
-        //         id: 2,
-        //         name: 'Тег 2'
-        //     },
-        //     {
-        //         id: 3,
-        //         name: 'Тег 3'
-        //     },
-        //     {
-        //         id: 4,
-        //         name: 'Тег 4'
-        //     },
-        //     {
-        //         id: 5,
-        //         name: 'Тег 5'
-        //     },
-        //     {
-        //         id: 6,
-        //         name: 'Тег 6'
-        //     },
-        // ]
+        // getTags()
+        [
+            {
+                id: 1,
+                name: 'Тег 1'
+            },
+            {
+                id: 2,
+                name: 'Тег 2'
+            },
+            {
+                id: 3,
+                name: 'Тег 3'
+            },
+            {
+                id: 4,
+                name: 'Тег 4'
+            },
+            {
+                id: 5,
+                name: 'Тег 5'
+            },
+            {
+                id: 6,
+                name: 'Тег 6'
+            },
+        ]
     )
     let [selectedTags, setSelectedTags] = useState([])
     const [status, setStatus] = useState(
@@ -123,20 +124,6 @@ export default function Catalog() {
         ]
     )
     let [selectedStatus, setSelectedStatus] = useState([])
-    const [additionalFilters, setAdditionalFilters] = useState(
-        [
-            {
-                id: 1,
-                name: 'Высокий рейтинг'
-            },
-            {
-                id: 2,
-                name: 'Есть отзывы'
-            }
-        ]
-    )
-    let [selectedAdditionalFilters, setSelectedAdditionalFilters] = useState([])
-    const [fetching, setFetching] = useState(true)
     const [openFilters, setOpenFilters] = useState(false)
     const [openSort, setOpenSort] = useState(false)
     // const [value, setValue] = useState('')
@@ -188,11 +175,6 @@ export default function Catalog() {
         searchBook()
     }
 
-    function updateSelectedAdditionalFilters(array) {
-        selectedAdditionalFilters = array
-        searchBook()
-    }
-
     async function selectSort(param, direction) {
         const ss = { param, direction }
         setSelectedSort(selectedSort = ss)
@@ -230,30 +212,10 @@ export default function Catalog() {
         console.log(url)
     }
 
-    // useEffect(() => {
-    //     let arr = []
-    //     if (fetching) {
-    //         axios.get(url).then(res => {
-    //             res.data.map(el => {
-    //                 arr.push(el)
-    //             })
-    //             arr.map(el => {
-    //                 if (!authors.includes(el.title)) {
-    //                     authors.push(el.title)
-    //                 }
-    //             })
-    //         }).finally(() => setFetching(false))
-    //     }
-    // }, [])
-
-    // const searchBooks = books.filter(book => {
-    //     return (book.title.toLowerCase().includes(value.toLowerCase())
-    //         //  || book.author.toLowerCase().includes(value.toLowerCase())
-    //     )
-    // })
-
     return (
         <div>
+            <Path />
+            <h1 className='page-title'>Книги</h1>
             <div className='catalog-search'>
                 <input type='text'
                     placeholder={'Введите название книги или имя автора'}
@@ -280,6 +242,14 @@ export default function Catalog() {
                             setOpenFilters(!openFilters)
                         }
                     }} />
+                <Button title={'Добавить'}
+                    className={`${openSort && 'button-active'}`}
+                    onClick={() => {
+                        // setOpenSort(!openSort)
+                        // if (openFilters) {
+                        //     setOpenFilters(!openFilters)
+                        // }
+                    }} />
             </div>
             <div className='catalog-filters-container'>
                 <div className={`catalog-filters ${openFilters && 'catalog-filters-open'}`}>
@@ -305,10 +275,6 @@ export default function Catalog() {
                         title={'Статус'}
                         items={status}
                         updateSelectedItems={updateSelectedStatus}
-                    />
-                    <Filter
-                        items={additionalFilters}
-                        updateSelectedItems={updateSelectedAdditionalFilters}
                     />
                 </div>
                 <div className={`catalog-sort ${openSort && 'catalog-sort-open'}`}>
@@ -384,12 +350,16 @@ export default function Catalog() {
                     </span>
                 </div>
             </div>
-            <div className='book-list'>
-                {books.map(el => (
-                    <Link to={`/catalog/${el.id}`} className='book-link-another-page' key={el.id}>
-                        <BookItem key={el.id} bookItem={el} />
-                    </Link>
-                ))}
+            <div className='librarian-div' >
+                {books.map(el =>
+                    <div key={el.id} className='librarian-item' >
+                        <img src={el.image} height={80} width={53} className='librarian-item-book-img' />
+                        <div className='librarian-item-book-text'>
+                            <span>{el.title}</span>
+                            <span>{el.author}</span>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     )

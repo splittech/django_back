@@ -17,6 +17,9 @@ import Reader from '../pages/Reader';
 import Librarian from '../pages/Librarian';
 import BookHistory from '../pages/BookHistory';
 import Reviews from '../pages/Reviews';
+import BooksLibrarian from '../pages/BooksLibrarian';
+import ReadersLibrarian from '../pages/ReadersLibrarian';
+import ReviewsLibrarian from '../pages/ReviewsLibrarian';
 
 export default class Main extends Component {
     render() {
@@ -47,6 +50,9 @@ export default class Main extends Component {
                         <Route path='/account/reader/bookhistory' element={<BookHistory />} />
                         <Route path='/account/reader/bookhistory:id' element={<BookHistory />} />
                         <Route path='/account/librarian' element={<Librarian />} />
+                        <Route path='/account/librarian/books' element={<BooksLibrarian />} />
+                        <Route path='/account/librarian/readers' element={<ReadersLibrarian />} />
+                        <Route path='/account/librarian/reviews' element={<ReviewsLibrarian />} />
                         <Route path='/authorisation' element={<Authorisation />} />
                         <Route path='/authorisation/forget_password' element={<ForgetPassword />} />
                         <Route path='/registration' element={<Registration />} />

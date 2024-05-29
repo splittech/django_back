@@ -1089,6 +1089,40 @@ body {
     color: #42515a;
 }
 
+/* LIBRARIAN */
+
+.librarian-div{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.librarian-item {
+    border: #999999 solid 1px;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    cursor: pointer;
+}
+
+.librarian-item-book-img {
+    border-radius: 10px;
+}
+
+.librarian-item-book-text{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+}
+
+.librarian-item-reader-img{
+    border-radius: 30px;
+}
+
 /* FOOTER */
 
 .footer {
