@@ -118,7 +118,7 @@ export default class Store {
         try {
             const response = await AuthService.getUser(auth_token)
             console.log(response)
-            this.setUser(response.data.user)
+            this.setUser(response.data)
             this.setAuth(true)
         } catch (e) {
             console.log(e.response?.data?.message)
