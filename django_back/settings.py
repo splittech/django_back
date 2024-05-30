@@ -225,6 +225,14 @@ REST_FRAMEWORK = {
     }
 }
 
+REST_AUTH_SERIALIZERS = {
+    'LOGIN_SERIALIZER': 'your_project.serializers.CustomLoginSerializer',  # если вам нужно кастомизировать
+}
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'your_project.serializers.CustomRegisterSerializer',  # если вам нужно кастомизировать
+}
+
 # CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",

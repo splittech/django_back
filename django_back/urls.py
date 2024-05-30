@@ -20,14 +20,21 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from users.views import CustomRegisterView, CustomAuthToken
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('auth/token/login/', CustomAuthToken.as_view(), name='auth-token-login'),
+
+    path('auth/users/', CustomRegisterView.as_view(), name='auth-user-register'),
 
     path('api-auth/', include('rest_framework.urls')),
 
     path('ckeditor/', include('ckeditor_uploader.urls')),
+
+    path('auth/', include('dj_rest_auth.urls')),
 
     path('auth/', include('djoser.urls')),
 
