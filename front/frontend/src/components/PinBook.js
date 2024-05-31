@@ -22,6 +22,7 @@ export default function PinBook(props) {
     })
 
     async function handleCheckboxChange(el) {
+        console.log(el)
         const isChecked = selectedItems.includes(el)
         const promise = new Promise((resolve) => {
             if (isChecked) {
