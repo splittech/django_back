@@ -10,7 +10,7 @@ export default function PinBook(props) {
     // [{ id: 1, name: 'kjnj' }, { id: 2, name: 'kjnj' }, { id: 3, name: 'kjnj' }, { id: 4, name: 'kjnj' }, { id: 5, name: 'kjnj' }, { id: 6, name: 'kjnj' }]
 
     const [value, setValue] = useState('')
-    let selectedItems = []
+    let selectedItems = 0
     const hasScroll = readers.length > 5
     const filters = useRef(null)
 
@@ -22,28 +22,29 @@ export default function PinBook(props) {
     })
 
     async function handleCheckboxChange(el) {
-        console.log(el)
-        const isChecked = selectedItems.includes(el)
-        const promise = new Promise((resolve) => {
-            if (isChecked) {
-                selectedItems = selectedItems.filter(item => item !== el)
-                const interval = setInterval(() => {
-                    if (!selectedItems.includes(el)) {
-                        clearInterval(interval)
-                        resolve()
-                    }
-                }, 100)
-            } else {
-                selectedItems.push(el)
-                const interval = setInterval(() => {
-                    if (selectedItems.includes(el)) {
-                        clearInterval(interval)
-                        resolve()
-                    }
-                }, 100)
-            }
-        })
-        await promise
+        // console.log(el)
+        // const isChecked = selectedItems.includes(el)
+        // const promise = new Promise((resolve) => {
+        //     if (isChecked) {
+        //         selectedItems = selectedItems.filter(item => item !== el)
+        //         const interval = setInterval(() => {
+        //             if (!selectedItems.includes(el)) {
+        //                 clearInterval(interval)
+        //                 resolve()
+        //             }
+        //         }, 100)
+        //     } else {
+        //         selectedItems.push(el)
+        //         const interval = setInterval(() => {
+        //             if (selectedItems.includes(el)) {
+        //                 clearInterval(interval)
+        //                 resolve()
+        //             }
+        //         }, 100)
+        //     }
+        // })
+        // await promise
+        selectedItems = el
         console.log(selectedItems)
     }
 
@@ -81,7 +82,7 @@ export default function PinBook(props) {
                 <Button
                     title={'Закрепить'}
                     onClick={() =>
-                        UserService.pinBook(props.bookId, selectedItems[0])
+                        UserService.pinBook(props.bookId, selectedItems)
                     } />
             </div>
         </div >
