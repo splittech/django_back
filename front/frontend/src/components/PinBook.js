@@ -70,7 +70,7 @@ export default function PinBook(props) {
                                         onChange={() => handleCheckboxChange(el.id)}
                                     />
                                     <span className='catalog-filters-item-checkbox-custom'></span>
-                                    {el.name}
+                                    {el.last_name} {el.first_name}
                                 </label>
                             ))}
                         </div>
