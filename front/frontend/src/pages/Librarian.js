@@ -61,7 +61,7 @@ export default observer(function Librarian() {
                             className='personal-account-image'></img>
                         <div className='personal-account-information-div' ref={refComponent}>
                             <div className='personal-account-information-div-title'>
-                                <span className='personal-account-information-div-name'>{user.lastName} {user.firstName}</span>
+                                <span className='personal-account-information-div-name'>{user.last_name} {user.first_name}</span>
                                 <li className='personal-account-information-div-e-ticket'>
                                     <span className='personal-account-information-item-name'>ID библиотекаря:</span>
                                     <span className='personal-account-information-item-property'>№{user.eTicket}</span>
