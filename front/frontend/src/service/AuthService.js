@@ -1,10 +1,16 @@
 import $api from "../http";
 
 export default class AuthService {
-    static async login(username, email, password) {
-        console.log({ username, email, password })
+    static async login(username, 
+        // email, 
+        password) {
+        console.log({ username, 
+            // email, 
+            password })
         return $api.post('/auth/token/login/',
-            { username, email, password })
+            { username, 
+                // email, 
+                password })
     }
 
     static async registration(username, email, firstname, lastname, password) {
