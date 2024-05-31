@@ -39,6 +39,7 @@ export default class UserService {
 
     static async pinBook(book, reader) {
         const auth_token = localStorage.getItem('auth_token')
+        console.log(auth_token)
         console.log({ book, reader })
         return $api.post('/api/v1/books/pinbook/', { book, reader },
             { headers: { "Authorization": `Token ${auth_token}` } }
