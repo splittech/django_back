@@ -17,12 +17,13 @@ class BookAdminForm(forms.ModelForm):
 
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
-    """Тег"""
+    """Теги"""
     list_display = ("name",)
+    prepopulated_fields = {'url': ('name',)}
 
 
 class ReviewInline(admin.TabularInline):
-    """Отзывы на странице фильма"""
+    """Отзывы на странице книги"""
     model = Review
     extra = 1
     readonly_fields = ("name", "email")
@@ -31,14 +32,15 @@ class ReviewInline(admin.TabularInline):
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     """Книги"""
-    list_display = ("title", "url", "draft")
+    list_display = ("title", "copies", "rating")
     search_fields = ("title", "author__name")
+    prepopulated_fields = {'url': ('title',)}
     save_on_top = True
     save_as = True
-    list_editable = ("draft",)
     actions = ["publish", "unpublish"]
     form = BookAdminForm
-    readonly_fields = ("get_image",)
+
+    #readonly_fields = ("get_image",)
 
     def get_image(self, obj):
         return mark_safe(f'<img src={obj.poster.url} width="100" height="110"')
@@ -81,6 +83,7 @@ class ReviewAdmin(admin.ModelAdmin):
 class GenreAdmin(admin.ModelAdmin):
     """Жанры"""
     list_display = ("name",)
+    prepopulated_fields = {'url': ('name',)}
 
 
 @admin.register(Author)

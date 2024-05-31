@@ -20,10 +20,16 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+from users.views import CustomAuthToken, CustomRegisterView
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
-    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    #path('kek', CustomAuthToken.as_view(), name='auth-token-login'),
+
+    #path('auth/users/', CustomRegisterView.as_view(), name='auth-user-register'),
+
+    #path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 
     path('api-auth/', include('rest_framework.urls')),
 

@@ -23,9 +23,6 @@ class Tag(models.Model):
 class Author(models.Model):
     """Авторы"""
     name = models.CharField("Имя", max_length=100)
-    #age = models.PositiveSmallIntegerField("Возраст", default=0)
-    #description = models.TextField("Описание")
-    #image = models.ImageField("Изображение", upload_to="actors/")
 
     def __str__(self):
         return self.name
@@ -41,7 +38,6 @@ class Author(models.Model):
 class Genre(models.Model):
     """Жанры"""
     name = models.CharField("Жанр", max_length=100)
-    #description = models.TextField("Описание")
     url = models.SlugField(max_length=160, unique=True)
 
     def __str__(self):
@@ -63,7 +59,8 @@ class Book(models.Model):
         Author, verbose_name="Автор", on_delete=models.SET_NULL, null=True
     )
     url = models.SlugField(max_length=130, unique=True)
-    draft = models.BooleanField("Черновик", default=False)
+    copies = models.PositiveIntegerField(verbose_name="Количество копий")
+    rating = models.PositiveIntegerField(verbose_name="Рейтинг", default=0)
 
     def __str__(self):
         return self.title
@@ -79,24 +76,6 @@ class Book(models.Model):
         verbose_name_plural = "Книги"
 
 
-class BookCopy(models.Model):
-    """Книги"""
-    book = models.ForeignKey(
-        Book, verbose_name="Книга", on_delete=models.SET_NULL, null=True
-    )
-    reader = models.ForeignKey(
-        settings.AUTH_USER_MODEL, verbose_name="Читатель", on_delete=models.SET_NULL, null=True
-    )
-    takenTime = models.DateTimeField(null=True, editable=False)
-    returnTime = models.DateTimeField(null=True, editable=False)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = "Книга"
-        verbose_name_plural = "Книги"
-
 class Review(models.Model):
     """Отзывы"""
     rating = models.IntegerField()
@@ -108,8 +87,22 @@ class Review(models.Model):
     book = models.ForeignKey(Book, verbose_name="Книга", on_delete=models.CASCADE, related_name="reviews")
 
     def __str__(self):
-        return f"{self.name} - {self.movie}"
+        return f"{self.name} - {self.book}"
 
     class Meta:
         verbose_name = "Отзыв"
         verbose_name_plural = "Отзывы"
+
+
+class Collection(models.Model):
+    """Подборки"""
+    title = models.CharField("Название", max_length=100)
+    description = models.TextField("Описание")
+    books = models.ManyToManyField(Book, verbose_name="Книги")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Подборка"
+        verbose_name_plural = "Подборки"

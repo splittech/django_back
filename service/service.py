@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django_filters import rest_framework as filters
-from books.models import Book, BookCopy
+from books.models import Book
 
 
 def get_client_ip(request):
@@ -29,11 +29,11 @@ class BookFilter(filters.FilterSet):
         fields = ['title', 'genres', 'tags']
 
 
-def pin_book(reader_id, book_id):
-    book = Book.objects.get(pk=book_id)
-    bookCopy = BookCopy.filter(book=book)
-
-    reader = User.objects.get(pk=reader_id)
-
-
-    book.update()
+# def pin_book(reader_id, book_id):
+#     book = Book.objects.get(pk=book_id)
+#     bookCopy = BookCopy.filter(book=book)
+#
+#     reader = User.objects.get(pk=reader_id)
+#
+#
+#     book.update()
