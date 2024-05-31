@@ -17,8 +17,8 @@ export default function PinBook(props) {
     useScrollBar(filters, hasScroll)
 
     const filter = readers.filter(el => {
-        return el.name?.toLowerCase()?.includes(value.toLowerCase())
-        // return el.last_name?.toLowerCase()?.includes(value.toLowerCase()) || el.first_name?.toLowerCase()?.includes(value.toLowerCase())
+        // return el.name?.toLowerCase()?.includes(value.toLowerCase())
+        return el.last_name?.toLowerCase()?.includes(value.toLowerCase()) || el.first_name?.toLowerCase()?.includes(value.toLowerCase())
     })
 
     async function handleCheckboxChange(el) {
