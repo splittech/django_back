@@ -44,6 +44,7 @@ export default function PinBook(props) {
             }
         })
         await promise
+        console.log(selectedItems)
     }
 
     return (
