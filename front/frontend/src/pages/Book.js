@@ -3,9 +3,16 @@ import UserService from '../service/UserService'
 import Path from '../components/Path'
 import Button from '../components/Button'
 import ReviewItem from '../components/ReviewItem'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { Context } from '..'
+import { observer } from 'mobx-react-lite'
+import PinBook from '../components/PinBook'
 
-export default function Book() {
+export default observer(function Book() {
+    const { store } = useContext(Context)
+
+    const isReader = store.isReader()
+
     const { id } = useParams()
     const [book, setBook] = useState(getBook(id))
 
@@ -59,6 +66,8 @@ export default function Book() {
     //     },]
     // }
 
+    const [pinBookClass, setPinBookClass] = useState(false)
+
     return (
         <div>
             <Path current={book.title} />
@@ -70,9 +79,9 @@ export default function Book() {
                             <h1 className='book-title'>{book.title}</h1>
                             <span className='book-description-author'>{book.author}</span>
                             <div className='book-description-numbers-div'>
-                                {/* {book.rating > 0 &&
+                                {book.rating > 0 &&
                                     <span className='book-description-numbers'>★ {book.rating?.toFixed(1)}</span>
-                                } */}
+                                }
                                 {book.reviews?.length > 0 &&
                                     <a
                                         href='#reviews'
@@ -84,11 +93,20 @@ export default function Book() {
                             </div>
                         </div>
                         <div className='book-description-buttons'>
-                            <span className='book-description-status'>Статус
-                                {/* {book.status} */}
-                            </span>
-                            <Button title={'В избранное'} />
-                            <Button title={'Забронировать'} />
+                            {isReader ?
+                                <>
+                                    <span className='book-description-status'>{book.status}</span>
+                                    <Button title={'В избранное'} />
+                                    <Button title={'Забронировать'} />
+                                </>
+                                : <>
+                                    <Button title={'Закрепить'}
+                                        onClick={() => { setPinBookClass(!pinBookClass) }} />
+                                    <PinBook
+                                        className={`${pinBookClass ? 'pin-book-open' : 'pin-book-close'}`}
+                                        bookId={book.id} />
+                                </>
+                            }
                         </div>
                     </div>
                     <div className='book-description-desc'>
@@ -113,21 +131,23 @@ export default function Book() {
                         Отзывы</a></h1>
                 <Button title={'Написать отзыв'} />
             </div>
-            {book.reviews?.length > 0 ?
-                <div className='book-reviews'>
-                    {book.reviews?.slice(0, 2).map(el =>
-                        <ReviewItem key={el.id} reviewItem={el} isAccount={false} />
-                    )}
-                </div>
-                : <div className='book-reviews'>
-                    Нет отзывов
-                </div>
+            {
+                book.reviews?.length > 0 ?
+                    <div className='book-reviews'>
+                        {book.reviews?.slice(0, 2).map(el =>
+                            <ReviewItem key={el.id} reviewItem={el} isAccount={false} />
+                        )}
+                    </div>
+                    : <div className='book-reviews'>
+                        Нет отзывов
+                    </div>
             }
-            {book.reviews?.length > 2 &&
+            {
+                book.reviews?.length > 2 &&
                 <Link
                     to={'reviews'}
                     className='read-all'>Смотреть все</Link>
             }
-        </div>
+        </div >
     )
-}
+})

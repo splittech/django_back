@@ -1,25 +1,19 @@
 import $api from "../http";
 
 export default class AuthService {
-    static async login(username, email, password, isCSRF) {
+    static async login(username, email, password) {
         console.log({ username, email, password })
         return $api.post('/auth/token/login/',
-            { username, email, password },
-            // { headers: { "X-CSRFToken": isCSRF } }
-        )
+            { username, email, password })
     }
 
-    static async registration(username, email, firstname, lastname, password, isCSRF) {
+    static async registration(username, email, firstname, lastname, password) {
         return $api.post('/auth/users/',
-            { username, email, firstname, lastname, password },
-            // { headers: { "X-CSRFToken": isCSRF } }
-        )
+            { username, email, firstname, lastname, password })
     }
 
-    static async logout(isCSRF) {
-        return $api.post('/auth/token/logout/',
-            // { headers: { "X-CSRFToken": isCSRF } }
-        )
+    static async logout() {
+        return $api.post('/auth/token/logout/')
     }
 
     static async getUser(auth_token) {
