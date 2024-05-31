@@ -70,10 +70,12 @@ export default class Store {
     }
 
     async isReader() {
-        if (this.user.groups.name === ('Reader')) {
-            return true
-        } else {
-            return false
+        if (this.isAuth) {
+            if (this.user.groups.name === ('Reader')) {
+                return true
+            } else {
+                return false
+            }
         }
     }
 
