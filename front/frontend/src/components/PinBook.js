@@ -78,7 +78,9 @@ export default function PinBook(props) {
                 </div>
                 <Button
                     title={'Закрепить'}
-                    onClick={() => UserService.pinBook(props.bookId, selectedItems[0])} />
+                    onClick={() =>
+                        UserService.pinBook(props.bookId, selectedItems[0])
+                    } />
             </div>
         </div >
     )
