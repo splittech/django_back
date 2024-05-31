@@ -71,7 +71,7 @@ export default class Store {
 
     async isReader() {
         if (this.isAuth) {
-            console.log(this.user.groups.name)
+            console.log(this.user.groups)
             if (this.user.groups.name === ('Reader')) {
                 return true
             } else {
