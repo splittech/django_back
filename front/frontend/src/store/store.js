@@ -28,10 +28,14 @@ export default class Store {
         this.isLoading = bool
     }
 
-    async login(username, email, password) {
+    async login(username, 
+        // email, 
+        password) {
         this.setLoading(true)
         try {
-            const response = await AuthService.login(username, email, password)
+            const response = await AuthService.login(username, 
+                // email, 
+                password)
             console.log(response)
             localStorage.setItem('auth_token', response.data.auth_token)
             // localStorage.setItem('userRole', response.data.userRole)
