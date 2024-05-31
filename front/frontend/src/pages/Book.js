@@ -11,7 +11,7 @@ import PinBook from '../components/PinBook'
 export default observer(function Book() {
     const { store } = useContext(Context)
 
-    const isReader = store.isReader()
+    const isReader = store.isReader
 
     const { id } = useParams()
     const [book, setBook] = useState(getBook(id))

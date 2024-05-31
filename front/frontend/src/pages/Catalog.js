@@ -9,8 +9,8 @@ import { API_URL } from '../http'
 import UseGetArray from '../hooks/use-getArray'
 
 export default function Catalog() {
-    let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
-    // let [url, setUrl] = useState('https://localhost:8000/api/v1/books/')
+    // let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
+    let [url, setUrl] = useState('https://localhost:8000/api/v1/books/')
     const memoizedUrl = useMemo(() => url, [url])
     // console.log(memoizedUrl)
     // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
