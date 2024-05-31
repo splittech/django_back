@@ -37,10 +37,10 @@ export default class UserService {
         return $api.get('', { id })
     }
 
-    static async pinBook(bookId, readerId) {
+    static async pinBook(book, reader) {
         const auth_token = localStorage.getItem('auth_token')
-        console.log({ bookId, readerId })
-        return $api.post('/api/v1/books/pinbook/', { bookId, readerId },
+        console.log({ book, reader })
+        return $api.post('/api/v1/books/pinbook/', { book, reader },
             { headers: { "Authorization": `Token ${auth_token}` } }
         )
     }
