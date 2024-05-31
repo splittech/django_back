@@ -714,7 +714,6 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
 }
 
 .book-description-params {
@@ -779,48 +778,68 @@ body {
     gap: 50px;
 }
 
-.pin-book-name{
+.pin-book-name {
     font-weight: 700;
     font-size: 20px;
     text-align: center;
     margin: 0;
 }
 
-/* .pin-book-background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #999999;
-    opacity: 0.8;
-    margin-left: auto;
-    margin-right: auto;
-    z-index: 10;
-} */
+.modal-background {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: all ease 0.5s;
+}
 
-.pin-book-open {
-    position: absolute;
-    z-index: 10;
-    opacity: 1;
+.modal-content {
     border-radius: 10px;
     border: #42515a solid 1px;
-    left: 520px;
-    width: 500px;
     background-color: white;
     padding: 30px;
-    margin-right: auto;
-    margin-left: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    z-index: 101;
+    width: 500px;
+    transform: scale(0.5);
+    transition: all 0.4s ease;
 }
 
-.pin-book-close {
-    opacity: 0;
+.modal-background.active {
+    opacity: 1;
+    pointer-events: all;
 }
 
-.pin-book-readers{
+.modal-content.active {
+    transform: scale(1);
+}
+
+.pin-book-readers {
     width: 100%;
+}
+
+.pin-book-status {
+    font-size: 20px;
+    font-weight: 400;
+}
+
+.pin-book-status.green {
+    color: #7dc271;
+}
+
+.pin-book-status.red {
+    color: #c60021;
 }
 
 /* ACCOUNT */
@@ -893,6 +912,8 @@ body {
 
 .personal-account-image {
     border-radius: 10px;
+    max-width: 162px;
+    max-height: 216px;
 }
 
 .personal-account-information-div {

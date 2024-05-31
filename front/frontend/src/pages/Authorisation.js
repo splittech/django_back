@@ -8,7 +8,6 @@ import { observer } from 'mobx-react-lite'
 
 export default observer(function Authorisation() {
     const [username, setUsername] = useState('')
-    // const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [usernameMessage, setUsernameMessage] = useState('')
     const [emailMessage, setEmailMessage] = useState('')
@@ -32,15 +31,6 @@ export default observer(function Authorisation() {
         } else {
             setUsernameMessage('')
         }
-        // if (email === '') {
-        //     setEmailMessage('Заполните это поле!')
-        //     flag = false
-        // } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
-        //     setEmailMessage('Email введен не корректно!')
-        //     flag = false
-        // } else {
-        //     setEmailMessage('')
-        // }
         if (password === '') {
             setPasswordMessage('Заполните это поле!')
             flag = false
@@ -68,16 +58,6 @@ export default observer(function Authorisation() {
                     placeholder={'Имя пользователя'} />
                 <label style={usernameMessage === '' ? { display: 'none' } : { color: '#c60021' }}>{usernameMessage}</label>
             </div>
-            {/* <div className='account-login-item'>
-                <span className='account-login-item-title'>Электронная почта:</span>
-                <Input
-                    className={emailMessage !== '' && 'input-invalid'}
-                    onChange={e => setEmail(e.target.value)}
-                    value={email}
-                    type='email'
-                    placeholder={'Электронная почта'} />
-                <label style={emailMessage === '' ? { display: 'none' } : { color: '#c60021' }}>{emailMessage}</label>
-            </div> */}
             <div className='account-login-item'>
                 <span className='account-login-item-title'>Пароль:</span>
                 <Input
@@ -93,9 +73,7 @@ export default observer(function Authorisation() {
                 className='button-enter'
                 onClick={() => {
                     if (checker()) {
-                        store.login(username, 
-                            // email, 
-                            password)
+                        store.login(username, password)
                     }
                 }} />
             <Link to={'/authorisation/forget_password'} className='account-login-forget-password'>Забыли пароль?</Link>

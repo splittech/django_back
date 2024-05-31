@@ -195,7 +195,7 @@ export default observer(function Reader() {
         //     avatar: '',
         //     last_name: 'Фамилия',
         //     first_name: 'Имя',
-        //     email: 'email@email.com',
+        //     username: 'qwerty',
         //     rating: 5.0,
         // }
     )
@@ -238,15 +238,15 @@ export default observer(function Reader() {
                             </div>
                             <ul className='personal-account-information-div-list'>
                                 <li>
-                                    <span className='personal-account-information-item-name'>Электронная почта:</span>
-                                    <span className='personal-account-information-item-property'>{user.email}</span>
+                                    <span className='personal-account-information-item-name'>Имя пользователя:</span>
+                                    <span className='personal-account-information-item-property'>{user.username}</span>
                                 </li>
                                 <li>
                                     <span className='personal-account-information-item-name'>Рейтинг читателя:</span>
                                     <span className='personal-account-information-item-property'>
                                         {/* {user.rating?.toFixed(1)} */}
                                         5.0
-                                    </span>
+                                        </span>
                                 </li>
                             </ul>
                             <Button
@@ -295,15 +295,14 @@ export default observer(function Reader() {
                                         />
                                     </li>
                                     <li className='personal-account-information-item-edit'>
-                                        <span className='account-login-item-title'>Адрес электронной почты:</span>
+                                        <span className='account-login-item-title'>Имя пользователя:</span>
                                         <Input
-                                            type={'email'}
-                                            value={user.email}
-                                            placeholder={'email@email.com'}
-                                            pattern={'[^@\\s]+@[^@\\s]+\\.[^@\\s]+'}
+                                            type={'text'}
+                                            value={user.username}
+                                            placeholder={'Введите имя пользователя'}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, email: e.target.value
+                                                    ...prevState, username: e.target.value
                                                 }))
                                             }}
                                         />

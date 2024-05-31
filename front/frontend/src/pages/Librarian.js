@@ -28,11 +28,11 @@ export default observer(function Librarian() {
 
     const [user, setUser] = useState(store.user
         //     {
-        //     eTicket: 123456,
-        //     photo: '',
-        //     lastName: 'Фамилия',
-        //     firstName: 'Имя',
-        //     email: 'email@email.com',
+        //     id: 123456,
+        //     avatar: '',
+        //     last_name: 'Фамилия',
+        //     first_name: 'Имя',
+        //     username: 'qwerty',
         //     position: 'Старший библиотекарь',
         // }
     )
@@ -64,13 +64,13 @@ export default observer(function Librarian() {
                                 <span className='personal-account-information-div-name'>{user.last_name} {user.first_name}</span>
                                 <li className='personal-account-information-div-e-ticket'>
                                     <span className='personal-account-information-item-name'>ID библиотекаря:</span>
-                                    <span className='personal-account-information-item-property'>№{user.id}</span>
+                                    <span className='personal-account-information-item-property'>{user.id}</span>
                                 </li>
                             </div>
                             <ul className='personal-account-information-div-list'>
                                 <li>
-                                    <span className='personal-account-information-item-name'>Электронная почта:</span>
-                                    <span className='personal-account-information-item-property'>{user.email}</span>
+                                    <span className='personal-account-information-item-name'>Имя пользователя:</span>
+                                    <span className='personal-account-information-item-property'>{user.username}</span>
                                 </li>
                                 <li>
                                     <span className='personal-account-information-item-name'>Должность:</span>
@@ -103,7 +103,7 @@ export default observer(function Librarian() {
                                             type={'text'}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, lastName: e.target.value
+                                                    ...prevState, last_name: e.target.value
                                                 }))
                                             }}
                                         />
@@ -117,21 +117,20 @@ export default observer(function Librarian() {
                                             pattern={"[А-Яа-яЁё\\s\\-]+"}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, firstName: e.target.value
+                                                    ...prevState, first_name: e.target.value
                                                 }))
                                             }}
                                         />
                                     </li>
                                     <li className='personal-account-information-item-edit'>
-                                        <span className='account-login-item-title'>Адрес электронной почты:</span>
+                                        <span className='account-login-item-title'>Имя пользователя:</span>
                                         <Input
-                                            type={'email'}
-                                            value={user.email}
-                                            placeholder={'email@email.com'}
-                                            pattern={'[^@\\s]+@[^@\\s]+\\.[^@\\s]+'}
+                                            type={'text'}
+                                            value={user.username}
+                                            placeholder={'Введите имя пользователя'}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, email: e.target.value
+                                                    ...prevState, username: e.target.value
                                                 }))
                                             }}
                                         />

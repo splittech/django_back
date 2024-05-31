@@ -1,12 +1,15 @@
+import React, { useRef, useState, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import UserService from '../service/UserService'
 import Path from '../components/Path'
 import Button from '../components/Button'
 import ReviewItem from '../components/ReviewItem'
-import { useState, useContext } from 'react'
 import { Context } from '..'
 import { observer } from 'mobx-react-lite'
-import PinBook from '../components/PinBook'
+import Modal from '../components/Modal'
+import useScrollBar from '../hooks/use-scrollBar'
+import Input from '../components/Input'
+import UseGetArray from '../hooks/use-getArray'
 
 export default observer(function Book() {
     const { store } = useContext(Context)
@@ -66,7 +69,46 @@ export default observer(function Book() {
     //     },]
     // }
 
-    const [pinBookClass, setPinBookClass] = useState(false)
+    const [modalActive, setModalActive] = useState(false)
+    const [modalActiveStatus, setModalActiveStatus] = useState(true)
+    let pinBookStatus = store.pinBookStatus
+
+    const [readers, setReaders] = UseGetArray('api/v1/books/readers')
+    // useState([
+    //     { id: 1, last_name: 'kjnj' },
+    //     { id: 2, last_name: 'kjnj' },
+    //     { id: 3, last_name: 'kjnj' },
+    //     { id: 4, last_name: 'kjnj' },
+    //     { id: 5, last_name: 'kjnj' },
+    //     { id: 6, last_name: 'kjnj' }
+    // ])
+
+    const [value, setValue] = useState('')
+    const [selectedItems, setSelectedItems] = useState(0)
+    const hasScroll = readers.length > 5
+    const filters = useRef(null)
+
+    useScrollBar(filters, hasScroll)
+
+    const filter = readers.filter(el => {
+        return el.last_name?.toLowerCase()?.includes(value.toLowerCase()) || el.first_name?.toLowerCase()?.includes(value.toLowerCase())
+    })
+
+    async function handleCheckboxChange(el) {
+        const promise = new Promise((resolve) => {
+            if (selectedItems !== el) {
+                setSelectedItems(el)
+                const interval = setInterval(() => {
+                    if (selectedItems === el) {
+                        clearInterval(interval)
+                        resolve()
+                    }
+                }, 100)
+            }
+        })
+        await promise
+        console.log(selectedItems)
+    }
 
     return (
         <div>
@@ -101,17 +143,62 @@ export default observer(function Book() {
                                 </>
                                 : <>
                                     <Button title={'Закрепить'}
-                                        onClick={() => { setPinBookClass(!pinBookClass) }} />
-                                    <PinBook
-                                        className={`${pinBookClass ? 'pin-book-open' : 'pin-book-close'}`}
-                                        bookId={book.id} />
+                                        onClick={() => { setModalActive(true) }} />
+                                    <Modal active={modalActive} setActive={setModalActive}>
+                                        <h1 className='pin-book-name'>Закрепление книги</h1>
+                                        <div className='catalog-filters-item pin-book-readers'>
+                                            <span className='catalog-filters-item-title'>Список читателей</span>
+                                            <Input placeholder='Введите имя читателя'
+                                                onChange={(e) => { setValue(e.target.value) }} />
+                                            <div style={{
+                                                height: hasScroll ? '155px' : 'auto',
+                                                paddingRight: '10px',
+                                            }}
+                                                ref={filters} >
+                                                <div className='catalog-filters-item-checkbox-item'>
+                                                    {filter.map(el => (
+                                                        <label key={el.id} className='catalog-filters-item-checkbox-label'>
+                                                            <input
+                                                                type='checkbox'
+                                                                className='catalog-filters-item-checkbox'
+                                                                onChange={() => handleCheckboxChange(el.id)}
+                                                                checked={selectedItems === el.id}
+                                                            />
+                                                            <span className='catalog-filters-item-checkbox-custom'></span>
+                                                            {el.last_name} {el.first_name}
+                                                        </label>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <Button
+                                            title={'Закрепить'}
+                                            onClick={() => {
+                                                console.log(selectedItems)
+                                                store.pinBook(book.id, selectedItems)
+                                                setModalActive(false)
+                                            }
+                                            } />
+                                    </Modal>
+                                    {pinBookStatus !== 0 &&
+                                        <>
+                                            {pinBookStatus === 200 ?
+                                                <Modal active={modalActiveStatus} setActive={setModalActiveStatus}>
+                                                    <h1 className='pin-book-status green'>Книга закреплена за читателем</h1>
+                                                </Modal> :
+                                                <Modal active={modalActiveStatus} setActive={setModalActiveStatus}>
+                                                    <h1 className='pin-book-status red'>Книгу не удалось закрепить за читателем</h1>
+                                                </Modal>
+                                            }
+                                        </>
+                                    }
                                 </>
                             }
                         </div>
                     </div>
                     <div className='book-description-desc'>
                         <h1 className='book-section-name'>О книге</h1>
-                        <p className='book-description-desc-text'>{book.description}</p>
+                        <p className='book-description-desc-text' dangerouslySetInnerHTML={{ __html: book.description }}></p>
                     </div>
                     <div className='book-description-genres-tegs'>
                         <div>
