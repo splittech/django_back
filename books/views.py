@@ -5,9 +5,9 @@ from rest_framework.views import APIView
 
 from users.models import User
 from users.serializers import UserSerializer, UsersListSerializer
-from .models import Book, Genre, Tag, Collection, Review
+from .models import Book, Genre, Tag, Collection, Review, Author
 from .serializers import BookListSerializer, BookDetailSerializer, ReviewCreateSerializer, GenresSerializer, \
-    TagsSerializer, CollectionsSerializer
+    TagsSerializer, CollectionsSerializer, AuthorsSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 
 from service.service import BookFilter
@@ -20,7 +20,7 @@ class BookListView(generics.ListAPIView):
     serializer_class = BookListSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = BookFilter
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         books = Book.objects.all()
@@ -105,6 +105,15 @@ class CollectionsListView(generics.ListAPIView):
     def get_queryset(self):
         collections = Collection.objects.all()
         return collections
+
+
+class AuthorsListView(generics.ListAPIView):
+    """Вывод авторов"""
+    serializer_class = AuthorsSerializer
+
+    def get_queryset(self):
+        authors = Author.objects.all()
+        return authors
 
 
 class UsersListView(generics.ListAPIView):
