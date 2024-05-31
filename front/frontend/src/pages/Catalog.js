@@ -1,23 +1,24 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import BookItem from '../components/BookItem'
 import { Link } from 'react-router-dom'
 import { FaSearch, FaArrowUp, FaArrowDown } from "react-icons/fa"
 import Button from '../components/Button'
 import Filter from '../components/Filter'
 import useDinamicPagination from '../hooks/use-dinamicPagination'
-import axios from 'axios'
 import { API_URL } from '../http'
-import UserService from '../service/UserService'
+import UseGetArray from '../hooks/use-getArray'
 
 export default function Catalog() {
-    // let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
-    let [url, setUrl] = useState('https://localhost:8000/api/v1/books/')
+    let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
+    // let [url, setUrl] = useState('https://localhost:8000/api/v1/books/')
     const memoizedUrl = useMemo(() => url, [url])
     // console.log(memoizedUrl)
     // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
     const [books] = useDinamicPagination(memoizedUrl, 15)
-    const [authors, setAuthors] = useState(
-        getAuthors()
+
+    const [authors, setAuthors] = 
+    UseGetArray('api/v1/books/authors'
+        // useState(
         // [
         //     {
         //         id: 1,
@@ -46,64 +47,66 @@ export default function Catalog() {
         // ]
     )
     let [selectedAuthors, setSelectedAuthors] = useState([])
-    const [genres, setGenres] = useState(
-        getGenres()
-        // [
-        //     {
-        //         id: 1,
-        //         name: 'Жанр 1'
-        //     },
-        //     {
-        //         id: 2,
-        //         name: 'Жанр 2'
-        //     },
-        //     {
-        //         id: 3,
-        //         name: 'Жанр 3'
-        //     },
-        //     {
-        //         id: 4,
-        //         name: 'Жанр 4'
-        //     },
-        //     {
-        //         id: 5,
-        //         name: 'Жанр 5'
-        //     },
-        //     {
-        //         id: 6,
-        //         name: 'Жанр 6'
-        //     },
-        // ]
+    const [genres, setGenres] = 
+    UseGetArray('api/v1/books/genres'
+        // useState(
+        //     [
+        //         {
+        //             id: 1,
+        //             name: 'Жанр 1'
+        //         },
+        //         {
+        //             id: 2,
+        //             name: 'Жанр 2'
+        //         },
+        //         {
+        //             id: 3,
+        //             name: 'Жанр 3'
+        //         },
+        //         {
+        //             id: 4,
+        //             name: 'Жанр 4'
+        //         },
+        //         {
+        //             id: 5,
+        //             name: 'Жанр 5'
+        //         },
+        //         {
+        //             id: 6,
+        //             name: 'Жанр 6'
+        //         },
+        //     ]
     )
     let [selectedGenres, setSelectedGenres] = useState([])
-    const [tags, setTags] = useState(
-        getTags()
-        // [
-        //     {
-        //         id: 1,
-        //         name: 'Тег 1'
-        //     },
-        //     {
-        //         id: 2,
-        //         name: 'Тег 2'
-        //     },
-        //     {
-        //         id: 3,
-        //         name: 'Тег 3'
-        //     },
-        //     {
-        //         id: 4,
-        //         name: 'Тег 4'
-        //     },
-        //     {
-        //         id: 5,
-        //         name: 'Тег 5'
-        //     },
-        //     {
-        //         id: 6,
-        //         name: 'Тег 6'
-        //     },
-        // ]
+    const [tags, setTags] = 
+    UseGetArray('api/v1/books/tags'
+        // useState(
+        //     [
+        //         {
+        //             id: 1,
+        //             name: 'Тег 1'
+        //         },
+        //         {
+        //             id: 2,
+        //             name: 'Тег 2'
+        //         },
+        //         {
+        //             id: 3,
+        //             name: 'Тег 3'
+        //         },
+        //         {
+        //             id: 4,
+        //             name: 'Тег 4'
+        //         },
+        //         {
+        //             id: 5,
+        //             name: 'Тег 5'
+        //         },
+        //         {
+        //             id: 6,
+        //             name: 'Тег 6'
+        //         },
+        //     ]
     )
     let [selectedTags, setSelectedTags] = useState([])
     const [status, setStatus] = useState(
@@ -136,37 +139,10 @@ export default function Catalog() {
         ]
     )
     let [selectedAdditionalFilters, setSelectedAdditionalFilters] = useState([])
-    const [fetching, setFetching] = useState(true)
     const [openFilters, setOpenFilters] = useState(false)
     const [openSort, setOpenSort] = useState(false)
     // const [value, setValue] = useState('')
     let [selectedSort, setSelectedSort] = useState({ param: 'По популярности', direction: 'asc' })
-    async function getAuthors() {
-        try {
-            const response = await UserService.getAuthors()
-            setAuthors(response.data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    async function getGenres() {
-        try {
-            const response = await UserService.getGenres()
-            setGenres(response.data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
-
-    async function getTags() {
-        try {
-            const response = await UserService.getTags()
-            setTags(response.data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
 
     function updateSelectedAutors(array) {
         selectedAuthors = array
@@ -224,27 +200,12 @@ export default function Catalog() {
 
         const queryParams = [authorsQuery, genresQuery, tagsQuery, statusesQuery].filter(Boolean).join('&')
 
-        const sortQuery = `${selectedSort.direction === 'desc' ? '-' : ''}${selectedSort.param}`
+        // const sortQuery = `${selectedSort.direction === 'desc' ? '-' : ''}${selectedSort.param}`
 
-        url = `${API_URL}api/v1/books${queryParams === '' ? '' : `?${queryParams}`}/?sort=${sortQuery}`
+        url = `${API_URL}api/v1/books${queryParams === '' ? '' : `?${queryParams}`}`
+        // url = `${API_URL}api/v1/books${queryParams === '' ? '' : `?${queryParams}`}/?sort=${sortQuery}`
         console.log(url)
     }
-
-    // useEffect(() => {
-    //     let arr = []
-    //     if (fetching) {
-    //         axios.get(url).then(res => {
-    //             res.data.map(el => {
-    //                 arr.push(el)
-    //             })
-    //             arr.map(el => {
-    //                 if (!authors.includes(el.title)) {
-    //                     authors.push(el.title)
-    //                 }
-    //             })
-    //         }).finally(() => setFetching(false))
-    //     }
-    // }, [])
 
     // const searchBooks = books.filter(book => {
     //     return (book.title.toLowerCase().includes(value.toLowerCase())
