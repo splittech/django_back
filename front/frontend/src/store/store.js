@@ -9,6 +9,7 @@ export default class Store {
     isAuth = false
     isLoading = false
     isCSRF = null
+    isReader = false
 
     constructor() {
         makeAutoObservable(this)
@@ -85,7 +86,12 @@ export default class Store {
             const response = await AuthService.getUser(auth_token)
             console.log(response)
             this.setUser(response.data)
-            console.log(response.data.groups)
+            console.log(response.data.groups.name)
+            if (response.data.groups.name === ('Reader')) {
+                this.isReader = true
+            } else {
+                this.isReader = false
+            }
             this.setAuth(true)
         } catch (e) {
             console.log(e.response?.data?.message)

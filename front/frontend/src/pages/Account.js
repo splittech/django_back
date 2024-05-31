@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite'
 export default observer(function Account() {
     const { store } = useContext(Context)
 
-    const isReader = store.isReader()
+    const isReader = store.isReader
 
     // useEffect(() => {
     //     if (localStorage.getItem('auth_token')) {
