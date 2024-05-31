@@ -779,6 +779,50 @@ body {
     gap: 50px;
 }
 
+.pin-book-name{
+    font-weight: 700;
+    font-size: 20px;
+    text-align: center;
+    margin: 0;
+}
+
+/* .pin-book-background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #999999;
+    opacity: 0.8;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 10;
+} */
+
+.pin-book-open {
+    position: absolute;
+    z-index: 10;
+    opacity: 1;
+    border-radius: 10px;
+    border: #42515a solid 1px;
+    left: 520px;
+    width: 500px;
+    background-color: white;
+    padding: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.pin-book-close {
+    opacity: 0;
+}
+
+.pin-book-readers{
+    width: 100%;
+}
+
 /* ACCOUNT */
 
 .account-login {
@@ -1091,7 +1135,7 @@ body {
 
 /* LIBRARIAN */
 
-.librarian-div{
+.librarian-div {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -1112,15 +1156,40 @@ body {
     border-radius: 10px;
 }
 
-.librarian-item-book-text{
+.librarian-item-book-text {
     display: flex;
     flex-direction: column;
     gap: 10px;
     justify-content: center;
 }
 
-.librarian-item-reader-img{
+.librarian-item-reader-img {
     border-radius: 30px;
+}
+
+.librarian-add-book {
+    border: 1px solid #42515a;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 500px;
+    margin-bottom: 35px;
+    padding: 20px;
+    gap: 20px;
+    transform: translateY(-30px);
+    transition-property: transform, opacity, position;
+    transition-duration: 0.5s, 0s, 0.5s;
+    transition-timing-function: ease, ease, ease;
+    position: absolute;
+    opacity: 0;
+    z-index: -1000;
+}
+
+.librarian-add-book-open {
+    transform: translateY(0);
+    position: relative;
+    opacity: 1;
+    z-index: 1;
 }
 
 /* FOOTER */
