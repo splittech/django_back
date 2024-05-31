@@ -10,7 +10,7 @@ export default function PinBook(props) {
     // [{ id: 1, name: 'kjnj' }, { id: 2, name: 'kjnj' }, { id: 3, name: 'kjnj' }, { id: 4, name: 'kjnj' }, { id: 5, name: 'kjnj' }, { id: 6, name: 'kjnj' }]
 
     const [value, setValue] = useState('')
-    let selectedItems = 0
+    const [selectedItems, setSelectedItems] = useState(0)
     const hasScroll = readers.length > 5
     const filters = useRef(null)
 
@@ -34,7 +34,7 @@ export default function PinBook(props) {
                 //     }
                 // }, 100)
             } else {
-                selectedItems = el
+                setSelectedItems(el)
                 // selectedItems.push(el)
                 const interval = setInterval(() => {
                     if (selectedItems === el) {
