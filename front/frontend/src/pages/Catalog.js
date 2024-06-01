@@ -10,7 +10,7 @@ import UseGetArray from '../hooks/use-getArray'
 
 export default function Catalog() {
     // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
-    const [url, setUrl] = useState('http://localhost:8000/api/v1/books/')
+    const [url, setUrl] = useState('http://127.0.0.1:8000/api/v1/books/')
     // const memoizedUrl = useMemo(() => url, [url])
     // console.log(memoizedUrl)
     // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')

@@ -20,12 +20,13 @@ export default function UseDinamicPagination(url, limit, page = 1) {
     useEffect(() => {
         if (fetching) {
             axios.get(`${url}`)
-            // ?_limit=${limit}&_page=${currentPage}`)
-            .then(res => {
-                setArray([...array, ...res.data])
-                setCurrentPage(prevState => prevState + 1)
-                setTotalCount(res.headers['x-total-count'])
-            }).finally(() => setFetching(false))
+                // ?_limit=${limit}&_page=${currentPage}`)
+                .then(res => {
+                    setArray([...array, ...res.data])
+                    // setCurrentPage(prevState => prevState + 1)
+                    setTotalCount(res.headers['x-total-count'])
+                    console.log(array)
+                }).finally(() => setFetching(false))
         }
     }, [fetching])
 
