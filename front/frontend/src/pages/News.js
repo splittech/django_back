@@ -30,12 +30,16 @@ export default function News() {
     // }
 
     return (
-        <div>
-            <Path current={news.title} />
-            <h1 className='page-title'>{news.title}</h1>
-            <span className='news-create-date'>{news.createDate}</span>
-            <img src={news.image} width={230} height={230} className='news-img-detail' />
-            <p dangerouslySetInnerHTML={{ __html: news.text }} className='news-description-text'></p>
-        </div>
+        <>
+            {news !== null &&
+                <div>
+                    <Path current={news.title} />
+                    <h1 className='page-title'>{news.title}</h1>
+                    <span className='news-create-date'>{news.createDate}</span>
+                    <img src={news.image} width={230} height={230} className='news-img-detail' />
+                    <p dangerouslySetInnerHTML={{ __html: news.text }} className='news-description-text'></p>
+                </div>
+            }
+        </>
     )
 }
