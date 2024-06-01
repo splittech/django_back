@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import BookItem from '../components/BookItem'
 import { Link } from 'react-router-dom'
 import { FaSearch, FaArrowUp, FaArrowDown } from "react-icons/fa"
@@ -9,105 +9,111 @@ import { API_URL } from '../http'
 import UseGetArray from '../hooks/use-getArray'
 
 export default function Catalog() {
-    // let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
-    let [url, setUrl] = useState('http://localhost:8000/api/v1/books/')
-    const memoizedUrl = useMemo(() => url, [url])
+    // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
+    const [url, setUrl] = useState('http://localhost:8000/api/v1/books/')
+    // const memoizedUrl = useMemo(() => url, [url])
     // console.log(memoizedUrl)
     // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
-    const [books] = useDinamicPagination(memoizedUrl, 15)
+    const [books, setBooks] = useState([])
 
-    const [authors, setAuthors] = 
-    UseGetArray('api/v1/books/authors'
-        // useState(
-        // [
-        //     {
-        //         id: 1,
-        //         name: 'Автор 1'
-        //     },
-        //     {
-        //         id: 2,
-        //         name: 'Автор 2'
-        //     },
-        //     {
-        //         id: 3,
-        //         name: 'Автор 3'
-        //     },
-        //     {
-        //         id: 4,
-        //         name: 'Автор 4'
-        //     },
-        //     {
-        //         id: 5,
-        //         name: 'Автор 5'
-        //     },
-        //     {
-        //         id: 6,
-        //         name: 'Автор 6'
-        //     },
-        // ]
-    )
+    const [fetchedBook] = useDinamicPagination(url, 15)
+
+    useEffect(() => {
+        setBooks(fetchedBook)
+    }, [fetchedBook])
+
+    const [authors, setAuthors] =
+        UseGetArray('api/v1/books/authors'
+            // useState(
+            //     [
+            //         {
+            //             id: 1,
+            //             name: 'Автор 1'
+            //         },
+            //         {
+            //             id: 2,
+            //             name: 'Автор 2'
+            //         },
+            //         {
+            //             id: 3,
+            //             name: 'Автор 3'
+            //         },
+            //         {
+            //             id: 4,
+            //             name: 'Автор 4'
+            //         },
+            //         {
+            //             id: 5,
+            //             name: 'Автор 5'
+            //         },
+            //         {
+            //             id: 6,
+            //             name: 'Автор 6'
+            //         },
+            //     ]
+        )
     let [selectedAuthors, setSelectedAuthors] = useState([])
-    const [genres, setGenres] = 
-    UseGetArray('api/v1/books/genres'
-        // useState(
-        //     [
-        //         {
-        //             id: 1,
-        //             name: 'Жанр 1'
-        //         },
-        //         {
-        //             id: 2,
-        //             name: 'Жанр 2'
-        //         },
-        //         {
-        //             id: 3,
-        //             name: 'Жанр 3'
-        //         },
-        //         {
-        //             id: 4,
-        //             name: 'Жанр 4'
-        //         },
-        //         {
-        //             id: 5,
-        //             name: 'Жанр 5'
-        //         },
-        //         {
-        //             id: 6,
-        //             name: 'Жанр 6'
-        //         },
-        //     ]
-    )
+    const [genres, setGenres] =
+        UseGetArray('api/v1/books/genres'
+            // useState(
+            //     [
+            //         {
+            //             id: 1,
+            //             name: 'Жанр 1'
+            //         },
+            //         {
+            //             id: 2,
+            //             name: 'Жанр 2'
+            //         },
+            //         {
+            //             id: 3,
+            //             name: 'Жанр 3'
+            //         },
+            //         {
+            //             id: 4,
+            //             name: 'Жанр 4'
+            //         },
+            //         {
+            //             id: 5,
+            //             name: 'Жанр 5'
+            //         },
+            //         {
+            //             id: 6,
+            //             name: 'Жанр 6'
+            //         },
+            //     ]
+        )
     let [selectedGenres, setSelectedGenres] = useState([])
-    const [tags, setTags] = 
-    UseGetArray('api/v1/books/tags'
-        // useState(
-        //     [
-        //         {
-        //             id: 1,
-        //             name: 'Тег 1'
-        //         },
-        //         {
-        //             id: 2,
-        //             name: 'Тег 2'
-        //         },
-        //         {
-        //             id: 3,
-        //             name: 'Тег 3'
-        //         },
-        //         {
-        //             id: 4,
-        //             name: 'Тег 4'
-        //         },
-        //         {
-        //             id: 5,
-        //             name: 'Тег 5'
-        //         },
-        //         {
-        //             id: 6,
-        //             name: 'Тег 6'
-        //         },
-        //     ]
-    )
+    const [tags, setTags] =
+        UseGetArray('api/v1/books/tags'
+            // useState(
+            //     [
+            //         {
+            //             id: 1,
+            //             name: 'Тег 1'
+            //         },
+            //         {
+            //             id: 2,
+            //             name: 'Тег 2'
+            //         },
+            //         {
+            //             id: 3,
+            //             name: 'Тег 3'
+            //         },
+            //         {
+            //             id: 4,
+            //             name: 'Тег 4'
+            //         },
+            //         {
+            //             id: 5,
+            //             name: 'Тег 5'
+            //         },
+            //         {
+            //             id: 6,
+            //             name: 'Тег 6'
+            //         },
+            //     ]
+        )
     let [selectedTags, setSelectedTags] = useState([])
     const [status, setStatus] = useState(
         [
@@ -144,30 +150,30 @@ export default function Catalog() {
     // const [value, setValue] = useState('')
     let [selectedSort, setSelectedSort] = useState({ param: 'По популярности', direction: 'asc' })
 
-    function updateSelectedAutors(array) {
-        selectedAuthors = array
-        searchBook()
-    }
+    // function updateSelectedAutors(array) {
+    //     setSelectedAuthors(array)
+    //     // searchBook()
+    // }
 
-    async function updateSelectedGenres(array) {
-        selectedGenres = array
-        searchBook()
-    }
+    // async function updateSelectedGenres(array) {
+    //     setSelectedGenres(array)
+    //     // searchBook()
+    // }
 
-    async function updateSelectedTags(array) {
-        selectedTags = array
-        searchBook()
-    }
+    // async function updateSelectedTags(array) {
+    //     setSelectedTags(array)
+    //     // searchBook()
+    // }
 
-    function updateSelectedStatus(array) {
-        selectedStatus = array
-        searchBook()
-    }
+    // function updateSelectedStatus(array) {
+    //     setSelectedStatus(array)
+    //     // searchBook()
+    // }
 
-    function updateSelectedAdditionalFilters(array) {
-        selectedAdditionalFilters = array
-        searchBook()
-    }
+    // function updateSelectedAdditionalFilters(array) {
+    //     setSelectedAdditionalFilters(array)
+    //     // searchBook()
+    // }
 
     async function selectSort(param, direction) {
         const ss = { param, direction }
@@ -181,10 +187,11 @@ export default function Catalog() {
             }, 100)
         })
         await promise
-        searchBook()
+        // searchBook()
     }
 
-    function searchBook() {
+    // function searchBook() {
+    useEffect(() => {
         const authorsQuery = selectedAuthors.length > 0 ? `author=${selectedAuthors.map(el => el
             // .replace(/\s/g, '_')
         ).join(',')}` : ''
@@ -202,10 +209,14 @@ export default function Catalog() {
 
         // const sortQuery = `${selectedSort.direction === 'desc' ? '-' : ''}${selectedSort.param}`
 
-        url = `${API_URL}api/v1/books${queryParams === '' ? '' : `?${queryParams}`}`
-        // url = `${API_URL}api/v1/books${queryParams === '' ? '' : `?${queryParams}`}/?sort=${sortQuery}`
+        setUrl(`${API_URL}api/v1/books${queryParams === '' ? '' : `?${queryParams}`}`)
+        // setUrl(`${API_URL}api/v1/books${queryParams === '' ? '' : `?${queryParams}`}/?sort=${sortQuery}`)
+    }, [selectedAuthors, selectedGenres, selectedTags])
+    // }
+
+    useEffect(() => {
         console.log(url)
-    }
+    }, [url])
 
     // const searchBooks = books.filter(book => {
     //     return (book.title.toLowerCase().includes(value.toLowerCase())
@@ -248,28 +259,38 @@ export default function Catalog() {
                         title={'Автор'}
                         placeholder={'Введите имя автора'}
                         items={authors}
-                        updateSelectedItems={updateSelectedAutors}
+                        selectedItems={selectedAuthors}
+                        setSelectedItems={setSelectedAuthors}
+                    // updateSelectedItems={updateSelectedAutors}
                     />
                     <Filter
                         title={'Жанр'}
                         placeholder={'Введите жанр'}
                         items={genres}
-                        updateSelectedItems={updateSelectedGenres}
+                        selectedItems={selectedGenres}
+                        setSelectedItems={setSelectedGenres}
+                    // updateSelectedItems={updateSelectedGenres}
                     />
                     <Filter
                         title={'Теги'}
                         placeholder={'Введите тег'}
                         items={tags}
-                        updateSelectedItems={updateSelectedTags}
+                        selectedItems={selectedTags}
+                        setSelectedItems={setSelectedTags}
+                    // updateSelectedItems={updateSelectedTags}
                     />
                     <Filter
                         title={'Статус'}
                         items={status}
-                        updateSelectedItems={updateSelectedStatus}
+                        selectedItems={selectedStatus}
+                        setSelectedItems={setSelectedStatus}
+                    // updateSelectedItems={updateSelectedStatus}
                     />
                     <Filter
                         items={additionalFilters}
-                        updateSelectedItems={updateSelectedAdditionalFilters}
+                        selectedItems={selectedAdditionalFilters}
+                        setSelectedItems={setSelectedAdditionalFilters}
+                    // updateSelectedItems={updateSelectedAdditionalFilters}
                     />
                 </div>
                 <div className={`catalog-sort ${openSort && 'catalog-sort-open'}`}>
