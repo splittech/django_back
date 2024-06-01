@@ -74,19 +74,23 @@ export default observer(function Book() {
     let pinBookStatus = store.pinBookStatus
 
     const [readers, setReaders] = UseGetArray('api/v1/books/readers')
-    // useState([
-    //     { id: 1, last_name: 'kjnj' },
-    //     { id: 2, last_name: 'kjnj' },
-    //     { id: 3, last_name: 'kjnj' },
-    //     { id: 4, last_name: 'kjnj' },
-    //     { id: 5, last_name: 'kjnj' },
-    //     { id: 6, last_name: 'kjnj' }
-    // ])
+        // useState([
+        //     { id: 1, last_name: 'kjnj' },
+        //     { id: 2, last_name: 'kjnj' },
+        //     { id: 3, last_name: 'kjnj' },
+        //     { id: 4, last_name: 'kjnj' },
+        //     { id: 5, last_name: 'kjnj' },
+        //     { id: 6, last_name: 'kjnj' }
+        // ])
 
     const [value, setValue] = useState('')
     const [selectedItems, setSelectedItems] = useState(0)
-    const hasScroll = readers.length > 5
+    let hasScroll = false
     const filters = useRef(null)
+
+    if (!isReader) {
+        hasScroll = readers.length > 5
+    }
 
     useScrollBar(filters, hasScroll)
 
@@ -175,8 +179,10 @@ export default observer(function Book() {
                                             title={'Закрепить'}
                                             onClick={() => {
                                                 console.log(selectedItems)
-                                                store.pinBook(book.id, selectedItems)
-                                                setModalActive(false)
+                                                if (selectedItems !== 0) {
+                                                    store.pinBook(book.id, selectedItems)
+                                                    setModalActive(false)
+                                                }
                                             }
                                             } />
                                     </Modal>
