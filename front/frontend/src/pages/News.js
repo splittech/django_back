@@ -1,20 +1,26 @@
 import { useParams } from 'react-router-dom'
 import UserService from '../service/UserService'
 import Path from '../components/Path'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export default function News() {
     const { id } = useParams()
-    const [news, setNews] = useState(getNews(id))
+    const [news, setNews] = useState(null)
 
-    async function getNews(id) {
-        try {
-            const response = await UserService.getNews(id)
-            setNews(response.data)
-        } catch (e) {
-            console.log(e)
+    useEffect(() => {
+        async function getNews() {
+            try {
+                const response = await UserService.getNews(id)
+                setNews(response.data)
+            } catch (e) {
+                console.log(e)
+            }
         }
-    }
+        if (!news) {
+            getNews()
+        }
+    }, [id, news])
+
 
     // const news = {
     //     title: "Название новости",

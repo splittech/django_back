@@ -368,8 +368,8 @@ export default function Catalog() {
             </div>
             <div className='book-list'>
                 {books.map(el => (
-                    <Link to={`/catalog/${el.id}`} className='book-link-another-page' key={el.id}>
-                        <BookItem key={el.id} bookItem={el} />
+                    <Link to={`/catalog/${el.id}`} className='book-link-another-page' key={el.title}>
+                        <BookItem bookItem={el} />
                     </Link>
                 ))}
             </div>
