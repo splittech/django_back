@@ -48,6 +48,10 @@ export default observer(function Librarian() {
             setWidht(height * 3 / 4)
         }
     }, [refComponent])
+    
+    if (!store.isLoading && !store.isAuth) {
+        return <Navigate to='/authorisation' />
+    }
 
     return (
         <div>
