@@ -19,6 +19,7 @@ export default function Catalog() {
     const [fetchedBook] = useDinamicPagination(url, 15)
 
     useEffect(() => {
+        console.log(fetchedBook)
         setBooks(fetchedBook)
     }, [fetchedBook])
 
@@ -193,10 +194,10 @@ export default function Catalog() {
     // function searchBook() {
     useEffect(() => {
         const authorsQuery = selectedAuthors.length > 0 ? `author=${selectedAuthors.map(el => el
-            // .replace(/\s/g, '_')
+            .replace(/\s/g, '%20')
         ).join(',')}` : ''
         const genresQuery = selectedGenres.length > 0 ? `genres=${selectedGenres.map(el => el
-            // .replace(/\s/g, '_')
+            .replace(/\s/g, '%20')
         ).join(',')}` : ''
         const tagsQuery = selectedTags.length > 0 ? `tags=${selectedTags.map(el => el
             // .replace(/\s/g, '_')

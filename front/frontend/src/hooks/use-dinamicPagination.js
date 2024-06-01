@@ -19,13 +19,14 @@ export default function UseDinamicPagination(url, limit, page = 1) {
 
     useEffect(() => {
         if (fetching) {
+            console.log(url)
             axios.get(`${url}`)
-                // ?_limit=${limit}&_page=${currentPage}`)
+            //?_limit=${limit}&_page=${currentPage}
                 .then(res => {
                     setArray([...array, ...res.data])
                     // setCurrentPage(prevState => prevState + 1)
                     setTotalCount(res.headers['x-total-count'])
-                    console.log(array)
+                    // console.log(arrayRef)
                 }).finally(() => setFetching(false))
         }
     }, [fetching])
@@ -38,14 +39,15 @@ export default function UseDinamicPagination(url, limit, page = 1) {
     }, [])
 
     useEffect(() => {
+        setArray([])
         setFetching(true)
     }, [url])
 
     const scrollHandler = (e) => {
-        if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 1000
-            && arrayRef.current.length < totalCountRef.current) {
-            setFetching(true)
-        }
+        // if (e.target.documentElement.scrollHeight - (e.target.documentElement.scrollTop + window.innerHeight) < 1000
+        //     && arrayRef.current.length < totalCountRef.current) {
+        //     setFetching(true)
+        // }
     }
 
     return (
