@@ -3,7 +3,7 @@ import NewsItem from '../components/NewsItem'
 import useDinamicPagination from '../hooks/use-dinamicPagination'
 
 export default function Home() {
-    const [news, setNews] = useDinamicPagination('http://localhost:8000/api/v1/news/', 1)
+    const [news, setNews] = useDinamicPagination('http://127.0.0.1:8000/api/v1/news/', 1)
 
     return (
         <div>
