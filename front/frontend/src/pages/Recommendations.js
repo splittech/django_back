@@ -198,12 +198,16 @@ export default function Recommendations() {
             <div>
                 <h1 className='section-name'><a name='tops'>Топы</a></h1>
                 <Tops bookItems={tops.length > 10 ? tops.slice(0, 10) : tops} />
-                <Link to={'tops'} className='read-all'>Смотреть все</Link>
+                {tops.length > 10 &&
+                    <Link to={'tops'} className='read-all'>Смотреть все</Link>
+                }
             </div>
             <div>
                 <h1 className='section-name'><a name='collections'>Подборки</a></h1>
                 <Collections collection={collections.length > 10 ? collections.slice(0, 10) : collections} />
-                <Link to={'collections'} className='read-all'>Смотреть все</Link>
+                {collections.length > 10 &&
+                    <Link to={'collections'} className='read-all'>Смотреть все</Link>
+                }
             </div>
         </div>
     )
