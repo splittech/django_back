@@ -86,8 +86,8 @@ export default class Store {
             const response = await AuthService.getUser(auth_token)
             console.log(response)
             this.setUser(response.data)
-            console.log(response.data.groups.name)
-            if (response.data.groups.name === ('Reader')) {
+            console.log(response.data.groups[0].name)
+            if (response.data.groups[0].name === ('Reader')) {
                 this.isReader = true
             } else {
                 this.isReader = false
