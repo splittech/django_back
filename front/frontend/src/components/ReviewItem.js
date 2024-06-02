@@ -8,7 +8,7 @@ export default function ReviewItem(props) {
     const [classname, setClassname] = useState('')
     const [isCkicked, setIsCkicked] = useState(false)
     const [comments] = useState(props.reviewItem.comments)
-    const [difference] = useState(props.reviewItem.like - props.reviewItem.dislike)
+    const [difference] = useState((props.reviewItem.like - props.reviewItem.dislike) ? props.reviewItem.like - props.reviewItem.dislike : 0)
     const refComponent = createRef()
 
     useEffect(() => {
