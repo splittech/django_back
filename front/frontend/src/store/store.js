@@ -12,6 +12,7 @@ export default class Store {
     isReader = true
     pinBookStatus = 0
     createReviewStatus = 0
+    addToFavoritesStatus = 0
     status = 0
 
     constructor() {
@@ -108,6 +109,18 @@ export default class Store {
             this.createReviewStatus = 200
         } catch (e) {
             this.createReviewStatus = 400
+            console.log(e.response?.data?.message)
+        }
+    }
+
+    async addToFavorites(reader, book) {
+        try {
+            const auth_token = localStorage.getItem('auth_token')
+            const response = await UserService.addToFavorites(reader, book, auth_token)
+            console.log(response)
+            this.addToFavoritesStatus = 200
+        } catch (e) {
+            this.addToFavoritesStatus = 400
             console.log(e.response?.data?.message)
         }
     }

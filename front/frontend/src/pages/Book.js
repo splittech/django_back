@@ -82,8 +82,10 @@ export default observer(function Book() {
     const [modalActiveReview, setModalActiveReview] = useState(false)
     const [modalActivePinBookStatus, setModalActivePinBookStatus] = useState(false)
     const [modalActiveCreateReviewStatus, setModalActiveCreateReviewStatus] = useState(false)
+    const [modalActiveAddToFavoritesStatus, setModalActiveAddToFavoritesStatus] = useState(false)
     let pinBookStatus = store.pinBookStatus
     let createReviewStatus = store.createReviewStatus
+    let addToFavoritesStatus = store.addToFavoritesStatus
 
     const [readers, setReaders] = UseGetArray('api/v1/books/readers')
         // useState([
@@ -160,7 +162,23 @@ export default observer(function Book() {
                                     {isReader ?
                                         <>
                                             <span className='book-description-status'>{book.status}</span>
-                                            <Button title={'В избранное'} />
+                                            <Button title={'В избранное'}
+                                                onClick={() => {
+                                                    store.addToFavorites(store.user.id, book.id)
+                                                    setModalActiveAddToFavoritesStatus(true)
+                                                }} />
+                                            {addToFavoritesStatus !== 0 &&
+                                                <>
+                                                    {addToFavoritesStatus === 200 ?
+                                                        <Modal active={modalActiveAddToFavoritesStatus} setActive={setModalActiveAddToFavoritesStatus}>
+                                                            <h1 className='pin-book-status green'>Книга добавлена в избранное</h1>
+                                                        </Modal> :
+                                                        <Modal active={modalActiveAddToFavoritesStatus} setActive={setModalActiveAddToFavoritesStatus}>
+                                                            <h1 className='pin-book-status red'>Не удалось добавить книгу в избранное</h1>
+                                                        </Modal>
+                                                    }
+                                                </>
+                                            }
                                             <Button title={'Забронировать'} />
                                         </>
                                         : <>

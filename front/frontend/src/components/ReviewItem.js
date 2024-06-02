@@ -94,9 +94,9 @@ export default function ReviewItem(props) {
                         </> :
                         <>
                             <div className='review-item-head'>
-                                <img src={props.reviewItem.image} width={50} height={50} className='review-item-img' />
+                                <img src={props.reviewItem.author.avatar} width={50} height={50} className='review-item-img' />
                                 <div className='review-item-head-text'>
-                                    <h1 className='review-item-name'>{props.reviewItem.name}</h1>
+                                    <h1 className='review-item-name'>{props.reviewItem.author.last_name} {props.reviewItem.author.first_name}</h1>
                                     <span className='review-item-rating'>Оценка: ★ {props.reviewItem.rating}</span>
                                 </div>
                             </div>
@@ -151,9 +151,9 @@ export default function ReviewItem(props) {
                 :
                 <>
                     <div className='review-item-head'>
-                        <img src={props.reviewItem.image} width={50} height={50} className='review-item-img' />
+                        <img src={props.reviewItem.author.avatar} width={50} height={50} className='review-item-img' />
                         <div className='review-item-head-text'>
-                            <h1 className='review-item-name'>{props.reviewItem.name}</h1>
+                            <h1 className='review-item-name'>{props.reviewItem.author.last_name} {props.reviewItem.author.first_name}</h1>
                             <span className='review-item-rating'>Оценка: ★ {props.reviewItem.rating}</span>
                         </div>
                     </div>
