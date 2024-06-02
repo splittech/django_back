@@ -4,7 +4,7 @@ import ReviewItem from './ReviewItem'
 import UseGetArray from '../hooks/use-getArray'
 
 export default function ReviewHistory(props) {
-    const [book, setBook] = UseGetArray(`api/v1/books/${props.book}`)
+    const [book, setBook] = UseGetArray(`api/v1/books/${props.reviewItems.book}`)
 
     return (
         <div className='review-list'>{props.reviewItems.map(el => (
