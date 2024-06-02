@@ -133,7 +133,7 @@ export default function Catalog() {
     }
 
     useEffect(() => {
-        const authorsQuery = selectedAuthors.length > 0 ? `title=${selectedAuthors.map(el => el.replace(/\s/g, '%20')).join(',')}` : ''
+        const authorsQuery = selectedAuthors.length > 0 ? `author=${selectedAuthors.map(el => el.replace(/\s/g, '%20')).join(',')}` : ''
         const genresQuery = selectedGenres.length > 0 ? `genres=${selectedGenres.map(el => el.replace(/\s/g, '%20')).join(',')}` : ''
         const tagsQuery = selectedTags.length > 0 ? `tags=${selectedTags.map(el => el.replace(/\s/g, '_')).join(',')}` : ''
 
