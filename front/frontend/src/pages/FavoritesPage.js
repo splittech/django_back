@@ -10,7 +10,7 @@ import Favorites from '../components/Favorites'
 export default observer(function FavoritesPage() {
     const { store } = useContext(Context)
 
-    const [favorites, setFavorites] = useState([]
+    const [favorites, setFavorites] = useState(store.user.favourites
         // [{
         //     id: 1,
         //     photo: '',
