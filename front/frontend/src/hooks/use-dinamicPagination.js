@@ -26,7 +26,6 @@ export default function UseDinamicPagination(url, limit, page = 1) {
                     setArray([...array, ...res.data])
                     // setCurrentPage(prevState => prevState + 1)
                     setTotalCount(res.headers['x-total-count'])
-                    // console.log(arrayRef)
                 }).finally(() => setFetching(false))
         }
     }, [fetching])

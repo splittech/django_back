@@ -275,7 +275,7 @@ export default observer(function Reader() {
                                             type={'text'}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, last_name: e.target.value
+                                                    ...prevState, lastName: e.target.value
                                                 }))
                                             }}
                                         />
@@ -289,7 +289,7 @@ export default observer(function Reader() {
                                             pattern={"[А-Яа-яЁё\\s\\-]+"}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, first_name: e.target.value
+                                                    ...prevState, firstName: e.target.value
                                                 }))
                                             }}
                                         />
@@ -297,7 +297,7 @@ export default observer(function Reader() {
                                     <li className='personal-account-information-item-edit'>
                                         <span className='account-login-item-title'>Имя пользователя:</span>
                                         <Input
-                                            type={'text'}
+                                            type={'email'}
                                             value={user.username}
                                             placeholder={'Введите имя пользователя'}
                                             onChange={(e) => {

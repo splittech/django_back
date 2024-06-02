@@ -41,6 +41,7 @@ export default class Main extends Component {
                         <Route path='/recommendations/tops' element={<TopsPage />} />
                         <Route path='/recommendations/collections' element={<CollectionsPage />} />
                         <Route path='/recommendations/collections/:id' element={<CollectionPage />} />
+                        <Route path='/recommendations/collections/:collectionId/:id' element={<Book />} />
                         <Route path='/catalog' element={<Catalog />} />
                         <Route path='/catalog/:id' element={<Book />} />
                         <Route path='/catalog/:id/reviews' element={<Reviews />} />
@@ -51,6 +52,7 @@ export default class Main extends Component {
                         <Route path='/account/reader/bookhistory:id' element={<BookHistory />} />
                         <Route path='/account/librarian' element={<Librarian />} />
                         <Route path='/account/librarian/books' element={<BooksLibrarian />} />
+                        <Route path='/account/librarian/books/:id' element={<Book />} />
                         <Route path='/account/librarian/readers' element={<ReadersLibrarian />} />
                         <Route path='/account/librarian/reviews' element={<ReviewsLibrarian />} />
                         <Route path='/authorisation' element={<Authorisation />} />

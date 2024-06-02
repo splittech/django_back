@@ -1,4 +1,4 @@
-import React, { useRef, useState, useContext } from 'react'
+import React, { useRef, useState, useContext, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import UserService from '../service/UserService'
 import Path from '../components/Path'
@@ -10,6 +10,8 @@ import Modal from '../components/Modal'
 import useScrollBar from '../hooks/use-scrollBar'
 import Input from '../components/Input'
 import UseGetArray from '../hooks/use-getArray'
+import { FaStar } from "react-icons/fa";
+import { FaRegStar } from "react-icons/fa";
 
 export default observer(function Book() {
     const { store } = useContext(Context)
@@ -17,16 +19,22 @@ export default observer(function Book() {
     const isReader = store.isReader
 
     const { id } = useParams()
-    const [book, setBook] = useState(getBook(id))
+    const [book, setBook] = useState(null)
 
-    async function getBook(id) {
-        try {
-            const response = await UserService.getBook(id)
-            setBook(response.data)
-        } catch (e) {
-            console.log(e)
+    useEffect(() => {
+        async function getBook() {
+            try {
+                const response = await UserService.getBook(id)
+                setBook(response.data)
+            } catch (e) {
+                console.log(e)
+            }
         }
-    }
+
+        if (!book) {
+            getBook()
+        }
+    }, [id, book])
 
     // const book = {
     //     title: "Название книги",
@@ -66,10 +74,12 @@ export default observer(function Book() {
     //         name: 'Имя автора',
     //         like: 2,
     //         dislike: 1
-    //     },]
+    //     },],
+    //     copies: 10
     // }
 
-    const [modalActive, setModalActive] = useState(false)
+    const [modalActivePinBook, setModalActivePinBook] = useState(false)
+    const [modalActiveReview, setModalActiveReview] = useState(false)
     const [modalActiveStatus, setModalActiveStatus] = useState(true)
     let pinBookStatus = store.pinBookStatus
 
@@ -114,133 +124,177 @@ export default observer(function Book() {
         console.log(selectedItems)
     }
 
+    const [text, setText] = useState('')
+    const stars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    const [selectedStars, setSelectedStars] = useState(0)
+
     return (
-        <div>
-            <Path current={book.title} />
-            <div className='book-description'>
-                <img src={book.image} width={360} height={540} className='book-description-img' />
+        <>
+            {book !== null &&
                 <div>
-                    <div className='book-description-head'>
-                        <div className='book-description-params'>
-                            <h1 className='book-title'>{book.title}</h1>
-                            <span className='book-description-author'>{book.author}</span>
-                            <div className='book-description-numbers-div'>
-                                {book.rating > 0 &&
-                                    <span className='book-description-numbers'>★ {book.rating?.toFixed(1)}</span>
-                                }
-                                {book.reviews?.length > 0 &&
-                                    <a
-                                        href='#reviews'
-                                        className='book-description-numbers'
-                                        style={{ textDecoration: "none" }}>
-                                        Отзывы: {book.reviews?.length}
-                                    </a>
-                                }
-                            </div>
-                        </div>
-                        <div className='book-description-buttons'>
-                            {isReader ?
-                                <>
-                                    <span className='book-description-status'>{book.status}</span>
-                                    <Button title={'В избранное'} />
-                                    <Button title={'Забронировать'} />
-                                </>
-                                : <>
-                                    <Button title={'Закрепить'}
-                                        onClick={() => { setModalActive(true) }} />
-                                    <Modal active={modalActive} setActive={setModalActive}>
-                                        <h1 className='pin-book-name'>Закрепление книги</h1>
-                                        <div className='catalog-filters-item pin-book-readers'>
-                                            <span className='catalog-filters-item-title'>Список читателей</span>
-                                            <Input placeholder='Введите имя читателя'
-                                                onChange={(e) => { setValue(e.target.value) }} />
-                                            <div style={{
-                                                height: hasScroll ? '155px' : 'auto',
-                                                paddingRight: '10px',
-                                            }}
-                                                ref={filters} >
-                                                <div className='catalog-filters-item-checkbox-item'>
-                                                    {filter.map(el => (
-                                                        <label key={el.id} className='catalog-filters-item-checkbox-label'>
-                                                            <input
-                                                                type='checkbox'
-                                                                className='catalog-filters-item-checkbox'
-                                                                onChange={() => handleCheckboxChange(el.id)}
-                                                                checked={selectedItems === el.id}
-                                                            />
-                                                            <span className='catalog-filters-item-checkbox-custom'></span>
-                                                            {el.last_name} {el.first_name}
-                                                        </label>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <Button
-                                            title={'Закрепить'}
-                                            onClick={() => {
-                                                console.log(selectedItems)
-                                                if (selectedItems !== 0) {
-                                                    store.pinBook(book.id, selectedItems)
-                                                    setModalActive(false)
-                                                }
-                                            }
-                                            } />
-                                    </Modal>
-                                    {pinBookStatus !== 0 &&
+                    <Path current={book.title} />
+                    <div className='book-description'>
+                        <img src={book.image} width={360} height={540} className='book-description-img' />
+                        <div>
+                            <div className='book-description-head'>
+                                <div className='book-description-params'>
+                                    <h1 className='book-title'>{book.title}</h1>
+                                    <span className='book-description-author'>{book.author}</span>
+                                    <div className='book-description-numbers-div'>
+                                        {book.rating > 0 &&
+                                            <span className='book-description-numbers'>★ {book.rating?.toFixed(1)}</span>
+                                        }
+                                        {book.reviews?.length > 0 &&
+                                            <a
+                                                href='#reviews'
+                                                className='book-description-numbers'
+                                                style={{ textDecoration: "none" }}>
+                                                Отзывы: {book.reviews?.length}
+                                            </a>
+                                        }
+                                    </div>
+                                </div>
+                                <div className='book-description-buttons'>
+                                    {isReader ?
                                         <>
-                                            {pinBookStatus === 200 ?
-                                                <Modal active={modalActiveStatus} setActive={setModalActiveStatus}>
-                                                    <h1 className='pin-book-status green'>Книга закреплена за читателем</h1>
-                                                </Modal> :
-                                                <Modal active={modalActiveStatus} setActive={setModalActiveStatus}>
-                                                    <h1 className='pin-book-status red'>Книгу не удалось закрепить за читателем</h1>
-                                                </Modal>
+                                            <span className='book-description-status'>{book.status}</span>
+                                            <Button title={'В избранное'} />
+                                            <Button title={'Забронировать'} />
+                                        </>
+                                        : <>
+                                            <span className='book-description-status'>Количество копий: {book.copies}</span>
+                                            <Button title={'Закрепить'}
+                                                onClick={() => { setModalActivePinBook(true) }} />
+                                            <Modal active={modalActivePinBook} setActive={setModalActivePinBook}>
+                                                <h1 className='pin-book-name'>Закрепление книги</h1>
+                                                <div className='catalog-filters-item pin-book-readers'>
+                                                    <span className='catalog-filters-item-title'>Список читателей</span>
+                                                    <Input placeholder='Введите имя читателя'
+                                                        onChange={(e) => { setValue(e.target.value) }} />
+                                                    <div style={{
+                                                        height: hasScroll ? '155px' : 'auto',
+                                                        paddingRight: '10px',
+                                                        width: '500px'
+                                                    }}
+                                                        ref={filters} >
+                                                        <div className='catalog-filters-item-checkbox-item'>
+                                                            {filter.map(el => (
+                                                                <label key={el.id} className='catalog-filters-item-checkbox-label'>
+                                                                    <input
+                                                                        type='checkbox'
+                                                                        className='catalog-filters-item-checkbox'
+                                                                        onChange={() => handleCheckboxChange(el.id)}
+                                                                        checked={selectedItems === el.id}
+                                                                    />
+                                                                    <span className='catalog-filters-item-checkbox-custom'></span>
+                                                                    {el.last_name} {el.first_name}
+                                                                </label>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <Button
+                                                    title={'Закрепить'}
+                                                    onClick={() => {
+                                                        console.log(selectedItems)
+                                                        if (selectedItems !== 0) {
+                                                            store.pinBook(book.id, selectedItems)
+                                                            setSelectedItems(0)
+                                                            setModalActivePinBook(false)
+                                                        }
+                                                    }
+                                                    } />
+                                            </Modal>
+                                            {pinBookStatus !== 0 &&
+                                                <>
+                                                    {pinBookStatus === 200 ?
+                                                        <Modal active={modalActiveStatus} setActive={setModalActiveStatus}>
+                                                            <h1 className='pin-book-status green'>Книга закреплена за читателем</h1>
+                                                        </Modal> :
+                                                        <Modal active={modalActiveStatus} setActive={setModalActiveStatus}>
+                                                            <h1 className='pin-book-status red'>Книгу не удалось закрепить за читателем</h1>
+                                                        </Modal>
+                                                    }
+                                                </>
                                             }
                                         </>
                                     }
-                                </>
-                            }
+                                </div>
+                            </div>
+                            <div className='book-description-desc'>
+                                <h1 className='book-section-name'>О книге</h1>
+                                <p className='book-description-desc-text' dangerouslySetInnerHTML={{ __html: book.description }}></p>
+                            </div>
+                            <div className='book-description-genres-tegs'>
+                                <div>
+                                    <h1 className='book-section-name'>Жанры</h1>
+                                    <p>{book.genres?.join(', ')}.</p>
+                                </div>
+                                <div>
+                                    <h1 className='book-section-name'>Теги</h1>
+                                    <p>{book.tags?.join(', ')}.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div className='book-description-desc'>
-                        <h1 className='book-section-name'>О книге</h1>
-                        <p className='book-description-desc-text' dangerouslySetInnerHTML={{ __html: book.description }}></p>
+                    <div className='book-description-head'>
+                        <h1 style={{ 'marginLeft': '30px', 'marginBottom': '30px' }} >
+                            <a className='book-section-name' name='reviews'>
+                                Отзывы</a></h1>
+                        <Button title={'Написать отзыв'} onClick={() => { setModalActiveReview(true) }} />
+                        <Modal active={modalActiveReview} setActive={setModalActiveReview}>
+                            <h1 className='pin-book-name'>Отзыв</h1>
+                            <div className='modal-review'>
+                                <div className='modal-review-star-div'>
+                                    <span>Оцените книгу:</span>
+                                    <span className='modal-review-stars'>
+                                        {stars.map(el => {
+                                            if (el < selectedStars) {
+                                                return <FaStar key={el} onClick={() => setSelectedStars(el + 1)} className='modal-review-star' />
+                                            } else {
+                                                return <FaRegStar key={el} onClick={() => setSelectedStars(el + 1)} className='modal-review-star' />
+                                            }
+                                        })}
+                                    </span>
+                                </div>
+                                <textarea
+                                    placeholder='Введите отзыв'
+                                    className='textarea textarea-review'
+                                    value={text}
+                                    onChange={e => setText(e.target.value)} />
+                            </div>
+                            <Button
+                                title={'Отправить'}
+                                onClick={() => {
+                                    if (text !== '' && selectedStars !== 0) {
+                                        // 
+                                        setModalActiveReview(false)
+                                        setText('')
+                                        setSelectedStars(0)
+                                    }
+                                }
+                                } />
+                        </Modal>
                     </div>
-                    <div className='book-description-genres-tegs'>
-                        <div>
-                            <h1 className='book-section-name'>Жанры</h1>
-                            <p>{book.genres?.join(', ')}.</p>
-                        </div>
-                        <div>
-                            <h1 className='book-section-name'>Теги</h1>
-                            <p>{book.tags?.join(', ')}.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className='book-description-head'>
-                <h1 style={{ 'marginLeft': '30px', 'marginBottom': '30px' }} >
-                    <a className='book-section-name' name='reviews'>
-                        Отзывы</a></h1>
-                <Button title={'Написать отзыв'} />
-            </div>
-            {
-                book.reviews?.length > 0 ?
-                    <div className='book-reviews'>
-                        {book.reviews?.slice(0, 2).map(el =>
-                            <ReviewItem key={el.id} reviewItem={el} isAccount={false} />
-                        )}
-                    </div>
-                    : <div className='book-reviews'>
-                        Нет отзывов
-                    </div>
+                    {
+                        book.reviews?.length > 0 ?
+                            <div className='book-reviews'>
+                                {book.reviews?.slice(0, 2).map(el =>
+                                    <ReviewItem key={el.id} reviewItem={el} isAccount={false} />
+                                )}
+                            </div>
+                            : <div className='book-reviews'>
+                                Нет отзывов
+                            </div>
+                    }
+                    {
+                        book.reviews?.length > 2 &&
+                        <Link
+                            to={'reviews'}
+                            className='read-all'>Смотреть все</Link>
+                    }
+                </div >
             }
-            {
-                book.reviews?.length > 2 &&
-                <Link
-                    to={'reviews'}
-                    className='read-all'>Смотреть все</Link>
-            }
-        </div >
+        </>
     )
 })

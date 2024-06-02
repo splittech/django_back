@@ -531,9 +531,8 @@ body {
     margin-bottom: 35px;
     padding: 20px;
     gap: 20px;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     transform: translateY(-30px);
-    /* transition: all ease 0.5s; */
     transition-property: transform, opacity, position;
     transition-duration: 0.5s, 0s, 0.5s;
     transition-timing-function: ease, ease, ease;
@@ -556,6 +555,7 @@ body {
     flex-direction: column;
     padding: 10px;
     gap: 10px;
+    width: -moz-available;
 }
 
 .catalog-filters-item-title {
@@ -812,7 +812,6 @@ body {
     align-items: center;
     gap: 30px;
     z-index: 101;
-    width: 500px;
     transform: scale(0.5);
     transition: all 0.4s ease;
 }
@@ -841,6 +840,53 @@ body {
 
 .pin-book-status.red {
     color: #c60021;
+}
+
+.modal-review {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.textarea {
+    font-family: "Montserrat Alternates", sans-serif;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 1px solid #999999;
+    padding: 10px;
+}
+
+.textarea:focus {
+    outline: 1.2px solid #42515a;
+}
+
+.textarea-review {
+    width: 50vw;
+    height: 30vh;
+}
+
+.modal-review-star-div {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+}
+
+.modal-review-stars {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.modal-review-star {
+    color: #42515a;
+    scale: 1.2;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.modal-review-star:hover {
+    transform: scale(1.1);
 }
 
 /* ACCOUNT */
@@ -1056,7 +1102,7 @@ body {
 }
 
 .review-item-text-container-hide-max {
-    max-height: 194px;
+    max-height: 170px;
 }
 
 .review-item-text-container-not-hide {
@@ -1155,6 +1201,13 @@ body {
     color: #42515a;
 }
 
+.review-item-buttons{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    justify-content: center;
+}
+
 /* LIBRARIAN */
 
 .librarian-div {
@@ -1186,7 +1239,7 @@ body {
 }
 
 .librarian-item-reader-img {
-    border-radius: 30px;
+    border-radius: 70px;
 }
 
 .librarian-add-book {
@@ -1213,6 +1266,100 @@ body {
     opacity: 1;
     z-index: 1;
 }
+
+.modal-librarian-item {
+    border: #999999 solid 1px;
+    border-radius: 10px;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    width: 80vw;
+}
+
+.modal-librarian-book-desc {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.modal-librarian-book-head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.modal-librarian-book-text-img {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.modal-librarian-book-text {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.modal-librarian-book-title {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.modal-librarian-book-author {
+    font-size: 20px;
+}
+
+.modal-librarian-book-copies {
+    font-size: 16px;
+    color: #42515a;
+}
+
+.modal-librarian-book-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 20px;
+}
+
+.modal-librarian-book-button {
+    border: none;
+    color: #42515a;
+    background-color: white;
+    font-family: "Montserrat Alternates", sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    width: fit-content;
+    padding: 0;
+}
+
+.modal-librarian-book-button:hover {
+    scale: 1.1;
+}
+
+.modal-librarian-book-bottom {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.modal-librarian-book-bottom-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.modal-librarian-book-bottom-title {
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+}
+
 
 /* FOOTER */
 

@@ -1,5 +1,7 @@
 import { makeAutoObservable } from 'mobx'
 import AuthService from "../service/AuthService";
+import axios from 'axios';
+import { API_URL } from '../http';
 import UserService from '../service/UserService';
 
 export default class Store {
@@ -9,6 +11,7 @@ export default class Store {
     isCSRF = null
     isReader = true
     pinBookStatus = 0
+    status = 0
 
     constructor() {
         makeAutoObservable(this)

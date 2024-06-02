@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState, useContext, useRef } from 'react'
 import Path from '../components/Path'
 import { Link } from 'react-router-dom'
 import { FaSearch, FaArrowUp, FaArrowDown } from "react-icons/fa"
@@ -7,209 +7,110 @@ import Filter from '../components/Filter'
 import useDinamicPagination from '../hooks/use-dinamicPagination'
 import { API_URL } from '../http'
 import UserService from '../service/UserService'
+import Modal from '../components/Modal'
+import useScrollBar from '../hooks/use-scrollBar'
+import { Context } from '..'
+import { observer } from 'mobx-react-lite'
+import Input from '../components/Input'
 
+export default observer(function ReadersLibrarian() {
+    const { store } = useContext(Context)
 
+    const [readers, setReaders] = UseGetArray('api/v1/books/readers')
+        // useState([
+        //     { id: 1, last_name: 'kjnj', first_name: 'qwer', username: 'user' },
+        //     { id: 2, last_name: 'kjnj', first_name: 'qwer', username: 'user' },
+        //     { id: 3, last_name: 'kjnj', first_name: 'qwer', username: 'user' },
+        //     { id: 4, last_name: 'kjnj', first_name: 'qwer', username: 'user' },
+        //     { id: 5, last_name: 'kjnj', first_name: 'qwer', username: 'user' },
+        //     { id: 6, last_name: 'kjnj', first_name: 'qwer', username: 'user' }
+        // ])
 
-export default function ReadersLibrarian() {
-    let [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
-    // let [url, setUrl] = useState('https://localhost:8000/api/v1/books/')
-    const memoizedUrl = useMemo(() => url, [url])
-    // console.log(memoizedUrl)
-    // const [url, setUrl] = useState('https://jsonplaceholder.typicode.com/posts')
-    const [readers] = useDinamicPagination(memoizedUrl, 15)
-    const [authors, setAuthors] = useState(
-        // getAuthors()
-        [
-            {
-                id: 1,
-                name: 'Автор 1'
-            },
-            {
-                id: 2,
-                name: 'Автор 2'
-            },
-            {
-                id: 3,
-                name: 'Автор 3'
-            },
-            {
-                id: 4,
-                name: 'Автор 4'
-            },
-            {
-                id: 5,
-                name: 'Автор 5'
-            },
-            {
-                id: 6,
-                name: 'Автор 6'
-            },
-        ]
-    )
-    let [selectedAuthors, setSelectedAuthors] = useState([])
-    const [genres, setGenres] = useState(
-        // getGenres()
-        [
-            {
-                id: 1,
-                name: 'Жанр 1'
-            },
-            {
-                id: 2,
-                name: 'Жанр 2'
-            },
-            {
-                id: 3,
-                name: 'Жанр 3'
-            },
-            {
-                id: 4,
-                name: 'Жанр 4'
-            },
-            {
-                id: 5,
-                name: 'Жанр 5'
-            },
-            {
-                id: 6,
-                name: 'Жанр 6'
-            },
-        ]
-    )
-    let [selectedGenres, setSelectedGenres] = useState([])
-    const [tags, setTags] = useState(
-        // getTags()
-        [
-            {
-                id: 1,
-                name: 'Тег 1'
-            },
-            {
-                id: 2,
-                name: 'Тег 2'
-            },
-            {
-                id: 3,
-                name: 'Тег 3'
-            },
-            {
-                id: 4,
-                name: 'Тег 4'
-            },
-            {
-                id: 5,
-                name: 'Тег 5'
-            },
-            {
-                id: 6,
-                name: 'Тег 6'
-            },
-        ]
-    )
-    let [selectedTags, setSelectedTags] = useState([])
-    const [status, setStatus] = useState(
-        [
-            {
-                id: 1,
-                name: 'Свободно'
-            },
-            {
-                id: 2,
-                name: 'На руках'
-            },
-            {
-                id: 3,
-                name: 'Забронировано'
-            }
-        ]
-    )
-    let [selectedStatus, setSelectedStatus] = useState([])
-    const [openFilters, setOpenFilters] = useState(false)
-    const [openSort, setOpenSort] = useState(false)
-    // const [value, setValue] = useState('')
-    let [selectedSort, setSelectedSort] = useState({ param: 'По популярности', direction: 'asc' })
-    async function getAuthors() {
-        try {
-            const response = await UserService.getAuthors()
-            setAuthors(response.data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    const [value, setValue] = useState('')
 
-    async function getGenres() {
-        try {
-            const response = await UserService.getGenres()
-            setGenres(response.data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    const searchReader = readers.filter(reader => {
+        return (reader.last_name?.toLowerCase().includes(value.toLowerCase())
+            || reader.first_name?.toLowerCase().includes(value.toLowerCase())
+            || reader.id === value
+        )
+    })
 
-    async function getTags() {
-        try {
-            const response = await UserService.getTags()
-            setTags(response.data)
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    const [modalActiveReader, setModalActiveReader] = useState({})
 
-    function updateSelectedAutors(array) {
-        selectedAuthors = array
-        searchBook()
-    }
+    const [booksInHand, setBooksInHand] = //UseGetArray('api/v1/books/readers')
+        useState([
+            { id: 1, title: 'kjnj', author: 'qwer' },
+            { id: 2, title: 'kjnj', author: 'qwer' },
+            { id: 3, title: 'kjnj', author: 'qwer' },
+            { id: 4, title: 'kjnj', author: 'qwer' },
+            { id: 5, title: 'kjnj', author: 'qwer' },
+            // { id: 6, title: 'kjnj', author: 'qwer' },
+            // { id: 7, title: 'kjnj', author: 'qwer' },
+        ])
 
-    async function updateSelectedGenres(array) {
-        selectedGenres = array
-        searchBook()
-    }
+    const [booksReserved, setBooksReserved] = //UseGetArray('api/v1/books/readers')
+        useState([
+            { id: 1, title: 'qwertyu', author: 'qwert' },
+            { id: 2, title: 'qwertyu', author: 'qwert' },
+            { id: 3, title: 'qwertyu', author: 'qwert' },
+            { id: 4, title: 'qwertyu', author: 'qwert' },
+            { id: 5, title: 'qwertyu', author: 'qwert' },
+            // { id: 6, title: 'qwertyu', author: 'qwert' },
+            // { id: 7, title: 'qwertyu', author: 'qwert' },
+        ])
 
-    async function updateSelectedTags(array) {
-        selectedTags = array
-        searchBook()
-    }
+    const hasScroll1 = booksInHand.length > 5
+    const hasScroll2 = booksReserved.length > 5
+    const [value1, setValue1] = useState('')
+    const [value2, setValue2] = useState('')
+    const [selectedItems1, setSelectedItems1] = useState(0)
+    const [selectedItems2, setSelectedItems2] = useState(0)
+    const filters1 = useRef(null)
+    const filters2 = useRef(null)
 
-    function updateSelectedStatus(array) {
-        selectedStatus = array
-        searchBook()
-    }
+    useScrollBar(filters1, hasScroll1)
+    useScrollBar(filters2, hasScroll2)
 
-    async function selectSort(param, direction) {
-        const ss = { param, direction }
-        setSelectedSort(selectedSort = ss)
+    const filter1 = booksInHand.filter(el => {
+        return el.title?.toLowerCase()?.includes(value1.toLowerCase())
+            || el.author?.toLowerCase()?.includes(value1.toLowerCase())
+    })
+
+    const filter2 = booksReserved.filter(el => {
+        return el.title?.toLowerCase()?.includes(value2.toLowerCase())
+            || el.author?.toLowerCase()?.includes(value2.toLowerCase())
+    })
+
+    async function handleCheckboxChange1(el) {
         const promise = new Promise((resolve) => {
-            const interval = setInterval(() => {
-                if (selectedSort.param === param && selectedSort.direction === direction) {
-                    clearInterval(interval)
-                    resolve()
-                }
-            }, 100)
+            if (selectedItems1 !== el) {
+                setSelectedItems1(el)
+                const interval = setInterval(() => {
+                    if (selectedItems1 === el) {
+                        clearInterval(interval)
+                        resolve()
+                    }
+                }, 100)
+            }
         })
         await promise
-        searchBook()
+        console.log(selectedItems1)
     }
 
-    function searchBook() {
-        const authorsQuery = selectedAuthors.length > 0 ? `author=${selectedAuthors.map(el => el
-            // .replace(/\s/g, '_')
-        ).join(',')}` : ''
-        const genresQuery = selectedGenres.length > 0 ? `genres=${selectedGenres.map(el => el
-            // .replace(/\s/g, '_')
-        ).join(',')}` : ''
-        const tagsQuery = selectedTags.length > 0 ? `tags=${selectedTags.map(el => el
-            // .replace(/\s/g, '_')
-        ).join(',')}` : ''
-        const statusesQuery = selectedStatus.length > 0 ? `status=${selectedStatus.map(el => el
-            // .replace(/\s/g, '_')
-        ).join(',')}` : ''
-
-        const queryParams = [authorsQuery, genresQuery, tagsQuery, statusesQuery].filter(Boolean).join('&')
-
-        const sortQuery = `${selectedSort.direction === 'desc' ? '-' : ''}${selectedSort.param}`
-
-        url = `${API_URL}api/v1/books${queryParams === '' ? '' : `?${queryParams}`}/?sort=${sortQuery}`
-        console.log(url)
+    async function handleCheckboxChange2(el) {
+        const promise = new Promise((resolve) => {
+            if (selectedItems2 !== el) {
+                setSelectedItems2(el)
+                const interval = setInterval(() => {
+                    if (selectedItems2 === el) {
+                        clearInterval(interval)
+                        resolve()
+                    }
+                }, 100)
+            }
+        })
+        await promise
+        console.log(selectedItems2)
     }
 
     return (
@@ -220,137 +121,146 @@ export default function ReadersLibrarian() {
                 <input type='text'
                     placeholder={'Введите имя читателя или номер читательского билета'}
                     onChange={(e) => {
-                        // setValue(e.target.value)
+                        setValue(e.target.value)
                     }}
                     className='catalog-search-input'></input>
                 <button className='catalog-search-button'><FaSearch className='catalog-search-button-icon' /></button>
             </div>
-            <div className='catalog-buttons'>
-                <Button title={'Фильтры'}
-                    className={`${openFilters && 'button-active'}`}
-                    onClick={() => {
-                        setOpenFilters(!openFilters)
-                        if (openSort) {
-                            setOpenSort(!openSort)
-                        }
-                    }} />
-                <Button title={selectedSort.param}
-                    className={`${openSort && 'button-active'}`}
-                    onClick={() => {
-                        setOpenSort(!openSort)
-                        if (openFilters) {
-                            setOpenFilters(!openFilters)
-                        }
-                    }} />
-            </div>
-            <div className='catalog-filters-container'>
-                <div className={`catalog-filters ${openFilters && 'catalog-filters-open'}`}>
-                    <Filter
-                        title={'Автор'}
-                        placeholder={'Введите имя автора'}
-                        items={authors}
-                        updateSelectedItems={updateSelectedAutors}
-                    />
-                    <Filter
-                        title={'Жанр'}
-                        placeholder={'Введите жанр'}
-                        items={genres}
-                        updateSelectedItems={updateSelectedGenres}
-                    />
-                    <Filter
-                        title={'Теги'}
-                        placeholder={'Введите тег'}
-                        items={tags}
-                        updateSelectedItems={updateSelectedTags}
-                    />
-                    <Filter
-                        title={'Статус'}
-                        items={status}
-                        updateSelectedItems={updateSelectedStatus}
-                    />
-                </div>
-                <div className={`catalog-sort ${openSort && 'catalog-sort-open'}`}>
-                    <span className='catalog-sort-title'>По популярности
-                        <div>
-                            <button
-                                className={`catalog-sort-button
-                                ${selectedSort.param === 'По популярности' & selectedSort.direction === 'asc' && 'catalog-sort-button-active'}`}
-                                onClick={() => selectSort('По популярности', 'asc')}
-                            ><FaArrowUp /></button>
-                            <button
-                                className={`catalog-sort-button
-                                ${selectedSort.param === 'По популярности' & selectedSort.direction === 'desc' && 'catalog-sort-button-active'}`}
-                                onClick={() => selectSort('По популярности', 'desc')}
-                            ><FaArrowDown /></button>
-                        </div>
-                    </span>
-                    <span className='catalog-sort-title'>По названиям
-                        <div>
-                            <button
-                                className={`catalog-sort-button
-                                ${selectedSort.param === 'По названиям' & selectedSort.direction === 'asc' && 'catalog-sort-button-active'}`}
-                                onClick={() => selectSort('По названиям', 'asc')}
-                            ><FaArrowUp /></button>
-                            <button
-                                className={`catalog-sort-button
-                                ${selectedSort.param === 'По названиям' & selectedSort.direction === 'desc' && 'catalog-sort-button-active'}`}
-                                onClick={() => selectSort('По названиям', 'desc')}
-                            ><FaArrowDown /></button>
-                        </div>
-                    </span>
-                    <span className='catalog-sort-title'>По авторам
-                        <div>
-                            <button
-                                className={`catalog-sort-button
-                                ${selectedSort.param === 'По авторам' & selectedSort.direction === 'asc' && 'catalog-sort-button-active'}`}
-                                onClick={() => selectSort('По авторам', 'asc')}
-                            ><FaArrowUp /></button>
-                            <button
-                                className={`catalog-sort-button
-                                ${selectedSort.param === 'По авторам' & selectedSort.direction === 'desc' && 'catalog-sort-button-active'}`}
-                                onClick={() => selectSort('По авторам', 'desc')}
-                            ><FaArrowDown /></button>
-                        </div>
-                    </span>
-                    <span className='catalog-sort-title'>По жанру
-                        <div>
-                            <button
-                                className={`catalog-sort-button
-                                ${selectedSort.param === 'По жанру' & selectedSort.direction === 'asc' && 'catalog-sort-button-active'}`}
-                                onClick={() => selectSort('По жанру', 'asc')}
-                            ><FaArrowUp /></button>
-                            <button
-                                className={`catalog-sort-button
-                                ${selectedSort.param === 'По жанру' & selectedSort.direction === 'desc' && 'catalog-sort-button-active'}`}
-                                onClick={() => selectSort('По жанру', 'desc')}
-                            ><FaArrowDown /></button>
-                        </div>
-                    </span>
-                    <span className='catalog-sort-title'>По статусу
-                        <div>
-                            <button
-                                className={`catalog-sort-button
-                                ${selectedSort.param === 'По статусу' & selectedSort.direction === 'asc' && 'catalog-sort-button-active'}`}
-                                onClick={() => selectSort('По статусу', 'asc')}
-                            ><FaArrowUp /></button>
-                            <button
-                                className={`catalog-sort-button
-                                ${selectedSort.param === 'По статусу' & selectedSort.direction === 'desc' && 'catalog-sort-button-active'}`}
-                                onClick={() => selectSort('По статусу', 'desc')}
-                            ><FaArrowDown /></button>
-                        </div>
-                    </span>
-                </div>
-            </div>
             <div className='librarian-div' >
-                {readers.map(el =>
-                    <div key={el.id} className='librarian-item' >
-                        <img src={el.avatar} height={30} width={30} className='librarian-item-reader-img' />
-                            <span>{el.title} {el.last_name} {el.first_name}</span>
-                            {/* <span>{el.author}</span> */}
-                    </div>
-                )}
-            </div>
-        </div>
+                {searchReader.length > 0 ?
+                    <>
+                        {searchReader.map(el =>
+                            <>
+                                <div key={el.id} className='librarian-item' onClick={() => { setModalActiveReader({ [el.id]: true }) }} >
+                                    <img src={el.avatar} height={30} width={30} className='librarian-item-reader-img' />
+                                    <span>{el.last_name} {el.first_name}</span>
+                                </div>
+                                <Modal active={modalActiveReader[el.id]} setActive={setModalActiveReader}>
+                                    <div key={el.id} className='modal-librarian-item' >
+                                        <div className='modal-librarian-book-desc'>
+                                            <div className='modal-librarian-book-head'>
+                                                <div className='modal-librarian-book-text-img'>
+                                                    <img src={el.avatar} height={70} width={70} className='librarian-item-reader-img' />
+                                                    <div className='modal-librarian-book-text'>
+                                                        <span className='modal-librarian-book-title'>{el.last_name} {el.first_name}</span>
+                                                        <span className='modal-librarian-book-copies'>Имя пользователя: {el.username}</span>
+                                                    </div>
+                                                </div>
+                                                <div className='modal-librarian-book-buttons'>
+                                                    <li className='personal-account-information-div-e-ticket'>
+                                                        <span className='personal-account-information-item-name'>Электронный билет:</span>
+                                                        <span className='personal-account-information-item-property'>№{el.id}</span>
+                                                    </li>
+                                                    <Link
+                                                        to={`${el.id}`}
+                                                        className='modal-librarian-book-button'
+                                                        style={{ textDecoration: 'none' }}>
+                                                        Открыть профиль
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                            <div className='modal-librarian-book-bottom'>
+                                                <div className='modal-librarian-book-bottom-item'>
+                                                    <div className='catalog-filters-item'>
+                                                        <span className='modal-librarian-book-bottom-title'>На руках</span>
+                                                        <Input placeholder='Введите название книги или имя автора'
+                                                            onChange={(e) => { setValue1(e.target.value) }}
+                                                        />
+                                                        <div style={{
+                                                            height: hasScroll1 ? '155px' : 'auto',
+                                                            paddingRight: '10px'
+                                                        }}
+                                                            ref={filters1}
+                                                        >
+                                                            <div className='catalog-filters-item-checkbox-item'>
+                                                                {filter1.map(el => (
+                                                                    <label key={el.id} className='catalog-filters-item-checkbox-label'>
+                                                                        <input
+                                                                            type='checkbox'
+                                                                            className='catalog-filters-item-checkbox'
+                                                                            onChange={() => handleCheckboxChange1(el.id)}
+                                                                            checked={selectedItems1 === el.id}
+                                                                        />
+                                                                        <span className='catalog-filters-item-checkbox-custom'></span>
+                                                                        {el.title}
+                                                                    </label>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <Button
+                                                        title={'Принять'}
+                                                        onClick={() => {
+                                                            console.log(selectedItems1)
+                                                            if (selectedItems1 !== 0) {
+                                                                // store.pinBook(book.id, selectedItems2)
+                                                                setSelectedItems1(0)
+                                                                setModalActiveReader(false)
+                                                            }
+                                                        }
+                                                        } />
+                                                    {/* <Button
+                                                        title={'Продлить'}
+                                                        onClick={() => {
+                                                            console.log(selectedItems1)
+                                                            if (selectedItems1 !== 0) {
+                                                                // store.pinBook(book.id, selectedItems2)
+                                                                setSelectedItems1(0)
+                                                                setModalActiveReader(false)
+                                                            }
+                                                        }
+                                                        } /> */}
+                                                </div>
+                                                <div className='modal-librarian-book-bottom-item'>
+                                                    <div className='catalog-filters-item'>
+                                                        <span className='modal-librarian-book-bottom-title'>Забронировано</span>
+                                                        <Input placeholder='Введите название книги или имя автора'
+                                                            onChange={(e) => { setValue2(e.target.value) }}
+                                                        />
+                                                        <div style={{
+                                                            height: hasScroll2 ? '155px' : 'auto',
+                                                            paddingRight: '10px'
+                                                        }}
+                                                            ref={filters2}
+                                                        >
+                                                            <div className='catalog-filters-item-checkbox-item'>
+                                                                {filter2.map(el => (
+                                                                    <label key={el.id} className='catalog-filters-item-checkbox-label'>
+                                                                        <input
+                                                                            type='checkbox'
+                                                                            className='catalog-filters-item-checkbox'
+                                                                            onChange={() => handleCheckboxChange2(el.id)}
+                                                                            checked={selectedItems2 === el.id}
+                                                                        />
+                                                                        <span className='catalog-filters-item-checkbox-custom'></span>
+                                                                        {el.title}
+                                                                    </label>
+                                                                ))}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <Button
+                                                        title={'Выдать'}
+                                                        onClick={() => {
+                                                            console.log(selectedItems2)
+                                                            if (selectedItems2 !== 0) {
+                                                                // store.pinBook(book.id, selectedItems2)
+                                                                setSelectedItems2(0)
+                                                                setModalActiveReader(false)
+                                                            }
+                                                        }
+                                                        } />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </Modal >
+                            </>
+                        )}
+                    </>
+                    : <p>Ничего не найдено</p>
+                }
+            </div >
+        </div >
     )
-}
+})

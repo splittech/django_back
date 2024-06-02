@@ -4,7 +4,7 @@ import Button from '../components/Button'
 import Input from '../components/Input'
 import { observer } from 'mobx-react-lite'
 import { Context } from '..'
-import { Navigate } from 'react-router-dom'
+import { Navigate } from 'react-router'
 
 export default observer(function Librarian() {
     const { store } = useContext(Context)
@@ -49,6 +49,7 @@ export default observer(function Librarian() {
             setWidht(height * 3 / 4)
         }
     }, [refComponent])
+
     
     if (!store.isLoading && !store.isAuth) {
         return <Navigate to='/authorisation' />
@@ -108,7 +109,7 @@ export default observer(function Librarian() {
                                             type={'text'}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, last_name: e.target.value
+                                                    ...prevState, lastName: e.target.value
                                                 }))
                                             }}
                                         />
@@ -122,20 +123,7 @@ export default observer(function Librarian() {
                                             pattern={"[А-Яа-яЁё\\s\\-]+"}
                                             onChange={(e) => {
                                                 setUser(prevState => ({
-                                                    ...prevState, first_name: e.target.value
-                                                }))
-                                            }}
-                                        />
-                                    </li>
-                                    <li className='personal-account-information-item-edit'>
-                                        <span className='account-login-item-title'>Имя пользователя:</span>
-                                        <Input
-                                            type={'text'}
-                                            value={user.username}
-                                            placeholder={'Введите имя пользователя'}
-                                            onChange={(e) => {
-                                                setUser(prevState => ({
-                                                    ...prevState, username: e.target.value
+                                                    ...prevState, firstName: e.target.value
                                                 }))
                                             }}
                                         />

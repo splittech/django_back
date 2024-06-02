@@ -2,23 +2,20 @@ import React, { useRef, useState } from 'react'
 import useScrollBar from '../hooks/use-scrollBar'
 import Input from './Input'
 
-export default function Filter({selectedItems, setSelectedItems, title, placeholder, items}) {
+export default function Filter({ selectedItems, setSelectedItems, title, placeholder, items }) {
     const [value, setValue] = useState('')
 
     const hasScroll = items.length > 5
-    // const hasScroll = props.items.length > 5
     const filters = useRef(null)
 
     useScrollBar(filters, hasScroll)
 
     const filter = items.filter(el => {
-        // const filter = props.items.filter(el => {
         return el.name?.toLowerCase()?.includes(value.toLowerCase())
     })
 
     function qwerty() {
         if (placeholder != null) {
-            // if (props.placeholder != null) {
             return '1/3'
         } else {
             return ''
@@ -30,7 +27,6 @@ export default function Filter({selectedItems, setSelectedItems, title, placehol
         const promise = new Promise((resolve) => {
             if (isChecked) {
                 setSelectedItems(selectedItems.filter(item => item !== el))
-                // selectedItems = selectedItems.filter(item => item !== el)
                 const interval = setInterval(() => {
                     if (!selectedItems.includes(el)) {
                         clearInterval(interval)
@@ -39,7 +35,6 @@ export default function Filter({selectedItems, setSelectedItems, title, placehol
                 }, 100)
             } else {
                 setSelectedItems([...selectedItems, el])
-                // selectedItems.push(el)
                 const interval = setInterval(() => {
                     if (selectedItems.includes(el)) {
                         clearInterval(interval)
@@ -50,21 +45,15 @@ export default function Filter({selectedItems, setSelectedItems, title, placehol
         })
         await promise
         console.log(selectedItems)
-        // props.updateSelectedItems(selectedItems)
     }
 
     return (
         <div className='catalog-filters-item' style={{ gridRow: qwerty() }} >
             {title != null && <span className='catalog-filters-item-title'>{title}</span>}
-            {/* {props.title != null && <span className='catalog-filters-item-title'>{props.title}</span>} */}
             {placeholder != null
                 && <Input placeholder={placeholder}
                     onChange={(e) => { setValue(e.target.value) }} />
             }
-            {/* {props.placeholder != null
-                && <Input placeholder={props.placeholder}
-                    onChange={(e) => { setValue(e.target.value) }} />
-            } */}
             <div style={{
                 height: hasScroll ? '155px' : 'auto',
                 paddingRight: '10px',

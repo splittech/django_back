@@ -10,7 +10,7 @@ export default class ReviewHistory extends Component {
                     <div>
                         <BookItem key={100} bookItem={el.book} />
                     </div>
-                    <ReviewItem key={el.id} reviewItem={el} />
+                    <ReviewItem key={el.id} reviewItem={el} isAccount={true} isReader={true} />
                 </div>
             ))}
             </div>
