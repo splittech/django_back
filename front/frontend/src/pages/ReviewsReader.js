@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import UserService from '../service/UserService'
 import Path from '../components/Path'
@@ -7,8 +7,11 @@ import ReviewItem from '../components/ReviewItem'
 import { FaStar } from "react-icons/fa";
 import { FaRegStar } from "react-icons/fa";
 import Modal from '../components/Modal'
+import { Context } from '..'
 
 export default function Reviews() {
+    const { store } = useContext(Context)
+
     const [user, setUser] = useState(store.user)
     //     {
     //         id: 123456,
