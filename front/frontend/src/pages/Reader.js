@@ -22,7 +22,7 @@ export default observer(function Reader() {
         },
         {
             id: 2,
-            title: 'Закрепленные книг',
+            title: 'Закрепленные книги',
             link: '#bookHistory'
         },
         {
@@ -316,7 +316,7 @@ export default observer(function Reader() {
                         </div>
                     </div>
                 }
-                <h1 className='section-name'><a name='bookHistory'>Закрепленные книг</a></h1>
+                <h1 className='section-name'><a name='bookHistory'>Закрепленные книги</a></h1>
                 {user.books?.length !== 0 ?
                     <>
                         <BookHistory bookItems={user.books.length > 5 ? user.books.slice(0, 5) : user.books} />
