@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import UserService from '../service/UserService'
 import Path from '../components/Path'
@@ -7,23 +7,28 @@ import BookItem from '../components/BookItem'
 
 export default function CollectionPage() {
     const { id } = useParams()
-    // const [collection, setCollection] = useState(getCollectionsItem(id))
+    const [collection, setCollection] = useState(null)
 
-    // async function getCollectionsItem(id) {
-    //     try {
-    //         const response = await UserService.getCollectionsItem(id)
-    //         setCollection(response.data)
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
+    useEffect(() => {
+        async function getCollection() {
+            try {
+                const response = await UserService.getCollectionsItem(id)
+                setCollection(response.data)
+            } catch (e) {
+                console.log(e)
+            }
+        }
+        if (!collection) {
+            getCollection()
+        }
+    }, [id, collection])
+
+    // const collection = {
+    //     id: 1,
+    //     title: 'Название',
+    //     description: 'Lorem ipsum dolor sit amet consectetur. Tincidunt ultricies curabitur morbi arcu augue cursus dolor risus. Volutpat eu mauris lorem ac commodo scelerisque enim sociis. Ultricies sed lacus neque morbi et nisl. Nascetur erat facilisis nulla nisi augue suspendisse ut quisque ut. Lorem ipsum dolor sit amet consectetur. Tincidunt ultricies curabitur morbi arcu augue cursus dolor risus. Volutpat eu mauris lorem ac commodo scelerisque enim sociis. Ultricies sed lacus neque morbi et nisl. Nascetur erat facilisis nulla nisi augue suspendisse ut quisque ut. Lorem ipsum dolor sit amet consectetur.',
+    //     books: ['', '', '', '']
     // }
-
-    const collection = {
-        id: 1,
-        title: 'Название',
-        description: 'Lorem ipsum dolor sit amet consectetur. Tincidunt ultricies curabitur morbi arcu augue cursus dolor risus. Volutpat eu mauris lorem ac commodo scelerisque enim sociis. Ultricies sed lacus neque morbi et nisl. Nascetur erat facilisis nulla nisi augue suspendisse ut quisque ut. Lorem ipsum dolor sit amet consectetur. Tincidunt ultricies curabitur morbi arcu augue cursus dolor risus. Volutpat eu mauris lorem ac commodo scelerisque enim sociis. Ultricies sed lacus neque morbi et nisl. Nascetur erat facilisis nulla nisi augue suspendisse ut quisque ut. Lorem ipsum dolor sit amet consectetur.',
-        books: ['', '', '', '']
-    }
 
     return (
         <div>

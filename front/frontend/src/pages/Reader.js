@@ -22,7 +22,7 @@ export default observer(function Reader() {
         },
         {
             id: 2,
-            title: 'История книг',
+            title: 'Закрепленные книг',
             link: '#bookHistory'
         },
         {
@@ -30,136 +30,136 @@ export default observer(function Reader() {
             title: 'История отзывов',
             link: '#reviewHistory'
         },
-        {
-            id: 4,
-            title: 'Персональные рекомендации',
-            link: '#personalRecommendations'
-        },
-        {
-            id: 5,
-            title: 'Избранное',
-            link: '#favorites'
-        }
+        // {
+        //     id: 4,
+        //     title: 'Персональные рекомендации',
+        //     link: '#personalRecommendations'
+        // },
+        // {
+        //     id: 5,
+        //     title: 'Избранное',
+        //     link: '#favorites'
+        // }
     ]
 
-    const books = [{
-        id: 1,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: '2024-05-20',
-    },
-    {
-        id: 2,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: '2024-05-01',
-    },
-    {
-        id: 3,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    },
-    {
-        id: 4,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    },
-    {
-        id: 5,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    },
-    {
-        id: 6,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    },
-    {
-        id: 7,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    },
-    {
-        id: 8,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    },
-    {
-        id: 9,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    },
-    {
-        id: 10,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    },
-    {
-        id: 11,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    },
-    {
-        id: 12,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    },
-    {
-        id: 13,
-        photo: '',
-        title: 'Название',
-        author: 'Автор',
-        rating: 5.0,
-        comment: 100,
-        status: null,
-    }
-    ]
+    // const books = [{
+    //     id: 1,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: '2024-05-20',
+    // },
+    // {
+    //     id: 2,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: '2024-05-01',
+    // },
+    // {
+    //     id: 3,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // },
+    // {
+    //     id: 4,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // },
+    // {
+    //     id: 5,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // },
+    // {
+    //     id: 6,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // },
+    // {
+    //     id: 7,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // },
+    // {
+    //     id: 8,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // },
+    // {
+    //     id: 9,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // },
+    // {
+    //     id: 10,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // },
+    // {
+    //     id: 11,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // },
+    // {
+    //     id: 12,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // },
+    // {
+    //     id: 13,
+    //     photo: '',
+    //     title: 'Название',
+    //     author: 'Автор',
+    //     rating: 5.0,
+    //     comment: 100,
+    //     status: null,
+    // }
+    // ]
 
     // const review = [{
     //     id: 1,
@@ -297,7 +297,7 @@ export default observer(function Reader() {
                                     <li className='personal-account-information-item-edit'>
                                         <span className='account-login-item-title'>Имя пользователя:</span>
                                         <Input
-                                            type={'email'}
+                                            type={'text'}
                                             value={user.username}
                                             placeholder={'Введите имя пользователя'}
                                             onChange={(e) => {
@@ -316,19 +316,30 @@ export default observer(function Reader() {
                         </div>
                     </div>
                 }
-                <h1 className='section-name'><a name='bookHistory'>История книг</a></h1>
-                <BookHistory bookItems={user.books.length > 5 ? user.books.slice(0, 5) : user.books} />
-                {user.books.length > 5 &&
-                    <Link to={'bookhistory'} className='read-all'>Смотреть все</Link>}
+                <h1 className='section-name'><a name='bookHistory'>Закрепленные книг</a></h1>
+                {user.books?.length !== 0 ?
+                    <>
+                        <BookHistory bookItems={user.books.length > 5 ? user.books.slice(0, 5) : user.books} />
+                        {user.books.length > 5 &&
+                            <Link to={'bookhistory'} className='read-all'>Смотреть все</Link>}
+                    </>
+                    : <p>Нет закрепленных книг</p>
+                }
                 <h1 className='section-name'><a name='reviewHistory'>История отзывов</a></h1>
-                {/* <ReviewHistory reviewItems={user.reviews.length > 2 ? user.reviews.slice(0, 2) : user.reviews} />
-                {user.reviews.length > 2 &&
-                    <Link to={'reviewhistory'} className='read-all'>Смотреть все</Link>
-                } */}
-                <h1 className='section-name'><a name='personalRecommendations'>Персональные рекомендации</a></h1>
+                {user.reviews?.length !== 0 ?
+                    <>
+                        <ReviewHistory reviewItems={user.reviews.length > 2 ? user.reviews.slice(0, 2) : user.reviews} />
+                        {
+                            user.reviews.length > 2 &&
+                            <Link to={'reviewhistory'} className='read-all'>Смотреть все</Link>
+                        }
+                    </>
+                    : <p>Нет отзывов</p>
+                }
+                {/* <h1 className='section-name'><a name='personalRecommendations'>Персональные рекомендации</a></h1>
                 <PersonalRecommendations bookItems={books.slice(2, 12)} />
                 <Link to={'personalrecommendations'} className='read-all'>Смотреть все</Link>
-                <h1 className='section-name'><a name='favorites'>Избранное</a></h1>
+                <h1 className='section-name'><a name='favorites'>Избранное</a></h1> */}
             </div>
         </div>
     )

@@ -18,7 +18,7 @@ export default class UserService {
     }
 
     static async getCollectionsItem(id) {
-        return $api.get('', { id })
+        return $api.get(`/api/v1/books/collections/${id}`)
     }
 
     static async getFavorites(id) {

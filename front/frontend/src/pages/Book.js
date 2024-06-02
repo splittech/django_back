@@ -80,18 +80,18 @@ export default observer(function Book() {
 
     const [modalActivePinBook, setModalActivePinBook] = useState(false)
     const [modalActiveReview, setModalActiveReview] = useState(false)
-    const [modalActiveStatus, setModalActiveStatus] = useState(true)
+    const [modalActiveStatus, setModalActiveStatus] = useState(false)
     let pinBookStatus = store.pinBookStatus
 
     const [readers, setReaders] = UseGetArray('api/v1/books/readers')
-        // useState([
-        //     { id: 1, last_name: 'kjnj' },
-        //     { id: 2, last_name: 'kjnj' },
-        //     { id: 3, last_name: 'kjnj' },
-        //     { id: 4, last_name: 'kjnj' },
-        //     { id: 5, last_name: 'kjnj' },
-        //     { id: 6, last_name: 'kjnj' }
-        // ])
+    // useState([
+    //     { id: 1, last_name: 'kjnj' },
+    //     { id: 2, last_name: 'kjnj' },
+    //     { id: 3, last_name: 'kjnj' },
+    //     { id: 4, last_name: 'kjnj' },
+    //     { id: 5, last_name: 'kjnj' },
+    //     { id: 6, last_name: 'kjnj' }
+    // ])
 
     const [value, setValue] = useState('')
     const [selectedItems, setSelectedItems] = useState(0)
@@ -201,6 +201,7 @@ export default observer(function Book() {
                                                             store.pinBook(book.id, selectedItems)
                                                             setSelectedItems(0)
                                                             setModalActivePinBook(false)
+                                                            setModalActiveStatus(true)
                                                         }
                                                     }
                                                     } />
