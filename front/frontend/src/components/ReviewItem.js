@@ -56,34 +56,40 @@ export default function ReviewItem(props) {
         <div className='review-item'>
             {props.isAccount ?
                 <>
-                    {props.isReader ? <>
-                        {props.status === 'Принято' ?
-                            <div className='review-item-status-div'>
-                                <span className='review-item-status review-item-status-green'>{props.reviewItem.status}</span>
+                    {props.isReader ?
+                        <>
+                            {props.status ? <>
+                                {props.status === 'Принято' ?
+                                    <div className='review-item-status-div'>
+                                        <span className='review-item-status review-item-status-green'>{props.reviewItem.status}</span>
+                                    </div>
+                                    :
+                                    <div className='review-item-status-div'>
+                                        <span className='review-item-status review-item-status-red'>{props.reviewItem.status}</span>
+                                        <span className='review-item-reason'>Причина: {props.reviewItem.reason}</span>
+                                    </div>
+                                }
+                            </> : <div className='review-item-status-div'>
+                                <span className='review-item-status review-item-status-green'>Проверяется</span>
                             </div>
-                            :
-                            <div className='review-item-status-div'>
-                                <span className='review-item-status review-item-status-red'>{props.reviewItem.status}</span>
-                                <span className='review-item-reason'>Причина: {props.reviewItem.reason}</span>
+                            }
+                            <span className='review-item-rating'>Оценка: ★ {props.reviewItem.rating}</span>
+                            <div className={`review-item-text-container ${classname}`}>
+                                <p className='review-item-text' ref={refComponent}>{props.reviewItem.text}</p>
+                                <div className='review-item-text-bottom'></div>
                             </div>
-                        }
-                        <span className='review-item-rating'>Оценка: ★ {props.reviewItem.rating}</span>
-                        <div className={`review-item-text-container ${classname}`}>
-                            <p className='review-item-text' ref={refComponent}>{props.reviewItem.text}</p>
-                            <div className='review-item-text-bottom'></div>
-                        </div>
-                        {height >= 194 &&
-                            <Button
-                                title={`${isCkicked ? 'Скрыть' : 'Показать полностью'}`}
-                                className='review-read-completely'
-                                onClick={() => {
-                                    setClassname('review-item-text-container-not-hide')
-                                    setIsCkicked(!isCkicked)
-                                }} />}
-                        {comments > 0 &&
-                            <span className='review-item-comments'>{getCommentsLabel(props.reviewItem.comments)}</span>
-                        }
-                    </> :
+                            {height >= 194 &&
+                                <Button
+                                    title={`${isCkicked ? 'Скрыть' : 'Показать полностью'}`}
+                                    className='review-read-completely'
+                                    onClick={() => {
+                                        setClassname('review-item-text-container-not-hide')
+                                        setIsCkicked(!isCkicked)
+                                    }} />}
+                            {comments > 0 &&
+                                <span className='review-item-comments'>{getCommentsLabel(props.reviewItem.comments)}</span>
+                            }
+                        </> :
                         <>
                             <div className='review-item-head'>
                                 <img src={props.reviewItem.image} width={50} height={50} className='review-item-img' />
