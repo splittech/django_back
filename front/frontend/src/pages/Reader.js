@@ -322,7 +322,7 @@ export default observer(function Reader() {
                     <Link to={'bookhistory'} className='read-all'>Смотреть все</Link>}
                 <h1 className='section-name'><a name='reviewHistory'>История отзывов</a></h1>
                 <ReviewHistory reviewItems={user.reviews.length > 2 ? user.reviews.slice(0, 2) : user.reviews} />
-                {user.books.length > 5 &&
+                {user.reviews.length > 2 &&
                     <Link to={'reviewhistory'} className='read-all'>Смотреть все</Link>
                 }
                 <h1 className='section-name'><a name='personalRecommendations'>Персональные рекомендации</a></h1>
