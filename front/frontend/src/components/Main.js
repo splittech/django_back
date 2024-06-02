@@ -20,6 +20,7 @@ import Reviews from '../pages/Reviews';
 import BooksLibrarian from '../pages/BooksLibrarian';
 import ReadersLibrarian from '../pages/ReadersLibrarian';
 import ReviewsLibrarian from '../pages/ReviewsLibrarian';
+import ReviewsReader from '../pages/ReviewsReader'
 
 export default class Main extends Component {
     render() {
@@ -49,6 +50,7 @@ export default class Main extends Component {
                         <Route path='/account' element={<Account />} />
                         <Route path='/account/reader' element={<Reader />} />
                         <Route path='/account/reader/bookhistory' element={<BookHistory />} />
+                        <Route path='/account/reader/reviewhistory' element={<ReviewsReader />} />
                         <Route path='/account/reader/bookhistory:id' element={<BookHistory />} />
                         <Route path='/account/librarian' element={<Librarian />} />
                         <Route path='/account/librarian/books' element={<BooksLibrarian />} />

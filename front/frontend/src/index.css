@@ -1062,7 +1062,7 @@ body {
     position: relative;
     flex-direction: column;
     gap: 15px;
-    width: -moz-available;
+    min-width: 906px;
 }
 
 .review-item-status,

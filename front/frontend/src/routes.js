@@ -8,6 +8,7 @@ export const routes = [
     { path: '/favorites', name: 'Избранное' },
     { path: '/account/reader', name: 'Читатель' },
     { path: '/account/reader/bookhistory', name: 'История книг' },
+    { path: '/account/reader/reviewhistory', name: 'История отзывов' },
     { path: '/account/librarian', name: 'Библиотекарь' },
     { path: '/account/librarian/books', name: 'Книги' },
     { path: '/account/librarian/readers', name: 'Читатели' },

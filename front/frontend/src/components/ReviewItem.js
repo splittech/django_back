@@ -58,21 +58,23 @@ export default function ReviewItem(props) {
                 <>
                     {props.isReader ?
                         <>
-                            {props.status ? <>
-                                {props.status === 'Принято' ?
-                                    <div className='review-item-status-div'>
-                                        <span className='review-item-status review-item-status-green'>{props.reviewItem.status}</span>
-                                    </div>
-                                    :
-                                    <div className='review-item-status-div'>
-                                        <span className='review-item-status review-item-status-red'>{props.reviewItem.status}</span>
-                                        <span className='review-item-reason'>Причина: {props.reviewItem.reason}</span>
-                                    </div>
-                                }
-                            </> : <div className='review-item-status-div'>
-                                <span className='review-item-status review-item-status-green'>Проверяется</span>
-                            </div>
-                            }
+                            {/* {props.status ?
+                                <>
+                                    {props.status === 'Принято' ?
+                                        <div className='review-item-status-div'>
+                                            <span className='review-item-status review-item-status-green'>{props.reviewItem.status}</span>
+                                        </div>
+                                        :
+                                        <div className='review-item-status-div'>
+                                            <span className='review-item-status review-item-status-red'>{props.reviewItem.status}</span>
+                                            <span className='review-item-reason'>Причина: {props.reviewItem.reason}</span>
+                                        </div>
+                                    }
+                                </> :
+                                <div className='review-item-status-div'>
+                                    <span className='review-item-status review-item-status-green'>Проверяется</span>
+                                </div>
+                            } */}
                             <span className='review-item-rating'>Оценка: ★ {props.reviewItem.rating}</span>
                             <div className={`review-item-text-container ${classname}`}>
                                 <p className='review-item-text' ref={refComponent}>{props.reviewItem.text}</p>
