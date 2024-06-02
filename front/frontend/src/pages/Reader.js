@@ -329,8 +329,6 @@ export default observer(function Reader() {
                 <PersonalRecommendations bookItems={books.slice(2, 12)} />
                 <Link to={'personalrecommendations'} className='read-all'>Смотреть все</Link>
                 <h1 className='section-name'><a name='favorites'>Избранное</a></h1>
-                <Favorites bookItems={books.slice(2, 12)} />
-                <Link to={'/favorites'} className='read-all'>Смотреть все</Link>
             </div>
         </div>
     )
