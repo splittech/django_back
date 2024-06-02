@@ -246,7 +246,7 @@ export default observer(function Reader() {
                                     <span className='personal-account-information-item-property'>
                                         {/* {user.rating?.toFixed(1)} */}
                                         5.0
-                                        </span>
+                                    </span>
                                 </li>
                             </ul>
                             <Button
@@ -317,11 +317,14 @@ export default observer(function Reader() {
                     </div>
                 }
                 <h1 className='section-name'><a name='bookHistory'>История книг</a></h1>
-                <BookHistory bookItems={user.books.slice(0, 5)} />
-                <Link to={'bookhistory'} className='read-all'>Смотреть все</Link>
+                <BookHistory bookItems={user.books.length > 5 ? user.books.slice(0, 5) : user.books} />
+                {user.books.length > 5 &&
+                    <Link to={'bookhistory'} className='read-all'>Смотреть все</Link>}
                 <h1 className='section-name'><a name='reviewHistory'>История отзывов</a></h1>
-                <ReviewHistory reviewItems={user.reviews.slice(0, 2)} />
-                <Link to={'reviewhistory'} className='read-all'>Смотреть все</Link>
+                <ReviewHistory reviewItems={user.reviews.length > 2 ? user.reviews.slice(0, 2) : user.reviews} />
+                {user.books.length > 5 &&
+                    <Link to={'reviewhistory'} className='read-all'>Смотреть все</Link>
+                }
                 <h1 className='section-name'><a name='personalRecommendations'>Персональные рекомендации</a></h1>
                 <PersonalRecommendations bookItems={books.slice(2, 12)} />
                 <Link to={'personalrecommendations'} className='read-all'>Смотреть все</Link>
