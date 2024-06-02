@@ -1062,6 +1062,7 @@ body {
     position: relative;
     flex-direction: column;
     gap: 15px;
+    width: -moz-available;
 }
 
 .review-item-status,
@@ -1201,7 +1202,7 @@ body {
     color: #42515a;
 }
 
-.review-item-buttons{
+.review-item-buttons {
     display: flex;
     flex-direction: row;
     gap: 30px;

@@ -16,7 +16,6 @@ export default function Catalog() {
     const [fetchedBook] = useDinamicPagination(url, 15)
 
     useEffect(() => {
-        console.log(fetchedBook)
         setBooks(fetchedBook)
     }, [fetchedBook])
 
