@@ -80,18 +80,20 @@ export default observer(function Book() {
 
     const [modalActivePinBook, setModalActivePinBook] = useState(false)
     const [modalActiveReview, setModalActiveReview] = useState(false)
-    const [modalActiveStatus, setModalActiveStatus] = useState(false)
+    const [modalActivePinBookStatus, setModalActivePinBookStatus] = useState(false)
+    const [modalActiveCreateReviewStatus, setModalActiveCreateReviewStatus] = useState(false)
     let pinBookStatus = store.pinBookStatus
+    let createReviewStatus = store.createReviewStatus
 
     const [readers, setReaders] = UseGetArray('api/v1/books/readers')
-    // useState([
-    //     { id: 1, last_name: 'kjnj' },
-    //     { id: 2, last_name: 'kjnj' },
-    //     { id: 3, last_name: 'kjnj' },
-    //     { id: 4, last_name: 'kjnj' },
-    //     { id: 5, last_name: 'kjnj' },
-    //     { id: 6, last_name: 'kjnj' }
-    // ])
+        // useState([
+        //     { id: 1, last_name: 'kjnj' },
+        //     { id: 2, last_name: 'kjnj' },
+        //     { id: 3, last_name: 'kjnj' },
+        //     { id: 4, last_name: 'kjnj' },
+        //     { id: 5, last_name: 'kjnj' },
+        //     { id: 6, last_name: 'kjnj' }
+        // ])
 
     const [value, setValue] = useState('')
     const [selectedItems, setSelectedItems] = useState(0)
@@ -201,7 +203,7 @@ export default observer(function Book() {
                                                             store.pinBook(book.id, selectedItems)
                                                             setSelectedItems(0)
                                                             setModalActivePinBook(false)
-                                                            setModalActiveStatus(true)
+                                                            setModalActivePinBookStatus(true)
                                                         }
                                                     }
                                                     } />
@@ -209,10 +211,10 @@ export default observer(function Book() {
                                             {pinBookStatus !== 0 &&
                                                 <>
                                                     {pinBookStatus === 200 ?
-                                                        <Modal active={modalActiveStatus} setActive={setModalActiveStatus}>
+                                                        <Modal active={modalActivePinBookStatus} setActive={setModalActivePinBookStatus}>
                                                             <h1 className='pin-book-status green'>Книга закреплена за читателем</h1>
                                                         </Modal> :
-                                                        <Modal active={modalActiveStatus} setActive={setModalActiveStatus}>
+                                                        <Modal active={modalActivePinBookStatus} setActive={setModalActivePinBookStatus}>
                                                             <h1 className='pin-book-status red'>Книгу не удалось закрепить за читателем</h1>
                                                         </Modal>
                                                     }
@@ -268,14 +270,27 @@ export default observer(function Book() {
                                 title={'Отправить'}
                                 onClick={() => {
                                     if (text !== '' && selectedStars !== 0) {
-                                        // 
+                                        store.createReview(selectedStars, 'qwerty', text, store.user.id, book.id)
                                         setModalActiveReview(false)
+                                        setModalActiveCreateReviewStatus(true)
                                         setText('')
                                         setSelectedStars(0)
                                     }
                                 }
                                 } />
                         </Modal>
+                        {createReviewStatus !== 0 &&
+                            <>
+                                {createReviewStatus === 200 ?
+                                    <Modal active={modalActiveCreateReviewStatus} setActive={setModalActiveCreateReviewStatus}>
+                                        <h1 className='pin-book-status green'>Отзыв отправлен</h1>
+                                    </Modal> :
+                                    <Modal active={modalActiveCreateReviewStatus} setActive={setModalActiveCreateReviewStatus}>
+                                        <h1 className='pin-book-status red'>Не удалось отправить отзыв</h1>
+                                    </Modal>
+                                }
+                            </>
+                        }
                     </div>
                     {
                         book.reviews?.length > 0 ?

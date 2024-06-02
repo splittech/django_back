@@ -30,4 +30,10 @@ export default class UserService {
             { headers: { "Authorization": `Token ${auth_token}` } }
         )
     }
+
+    static async createReview(rating, name, text, author, book, auth_token) {
+        return $api.post('/api/v1/books/reviews/create/', { rating, name, text, author, book },
+            { headers: { "Authorization": `Token ${auth_token}` } }
+        )
+    }
 }

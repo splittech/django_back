@@ -11,6 +11,7 @@ export default class Store {
     isCSRF = null
     isReader = true
     pinBookStatus = 0
+    createReviewStatus = 0
     status = 0
 
     constructor() {
@@ -70,24 +71,13 @@ export default class Store {
         }
     }
 
-    async isReader() {
-        if (this.isAuth) {
-            console.log(this.user)
-            if (this.user.groups.name === ('Reader')) {
-                return true
-            } else {
-                return false
-            }
-        }
-    }
-
     async getUser(auth_token) {
         try {
             const response = await AuthService.getUser(auth_token)
             console.log(response)
             this.setUser(response.data)
-            console.log(response.data.groups[0].name)
-            if (response.data.groups[0].name === ('Reader')) {
+            console.log(response.data.groups.name)
+            if (response.data.groups.name === ('Reader')) {
                 this.isReader = true
             } else {
                 this.isReader = false
@@ -106,6 +96,18 @@ export default class Store {
             this.pinBookStatus = 200
         } catch (e) {
             this.pinBookStatus = 400
+            console.log(e.response?.data?.message)
+        }
+    }
+
+    async createReview(rating, name, text, author, book) {
+        try {
+            const auth_token = localStorage.getItem('auth_token')
+            const response = await UserService.createReview(rating, name, text, author, book, auth_token)
+            console.log(response)
+            this.createReviewStatus = 200
+        } catch (e) {
+            this.createReviewStatus = 400
             console.log(e.response?.data?.message)
         }
     }
