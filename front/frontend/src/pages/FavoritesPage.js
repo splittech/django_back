@@ -129,7 +129,9 @@ export default observer(function FavoritesPage() {
         <div>
             {!store.isLoading && store.isAuth ?
                 <>{favorites?.length > 0 ?
-                    <Favorites bookItems={favorites} />
+                    <>
+                        <h1 className='page-title'>Избранное</h1>
+                        <Favorites bookItems={favorites} /></>
                     : <div>Нет книг, добавленных в избранное</div>
                 }</>
                 : <div>Вы не авторизованы</div>
