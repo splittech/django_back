@@ -38,7 +38,7 @@ export default class UserService {
     }
 
     static async addToFavorites(reader, book, auth_token) {
-        return $api.post('/api/v1/books/reviews/favourite/', { reader, book },
+        return $api.post('/api/v1/books/favourite/', { reader, book },
             { headers: { "Authorization": `Token ${auth_token}` } }
         )
     }
