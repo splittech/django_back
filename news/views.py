@@ -15,8 +15,7 @@ class NewsListAPI(generics.ListAPIView):
         return books
 
 
-class NewsDetailAPI(APIView):
-    def get(self, request, pk):
-        news = News.objects.get(pk=pk)
-        serializer = NewsDetailSerializer(news)
-        return Response(serializer.data)
+class NewsDetailAPI(generics.RetrieveAPIView):
+    """Вывод списка новостей"""
+    serializer_class = NewsListSerializer
+    queryset = News.objects.all()

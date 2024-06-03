@@ -1,9 +1,13 @@
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.db import models
 from datetime import date
 from django.conf import settings
 
 from django.urls import reverse
+from django.conf import settings
+
+
+User = settings.AUTH_USER_MODEL
 
 
 class Tag(models.Model):
@@ -85,6 +89,9 @@ class Review(models.Model):
         'self', verbose_name="Родитель", on_delete=models.SET_NULL, blank=True, null=True
     )
     book = models.ForeignKey(Book, verbose_name="Книга", on_delete=models.CASCADE, related_name="reviews")
+    author = models.ForeignKey(
+        User, verbose_name="Автор", on_delete=models.SET_NULL, blank=True, null=True, related_name="reviews"
+    )
 
     def __str__(self):
         return f"{self.name} - {self.book}"

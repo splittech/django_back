@@ -3,7 +3,7 @@ from django.contrib import admin
 from django.utils.safestring import mark_safe
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
-from .models import Tag, Genre, Book, Author, Review
+from .models import Tag, Genre, Book, Author, Review, Collection
 
 
 class BookAdminForm(forms.ModelForm):
@@ -22,11 +22,11 @@ class TagAdmin(admin.ModelAdmin):
     prepopulated_fields = {'url': ('name',)}
 
 
-class ReviewInline(admin.TabularInline):
-    """Отзывы на странице книги"""
-    model = Review
-    extra = 1
-    readonly_fields = ("name", "email")
+# class ReviewInline(admin.TabularInline):
+#     """Отзывы на странице книги"""
+#     model = Review
+#     extra = 1
+#     readonly_fields = ("name", "email")
 
 
 @admin.register(Book)
@@ -75,8 +75,8 @@ class BookAdmin(admin.ModelAdmin):
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
     """Отзывы к книге"""
-    list_display = ("name", "parent", "book", "id")
-    readonly_fields = ("name",)
+    list_display = ("name", "rating", "book")
+    #readonly_fields = ("name",)
 
 
 @admin.register(Genre)
@@ -90,6 +90,23 @@ class GenreAdmin(admin.ModelAdmin):
 class AuthorAdmin(admin.ModelAdmin):
     """Автор"""
     list_display = ("name",)
+
+
+@admin.register(Collection)
+class CollectionsAdmin(admin.ModelAdmin):
+    """Подборки"""
+    list_display = ("title",)
+    search_fields = ("title",)
+    form = BookAdminForm
+
+
+# @admin.register(Review)
+# class ReviewsAdmin(admin.ModelAdmin):
+#     """Отзывы"""
+#     list_display = ("title", "rating", "book__name")
+#     search_fields = ("title",)
+#     form = BookAdminForm
+
 
 
 admin.site.site_title = "Django Books"

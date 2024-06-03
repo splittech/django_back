@@ -20,7 +20,7 @@ class BookListView(generics.ListAPIView):
     serializer_class = BookListSerializer
     filter_backends = (DjangoFilterBackend,)
     filterset_class = BookFilter
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         books = Book.objects.all()
@@ -35,10 +35,14 @@ class BookDetailView(generics.RetrieveAPIView):
 
 class ReviewCreateView(APIView):
     """Добавление отзыва"""
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
         rating = int(request.data.get('rating'))
-        if rating <= 10:
+        user_id = int(request.data.get('author'))
+        authenticated_user = request.user
+
+        if rating <= 10 and user_id == authenticated_user.id:
+            authenticated_user = request.user
             serializer = ReviewCreateSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             serializer.save()
@@ -61,7 +65,7 @@ class ReviewCreateView(APIView):
 
 class PinBookView(APIView):
     """Закрепление книги"""
-    permission_classes = [permissions.IsAuthenticated]
+    #permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
         book_id = int(request.data.get('book'))
         reader_id = int(request.data.get('reader'))
@@ -79,6 +83,27 @@ class PinBookView(APIView):
             return Response({'copies': book.copies.__str__()}, 200)
         else:
             return Response({'error': 'tried to pin to librarian'}, 400)
+
+
+class FavouriteView(APIView):
+    """Добавление в избранное"""
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        authenticated_user = request.user
+        book_id = int(request.data.get('book'))
+        reader_id = int(request.data.get('reader'))
+        if reader_id == authenticated_user.id:
+            reader = User.objects.get(pk=reader_id)
+            book = Book.objects.get(pk=book_id)
+            reader.favourites.add(book)
+            reader.save()
+            return Response({'book': book_id.__str__()}, 200)
+        else:
+            return Response({'error': 'tried to favourite book to other user'}, 400)
+
+
+
 
 class TagsListView(generics.ListAPIView):
     """Вывод списка тегов"""
@@ -105,6 +130,12 @@ class CollectionsListView(generics.ListAPIView):
     def get_queryset(self):
         collections = Collection.objects.all()
         return collections
+
+
+class CollectionDetailView(generics.RetrieveAPIView):
+    """Вывод конкретной подборки"""
+    queryset = Collection.objects.all()
+    serializer_class = CollectionsSerializer
 
 
 class AuthorsListView(generics.ListAPIView):

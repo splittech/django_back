@@ -24,7 +24,7 @@ class UserAdmin(BaseUserAdmin):
     list_filter = ('is_staff', 'is_active',)
     fieldsets = (
         (None, {'fields': ('username', 'password', 'avatar',)}),
-        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'books')}),  # Добавлены first_name и last_name
+        ('Personal info', {'fields': ('first_name', 'last_name', 'email', 'books', 'favourites')}),  # Добавлены first_name и last_name
         ('Permissions', {'fields': ('is_staff', 'is_active', 'groups', 'user_permissions')}),
         ('Important dates', {'fields': ('last_login', 'date_joined')}),
     )

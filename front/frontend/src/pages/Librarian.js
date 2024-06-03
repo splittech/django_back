@@ -79,7 +79,7 @@ export default observer(function Librarian() {
                                     <span className='personal-account-information-item-property'>{user.username}</span>
                                 </li>
                                 <li>
-                                    <span className='personal-account-information-item-name'>Должность:</span>
+                                    <span className='personal-account-information-item-name'>Должность: Старший библиотекарь</span>
                                     <span className='personal-account-information-item-property'>{user.position}</span>
                                 </li>
                             </ul>
