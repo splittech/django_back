@@ -37,7 +37,7 @@ export default function CollectionPage() {
                 <div>
                     <Path current={collection.title} />
                     <h1 className='collection-name'>{collection.title}</h1>
-                    <p className='collection-description'>{collection.description}</p>
+                    <p dangerouslySetInnerHTML={{ __html: collection.description }} className='collection-description'></p>
                     <div className='book-list'>
                         {collection.books.map(el => (
                             <Link to={`${el.id}`} className='book-link-another-page' key={el.id}>
