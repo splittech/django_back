@@ -24,7 +24,6 @@ class SimpleAPITests(APITestCase):
     def get_token(self, user):
         # Получаем токен для пользователя через запрос
         response = self.client.post('/auth/token/login/', {'username': user.username, 'password': 'testpassword'})
-        print(response.data)
         return response.data['auth_token']
 
     def test_get_readers_list(self):

@@ -58,7 +58,7 @@ class ReviewCreateView(APIView):
             book = Book.objects.get(pk=book_id)
             book.rating = book_rating
             book.save()
-            return Response({'rating': book_rating.__str__()}, 200)
+            return Response({'rating': str(int(book.rating))}, 200)
         else:
             return Response({'error': 'Rating is more than 10'}, 400)
 
