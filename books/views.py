@@ -152,5 +152,6 @@ class UsersListView(generics.ListAPIView):
     serializer_class = UsersListSerializer
     permission_classes = [permissions.IsAuthenticated]
     def get_queryset(self):
+        #users = User.objects.all()
         users = User.objects.filter(groups=2)
         return users

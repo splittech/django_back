@@ -6,23 +6,23 @@ from users.models import User
 
 class SimpleAPITests(APITestCase):
     def setUp(self):
-        # Получаем или создаем группу "Readers"
-        self.readers_group, created = Group.objects.get_or_create(name='Reader')
+        # Создаем группы
+        self.readers_group, created = Group.objects.get_or_create(name='Librarians')
+        self.readers_group, created = Group.objects.get_or_create(name='Readers')
 
-        # Создаем пользователя и добавляем его в группу "Readers"
+        # Создаем пользователя и добавляем его в группу читателей
         self.reader_user = User.objects.create_user(
             username='reader',
             password='testpassword',
             email='reader@example.com'
         )
         self.reader_user.groups.add(self.readers_group)
-        print(">>>>>>>>>>>>>>>>>>>>>>>" + str(self.reader_user.groups))
 
-        # Получаем токен для аутентификации
+        # Получаем токен
         self.token = self.get_token(self.reader_user)
 
     def get_token(self, user):
-        # Получаем JWT токен для пользователя
+        # Получаем токен для пользователя через запрос
         response = self.client.post('/auth/token/login/', {'username': user.username, 'password': 'testpassword'})
         print(response.data)
         return response.data['auth_token']
@@ -35,7 +35,6 @@ class SimpleAPITests(APITestCase):
         # Проверяем статус ответа
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         # Проверяем, что список читателей не пуст
-        print("ХУЙ: " + str(response.data))
         self.assertGreater(len(response.data), 0)
 
 
