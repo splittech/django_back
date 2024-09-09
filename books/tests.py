@@ -15,7 +15,7 @@ class BookCreationTestCase(TestCase):
         self.author = Author.objects.create(name="Джоан Роулинг")
         self.book = Book.objects.create(
             title="Гарри Поттер",
-            description="Какое-то описание",
+            description="Фэнтези-роман",
             author=self.author,
             url="harry-potter",
             copies=10,
@@ -58,7 +58,7 @@ class BookReviewsTestCase(APITestCase):
         self.author = Author.objects.create(name="Джоан Роулинг")
         self.book = Book.objects.create(
             title="Гарри Поттер",
-            description="Какое-то описание",
+            description="Фэнтези-роман",
             author=self.author,
             url="harry-potter",
             copies=10,
@@ -80,7 +80,8 @@ class BookReviewsTestCase(APITestCase):
         self.reader_user.groups.add(self.readers_group)
 
         # Получаем токен для пользователя через запрос
-        response = self.client.post('/auth/token/login/', {'username': self.reader_user.username, 'password': 'testpassword'})
+        response = self.client.post('/auth/token/login/',
+                                    {'username': self.reader_user.username, 'password': 'testpassword'})
         self.token = response.data['auth_token']
 
     def test_book_rating_changed(self):
@@ -97,3 +98,66 @@ class BookReviewsTestCase(APITestCase):
         self.book.refresh_from_db()
         # Проверяем что рейтинг книги расчитался правильно
         self.assertEqual(str(self.book.rating), response.data['rating'])
+
+
+class SortingTestCase(APITestCase):
+    def setUp(self):
+        # Создание базовых объектов для тестирования
+        # Создание трех тегов и трех жанров
+        self.tag1 = Tag.objects.create(name="Фэнтези", url="fantasy")
+        self.tag2 = Tag.objects.create(name="Магия", url="magic")
+        self.tag3 = Tag.objects.create(name="Научная фантастика", url="sci-fi")
+
+        self.genre1 = Genre.objects.create(name="Приключения", url="adventure")
+        self.genre2 = Genre.objects.create(name="Мистика", url="mystery")
+        self.genre3 = Genre.objects.create(name="Экшен", url="action")
+
+        # Создание первого автора и книги с тегами и жанрами
+        self.author1 = Author.objects.create(name="Джоан Роулинг")
+        self.book1 = Book.objects.create(
+            title="Гарри Поттер",
+            description="Фэнтези-роман",
+            author=self.author1,
+            url="harry-potter",
+            copies=10,
+            rating=0
+        )
+        self.book1.genres.add(self.genre1, self.genre2)  # Жанры: Приключения и Мистика
+        self.book1.tags.add(self.tag1, self.tag2)  # Теги: Фэнтези и Магия
+
+        # Создание второго автора и книги с тегами и жанрами
+        self.author2 = Author.objects.create(name="Фрэнк Герберт")
+        self.book2 = Book.objects.create(
+            title="Дюна",
+            description="Научно-фантастический роман",
+            author=self.author2,
+            url="dune",
+            copies=5,
+            rating=0
+        )
+        self.book2.genres.add(self.genre2, self.genre3)  # Жанры: Мистика и Экшен
+        self.book2.tags.add(self.tag2, self.tag3)  # Теги: Магия и Научная фантастика
+
+        # Создание третьего автора и книги с тегами и жанрами
+        self.author3 = Author.objects.create(name="Джон Толкин")
+        self.book3 = Book.objects.create(
+            title="Властелин Колец",
+            description="Эпический фэнтези-роман",
+            author=self.author3,
+            url="lord-of-the-rings",
+            copies=8,
+            rating=0
+        )
+        self.book3.genres.add(self.genre1, self.genre3)  # Жанры: Приключения и Экшен
+        self.book3.tags.add(self.tag1, self.tag3)  # Теги: Фэнтези и Научная фантастика
+        self.book1.refresh_from_db()
+        self.book2.refresh_from_db()
+        self.book3.refresh_from_db()
+
+    def test_sort_genres(self):
+        # self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+        # Через запрос добавляем два отзыва к ранее созданной книге
+        response = self.client.get(f'http://127.0.0.1:8000/api/v1/books?genres={self.genre2.name}')
+        print('URL ответа:', response.headers)
+        # Проверяем что рейтинг книги расчитался правильно
+        self.assertEqual(str(self.book1.rating), response.data['rating'])
