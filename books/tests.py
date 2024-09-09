@@ -15,8 +15,6 @@ class ModelsTestCase(TestCase):
             title="Harry Potter",
             description="A fantasy novel",
             author=self.author,
-            genres=None,
-            tags=None,
             url="harry-potter",
             copies=0,
             rating=0
