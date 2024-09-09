@@ -65,18 +65,15 @@ class ReviewCreateView(APIView):
 
 class PinBookView(APIView):
     """Закрепление книги"""
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     def post(self, request):
         book_id = int(request.data.get('book'))
         reader_id = int(request.data.get('reader'))
         reader = User.objects.get(pk=reader_id)
         if not reader.groups.filter(name='Librarian').exists():
             book = Book.objects.get(pk=book_id)
-            # if reader.books. < 1:
-            #     return Response({'error': 'no copies available'}, 400)
             if book.copies < 1:
                 return Response({'error': 'no copies available'}, 400)
-            #else:
             book.copies = book.copies - 1
             book.save()
             reader.books.add(book)
