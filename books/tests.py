@@ -84,6 +84,7 @@ class BookReviewsTestCase(APITestCase):
         response = self.client.post('/auth/token/login/', {'username': self.reader_user.username, 'password': 'testpassword'})
         self.token = response.data['auth_token']
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+
     def test_book_rating_changed(self):
         # Через запрос добавляем два отзыва к ранее созданной книге
         response = self.client.post('http://127.0.0.1:8000/api/v1/books/reviews/create/', {
@@ -141,6 +142,7 @@ class UpdateBookTestCase(APITestCase):
                                     {'username': self.reader_user.username, 'password': 'testpassword'})
         self.token = response.data['auth_token']
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token)
+
     def test_pin_book_to_reader(self):
         # Закрепление книги за читателем
         response = self.client.post('http://127.0.0.1:8000/api/v1/books/pinbook/', {
