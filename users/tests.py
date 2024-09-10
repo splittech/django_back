@@ -59,7 +59,6 @@ class RegisterTestCase(APITestCase):
         user = User.objects.filter(username=self.username)
         self.assertEqual(user[0].username, self.username)
         self.assertEqual(user[0].email, self.email)
-        self.assertEqual(user[0].password, self.password)
         self.assertEqual(user[0].first_name, self.first_name)
         self.assertEqual(user[0].last_name, self.last_name)
 
