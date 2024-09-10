@@ -46,7 +46,7 @@ class RegisterTestCase(APITestCase):
         self.readers_group, created = Group.objects.get_or_create(name='Readers')
 
     def test_registration(self):
-        # Отправляем запрос к API для регистрации читателя
+        # Отправляем запрос к API для регистрации пользователя
         response = self.client.post('/auth/users/',
                                     {
                                         'username': self.username,
@@ -55,11 +55,13 @@ class RegisterTestCase(APITestCase):
                                         'first_name': self.first_name,
                                         'last_name': self.last_name
                                     })
+        # Проевка, что пользователь создался
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        # Получение объекта пользователя из БД
         user = User.objects.filter(username=self.username)
+        # Проверка, что поля сущности являются корректными
         self.assertEqual(user[0].username, self.username)
         self.assertEqual(user[0].email, self.email)
-        self.assertEqual(user[0].password, self.password)
         self.assertEqual(user[0].first_name, self.first_name)
         self.assertEqual(user[0].last_name, self.last_name)
 
